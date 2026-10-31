@@ -292,6 +292,7 @@ def head(page):
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="%(og_type)s">
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="%(title)s">
 <meta property="og:description" content="%(description)s">
@@ -309,6 +310,8 @@ def head(page):
 <link rel="icon" href="%(root)sassets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="%(root)sassets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="%(root)sassets/img/icon-192.png">
+<link rel="preload" as="image" href="%(root)sassets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="%(root)sassets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="%(root)sassets/css/site.css">
 %(json_ld)s</head>
 <body>
@@ -355,6 +358,7 @@ def header(root, current=None):
       </button>
     </div>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
 """ % {
         "root": root,
@@ -373,8 +377,8 @@ def footer(root):
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="%(root)sassets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
-        <img src="%(root)sassets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <img src="%(root)sassets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
+        <img src="%(root)sassets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.
         Created by Umaiz Sufiyan.</p>
