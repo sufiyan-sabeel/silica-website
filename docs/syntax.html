@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Syntax — Silica documentation</title>
+<meta name="description" content="Silica's keywords, statements, expressions, operators and block rules, with the grammar the v0.9.0 parser actually accepts.">
+<link rel="canonical" href="https://sufiyan-sabeel.github.io/silica-website/docs/syntax.html">
+<meta name="author" content="Umaiz Sufiyan">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0d10">
+<meta name="color-scheme" content="dark light">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Silica Programming Language">
+<meta property="og:title" content="Syntax — Silica documentation">
+<meta property="og:description" content="Silica's keywords, statements, expressions, operators and block rules, with the grammar the v0.9.0 parser actually accepts.">
+<meta property="og:url" content="https://sufiyan-sabeel.github.io/silica-website/docs/syntax.html">
+<meta property="og:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Silica — a language built to create">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Syntax — Silica documentation">
+<meta name="twitter:description" content="Silica's keywords, statements, expressions, operators and block rules, with the grammar the v0.9.0 parser actually accepts.">
+<meta name="twitter:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.jpg">
+
+<link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
+<link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Syntax",
+      "description": "Silica's keywords, statements, expressions, operators and block rules, with the grammar the v0.9.0 parser actually accepts.",
+      "url": "https://sufiyan-sabeel.github.io/silica-website/docs/syntax.html",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#creator"
+      },
+      "publisher": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#creator"
+      },
+      "isPartOf": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#website"
+      },
+      "about": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#software"
+      },
+      "proficiencyLevel": "Beginner"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sufiyan-sabeel.github.io/silica-website/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Documentation",
+          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/getting-started.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Syntax",
+          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/syntax.html"
+        }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://sufiyan-sabeel.github.io/silica-website/#creator",
+      "name": "Umaiz Sufiyan",
+      "url": "https://github.com/sufiyan-sabeel",
+      "jobTitle": "Student Developer and Creator of Silica",
+      "sameAs": [
+        "https://github.com/sufiyan-sabeel",
+        "https://www.instagram.com/umaizsufiyan.78/"
+      ]
+    }
+  ]
+}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Silica home">
+      <img src="../assets/img/mark-dark.png" alt="" class="logo-dark" width="24" height="31">
+      <img src="../assets/img/mark-light.png" alt="" class="logo-light" width="24" height="31">
+      <span>Silica</span>
+    </a>
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#playground">Playground</a>
+      <a href="../docs/getting-started.html">Docs</a>
+      <a href="../index.html#install">Install</a>
+      <a href="../index.html#roadmap">Roadmap</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+      <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span>GitHub</span>
+      </a>
+      <button class="icon-btn nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="main"><div class="wrap"><div class="docs"><nav class="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html" aria-current="page">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Syntax</span></nav><h1>Syntax</h1>
+<p>This page describes the grammar the v0.9.0 parser actually accepts. Where
+the grammar cannot express a rule — for example that <code>break</code> is only
+legal inside a loop — the checker enforces it instead.</p>
+
+<h2 id="keywords">Keywords</h2>
+<p>These are the only reserved words. They cannot be used as identifiers.</p>
+<table><thead><tr><th>Keyword</th><th>Meaning</th></tr></thead><tbody><tr><td><code>sfn</code></td><td>declare a function</td></tr><tr><td><code>ret</code></td><td>return a value (or nothing)</td></tr><tr><td><code>let</code> / <code>const</code></td><td>mutable / immutable binding</td></tr><tr><td><code>si</code> / <code>sino</code></td><td>if / else</td></tr><tr><td><code>tant</code></td><td>while loop</td></tr><tr><td><code>per</code> … <code>in</code></td><td>for each loop</td></tr><tr><td><code>break</code> / <code>continue</code></td><td>leave the innermost loop / start its next iteration</td></tr><tr><td><code>halt</code></td><td>terminate the program, optionally with an exit code</td></tr><tr><td><code>fin</code></td><td>optional explicit end-of-block marker</td></tr><tr><td><code>oui</code> / <code>nein</code></td><td>true / false</td></tr><tr><td><code>und</code> / <code>ou</code> / <code>non</code></td><td>logical and / or / not</td></tr><tr><td><code>sprint</code> / <code>dit</code></td><td>print with / without a newline</td></tr><tr><td><code>input</code></td><td>read one line of stdin as a String</td></tr><tr><td><code>use</code></td><td>import a standard-library module</td></tr></tbody></table>
+
+<h2 id="structure">Program structure</h2>
+<p>A program is a sequence of imports, function declarations and global
+declarations. Braces are mandatory for every block; there is no
+single-statement body form.</p>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">structure.sc</span><button class="code__copy" type="button" data-copy="code-structure-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-structure-sc-1" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">string</span>
+
+<span class="tok-kw">const</span> version<span class="tok-op">:</span> <span class="tok-type">String</span> <span class="tok-op">=</span> <span class="tok-str">&quot;0.9.0&quot;</span>
+
+<span class="tok-kw">sfn</span> <span class="tok-fn">greet</span><span class="tok-op">(</span>name<span class="tok-op">:</span> <span class="tok-type">String</span><span class="tok-op">)</span> <span class="tok-op">-</span><span class="tok-op">&gt;</span> <span class="tok-type">String</span> <span class="tok-op">{</span>
+    <span class="tok-kw">ret</span> <span class="tok-str">&quot;Hello, &quot;</span> <span class="tok-op">+</span> name
+<span class="tok-op">}</span>
+
+<span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">greet</span><span class="tok-op">(</span><span class="tok-str">&quot;Silica&quot;</span><span class="tok-op">)</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span>version<span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-9" tabindex="0"><code>Hello<span class="tok-op">,</span> Silica
+<span class="tok-num">0.9.0</span></code></pre></div>
+
+<h2 id="statements">Statements</h2>
+<table><thead><tr><th>Form</th><th>Example</th></tr></thead><tbody><tr><td>binding</td><td><code>let count: Int = 3</code> · <code>const name: String = "Silica"</code></td></tr><tr><td>assignment</td><td><code>count = count + 1</code> (only for <code>let</code>)</td></tr><tr><td>conditional</td><td><code>si cond { … } sino { … }</code></td></tr><tr><td>while</td><td><code>tant cond { … }</code></td></tr><tr><td>for each</td><td><code>per item in list { … }</code></td></tr><tr><td>return</td><td><code>ret value</code> · <code>ret</code></td></tr><tr><td>loop control</td><td><code>break</code> · <code>continue</code></td></tr><tr><td>terminate</td><td><code>halt(2)</code> · <code>halt</code></td></tr><tr><td>expression</td><td><code>sprint(x)</code> · <code>push(items, 1)</code></td></tr></tbody></table>
+
+<h2 id="newlines">Newlines, blocks and comments</h2>
+<ul>
+  <li>A newline ends a statement. Inside <code>(</code> … <code>)</code> and
+  <code>[</code> … <code>]</code> newlines are ignored, so a long expression can be
+  wrapped in parentheses.</li>
+  <li><code>;</code> is accepted as an optional statement separator, but a newline
+  is the idiomatic terminator.</li>
+  <li><code>fin</code> may appear as an explicit end-of-block marker. It is
+  accepted and never required.</li>
+  <li>Comments run from <code>#</code> or <code>//</code> to the end of the
+  line.</li>
+</ul>
+
+<h2 id="operators">Operators</h2>
+<p>From loosest to tightest binding:</p>
+<table><thead><tr><th>Level</th><th>Operators</th></tr></thead><tbody><tr><td>logical or</td><td><code>ou</code></td></tr><tr><td>logical and</td><td><code>und</code></td></tr><tr><td>equality</td><td><code>==</code> <code>!=</code></td></tr><tr><td>comparison</td><td><code>&lt;</code> <code>&lt;=</code> <code>&gt;</code> <code>&gt;=</code></td></tr><tr><td>additive</td><td><code>+</code> <code>-</code></td></tr><tr><td>multiplicative</td><td><code>*</code> <code>/</code> <code>%</code></td></tr><tr><td>unary</td><td><code>non</code> <code>-</code></td></tr><tr><td>postfix</td><td>call <code>()</code>, index <code>[]</code>, member <code>.</code></td></tr></tbody></table>
+
+<p><code>und</code> and <code>ou</code> short-circuit: the right-hand side is not
+evaluated when the result is already known.</p>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">logic.sc</span></div><div class="code__label">Short-circuit logic</div><pre id="code-logic-sc-1" tabindex="0"><code><span class="tok-kw">si</span> ready <span class="tok-kw">und</span> <span class="tok-kw">non</span> blocked <span class="tok-op">{</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;Ready&quot;</span><span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div>
+
+<h2 id="expressions">Literals and expressions</h2>
+<p>A <code>{</code> in expression position starts a map literal; a <code>{</code>
+after a statement header starts a block. The parser decides by position, so the
+two never conflict.</p>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">literals.sc</span><button class="code__copy" type="button" data-copy="code-literals-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-literals-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> items<span class="tok-op">:</span> <span class="tok-type">List</span> <span class="tok-op">=</span> <span class="tok-op">[</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">2</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">]</span>
+    <span class="tok-kw">let</span> record<span class="tok-op">:</span> <span class="tok-type">Map</span> <span class="tok-op">=</span> <span class="tok-op">{</span><span class="tok-str">&quot;language&quot;</span><span class="tok-op">:</span> <span class="tok-str">&quot;Silica&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;version&quot;</span><span class="tok-op">:</span> <span class="tok-str">&quot;0.9.0&quot;</span><span class="tok-op">}</span>
+    <span class="tok-kw">let</span> first<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> items<span class="tok-op">[</span><span class="tok-num">0</span><span class="tok-op">]</span>
+    <span class="tok-kw">let</span> version<span class="tok-op">:</span> <span class="tok-type">String</span> <span class="tok-op">=</span> record<span class="tok-op">[</span><span class="tok-str">&quot;version&quot;</span><span class="tok-op">]</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span>first<span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span>version<span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-10" tabindex="0"><code><span class="tok-num">1</span>
+<span class="tok-num">0.9.0</span></code></pre></div>
+
+<h2 id="grammar">Grammar</h2>
+<p>The EBNF for the accepted grammar, abridged to the parts most often
+asked about:</p>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">grammar.ebnf</span></div><pre id="code-grammar-ebnf-1" tabindex="0"><code>program        <span class="tok-op">=</span> <span class="tok-op">{</span> NEWLINE | <span class="tok-kw">use</span><span class="tok-op">-</span>decl | func<span class="tok-op">-</span>decl | global<span class="tok-op">-</span>decl <span class="tok-op">}</span> EOF <span class="tok-op">;</span>
+func<span class="tok-op">-</span>decl      <span class="tok-op">=</span> <span class="tok-str">&quot;sfn&quot;</span> IDENT <span class="tok-str">&quot;(&quot;</span> <span class="tok-op">[</span> param <span class="tok-op">{</span> <span class="tok-str">&quot;,&quot;</span> param <span class="tok-op">}</span> <span class="tok-op">]</span> <span class="tok-str">&quot;)&quot;</span>
+                 <span class="tok-op">[</span> <span class="tok-str">&quot;-&gt;&quot;</span> type <span class="tok-op">]</span> block <span class="tok-op">;</span>
+block          <span class="tok-op">=</span> <span class="tok-str">&quot;{&quot;</span> <span class="tok-op">{</span> NEWLINE | stmt <span class="tok-op">}</span> <span class="tok-op">[</span> <span class="tok-str">&quot;fin&quot;</span> <span class="tok-op">]</span> <span class="tok-str">&quot;}&quot;</span> <span class="tok-op">;</span>
+if<span class="tok-op">-</span>stmt        <span class="tok-op">=</span> <span class="tok-str">&quot;si&quot;</span> expr block <span class="tok-op">[</span> <span class="tok-str">&quot;sino&quot;</span> block <span class="tok-op">]</span> <span class="tok-op">;</span>
+while<span class="tok-op">-</span>stmt     <span class="tok-op">=</span> <span class="tok-str">&quot;tant&quot;</span> expr block <span class="tok-op">;</span>
+for<span class="tok-op">-</span>stmt       <span class="tok-op">=</span> <span class="tok-str">&quot;per&quot;</span> IDENT <span class="tok-str">&quot;in&quot;</span> expr block <span class="tok-op">;</span>
+<span class="tok-kw">let</span><span class="tok-op">-</span>stmt       <span class="tok-op">=</span> <span class="tok-op">(</span><span class="tok-str">&quot;let&quot;</span> | <span class="tok-str">&quot;const&quot;</span><span class="tok-op">)</span> IDENT <span class="tok-op">[</span> <span class="tok-str">&quot;:&quot;</span> type <span class="tok-op">]</span> <span class="tok-str">&quot;=&quot;</span> expr NEWLINE <span class="tok-op">;</span>
+type           <span class="tok-op">=</span> <span class="tok-str">&quot;Int&quot;</span> | <span class="tok-str">&quot;Float&quot;</span> | <span class="tok-str">&quot;Bool&quot;</span> | <span class="tok-str">&quot;String&quot;</span> | <span class="tok-str">&quot;Unit&quot;</span>
+               | <span class="tok-str">&quot;List&quot;</span> | <span class="tok-str">&quot;Map&quot;</span> | <span class="tok-str">&quot;Any&quot;</span> <span class="tok-op">;</span></code></pre></div>
+
+<h2 id="types">Types in the grammar</h2>
+<p>Type annotations are optional in <code>let</code>, <code>const</code> and
+parameter lists. Where they are given, the checker enforces them.</p>
+<div class="callout"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>There are exactly eight type names: <code>Int</code>, <code>Float</code>, <code>Bool</code>, <code>String</code>, <code>Unit</code>, <code>List</code>, <code>Map</code> and <code>Any</code>. There are no user-defined types and no generic parameters in 0.9.0 — <a href="variables-and-data-types.html">Variables and Data Types</a> explains what that means in practice.</p></div>
+<div class="pager"><a class="prev" href="installation.html"><span>Previous</span>Installation</a><a class="next" href="variables-and-data-types.html"><span>Next</span>Variables and Data Types</a></div></article></div></div></main><footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <p>An open-source, high-level general-purpose programming language with its
+        own syntax, a checked compiler and a versioned bytecode format.
+        Created by Umaiz Sufiyan.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Documentation</h4>
+        <ul>
+        <li><a href="../docs/getting-started.html">Getting Started</a></li>
+        <li><a href="../docs/installation.html">Installation</a></li>
+        <li><a href="../docs/syntax.html">Syntax</a></li>
+        <li><a href="../docs/variables-and-data-types.html">Variables and Data Types</a></li>
+        <li><a href="../docs/functions.html">Functions</a></li>
+        <li><a href="../docs/control-flow.html">Control Flow</a></li>
+        <li><a href="../docs/strings.html">Strings</a></li>
+        <li><a href="../docs/built-in-functions.html">Built-in Functions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/sufiyan-sabeel/silica" rel="noopener">Source on GitHub</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/releases" rel="noopener">Releases</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/docs/LANGUAGE_SPEC.md" rel="noopener">Language spec</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/issues" rel="noopener">Issues</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Creator</h4>
+        <ul>
+          <li><a href="https://github.com/sufiyan-sabeel" rel="noopener">Umaiz Sufiyan</a></li>
+          <li><a href="https://www.instagram.com/umaizsufiyan.78/" rel="noopener">Instagram</a></li>
+          <li><a href="../index.html#creator">About the creator</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/LICENSE" rel="noopener">MIT licence</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p style="margin:0">© 2026 Umaiz Sufiyan. Silica is released under the MIT licence.</p>
+      <p style="margin:0">Designed and developed with curiosity by Umaiz Sufiyan.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>
