@@ -435,6 +435,77 @@ sfn main() {
     },
 })
 
+SNIPPETS.update({
+    # ------------------------------------------------- 0.9.2: structs
+    "struct_basic": {
+        "file": "structs.sc",
+        "code": """struct Point {
+    x: Int
+    y: Int
+}
+
+sfn main() {
+    let p = Point(x: 3, y: 4)
+    sprint(p.x)
+    sprint(p)
+    p.x = 10
+    sprint(p.x)
+}""",
+    },
+    "struct_nested": {
+        "file": "nested.sc",
+        "code": """struct Vec {
+    x: Int
+    y: Int
+}
+
+struct Box {
+    corner: Vec
+    label: String
+}
+
+sfn main() {
+    let b = Box(corner: Vec(x: 1, y: 2), label: "origin")
+    sprint(b.corner.x)
+    b.corner.x = 10
+    sprint(b)
+}""",
+    },
+    "struct_fn": {
+        "file": "struct_fn.sc",
+        "code": """struct Point {
+    x: Int
+    y: Int
+}
+
+sfn length_squared(p: Point) -> Int {
+    ret p.x * p.x + p.y * p.y
+}
+
+sfn main() {
+    let a = Point(3, 4)
+    sprint(length_squared(a))
+    let b = Point(x: 3, y: 4)
+    sprint(a == b)
+}""",
+    },
+    # ------------------------------------------------- 0.9.1: colours
+    "colors_demo": {
+        "file": "colors.sc",
+        "code": """use colors
+
+sfn main() {
+    let accent = colors.parse("#8B9BFF")
+    sprint(colors.hex(accent))
+    sprint(colors.contrast("#8B9BFF", "#0B1020"))
+    sprint(colors.passes("#8B9BFF", "#0B1020", "AA", oui))
+    let scale = colors.palette("#8B9BFF", [50, 500, 950])
+    sprint(scale)
+    sprint(colors.css(accent, "hex"))
+}""",
+    },
+})
+
 # Defaults: stdin or capability-bound snippets are checked but not executed.
 for _entry in SNIPPETS.values():
     _entry.setdefault("skip_run", False)
