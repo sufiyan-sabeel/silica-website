@@ -12,6 +12,7 @@
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="Page not found — Silica">
 <meta property="og:description" content="That page does not exist on the Silica website.">
@@ -29,6 +30,8 @@
 <link rel="icon" href="/silica-website/assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="/silica-website/assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="/silica-website/assets/img/icon-192.png">
+<link rel="preload" as="image" href="/silica-website/assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="/silica-website/assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="/silica-website/assets/css/site.css">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -69,6 +72,7 @@
       </button>
     </div>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
 
 <main id="main">
@@ -92,8 +96,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="/silica-website/assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
-        <img src="/silica-website/assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <img src="/silica-website/assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
+        <img src="/silica-website/assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.
         Created by Umaiz Sufiyan.</p>
