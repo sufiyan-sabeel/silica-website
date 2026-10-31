@@ -1,10 +1,11 @@
-"""Build the Silica website into ./site.
+"""Build the Silica website in place.
 
-    python3 tools/verify_snippets.py /path/to/silica   # verify code first
-    python3 tools/build_site.py                        # then build
+    python3 tools/fetch_repo_status.py     # capture live repository facts
+    python3 tools/verify_snippets.py PATH  # verify every code example
+    python3 tools/build_site.py            # generate the pages
 
-The output is plain static HTML/CSS/JS with no build step at serve time, so it
-can be served by GitHub Pages directly.
+Output is plain static HTML/CSS/JS plus a search index, served directly by
+GitHub Pages from the repository root.
 """
 
 import datetime
@@ -19,22 +20,25 @@ sys.path.insert(0, HERE)
 
 import pages_docs  # noqa: E402
 import pages_home  # noqa: E402
-from site_chrome import (BASE_URL, DOC_PAGES, GITHUB, VERSION, footer, head,  # noqa: E402
-                         header, icon)
+from site_chrome import (BASE_URL, BUILT, DOC_PAGES, GITHUB, LICENSE, RELEASE,  # noqa: E402
+                         STATUS, VERSION, footer, head, header, search_dialog)
 
 ROOT = os.path.dirname(HERE)
-OUT = ROOT   # the site is built in place at the repository root
+OUT = ROOT          # built in place: the repository root is the published site
 TODAY = datetime.date.today().isoformat()
 
 DOC_GROUPS = [
-    ("Start here", ["getting-started", "installation"]),
+    ("Start here", ["introduction", "getting-started", "installation"]),
     ("Language", ["syntax", "variables-and-data-types", "functions",
-                  "control-flow", "strings"]),
+                  "control-flow", "strings", "structs"]),
     ("Reference", ["built-in-functions", "cli-reference", "examples", "faq"]),
 ]
 
 
-def org_json_ld():
+# --------------------------------------------------------------------------
+# structured data
+# --------------------------------------------------------------------------
+def person_json_ld():
     return {
         "@type": "Person",
         "@id": BASE_URL + "/#creator",
@@ -49,16 +53,16 @@ def org_json_ld():
 
 
 def home_json_ld():
-    data = {
+    return {
         "@context": "https://schema.org",
         "@graph": [
             {
                 "@type": "WebSite",
                 "@id": BASE_URL + "/#website",
                 "url": BASE_URL + "/",
-                "name": "Silica Programming Language",
-                "description": "The official website of Silica, an open-source "
-                               "high-level general-purpose programming language.",
+                "name": "Silica — A Language Built to Create",
+                "description": "The official website of Silica, an open-source, "
+                               "high-level, general-purpose programming language.",
                 "inLanguage": "en",
                 "publisher": {"@id": BASE_URL + "/#creator"},
             },
@@ -90,10 +94,9 @@ def home_json_ld():
                 "url": BASE_URL + "/",
                 "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
             },
-            org_json_ld(),
+            person_json_ld(),
         ],
     }
-    return data
 
 
 def doc_json_ld(slug, title, description):
@@ -118,12 +121,12 @@ def doc_json_ld(slug, title, description):
                     {"@type": "ListItem", "position": 1, "name": "Home",
                      "item": BASE_URL + "/"},
                     {"@type": "ListItem", "position": 2, "name": "Documentation",
-                     "item": "%s/docs/getting-started.html" % BASE_URL},
+                     "item": "%s/docs/introduction.html" % BASE_URL},
                     {"@type": "ListItem", "position": 3, "name": title,
                      "item": "%s/docs/%s.html" % (BASE_URL, slug)},
                 ],
             },
-            org_json_ld(),
+            person_json_ld(),
         ],
     }
 
@@ -133,29 +136,65 @@ def script_tag(data):
             % json.dumps(data, indent=2, ensure_ascii=False))
 
 
+# --------------------------------------------------------------------------
+# helpers
+# --------------------------------------------------------------------------
+def strip_tags(markup):
+    text = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", markup, flags=re.S | re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = html.unescape(text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def build_toc(body):
-    """An "On this page" list from the page's own h2 headings."""
     items = re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body, re.S)
     if len(items) < 2:
         return ""
     links = []
     for anchor, text in items:
-        label = re.sub(r"<[^>]+>", "", text).strip()
-        links.append('<li><a href="#%s">%s</a></li>' % (anchor, label))
+        label = strip_tags(text)
+        links.append('<li><a href="#%s">%s</a></li>' % (anchor, html.escape(label)))
     return ('<nav class="toc" aria-label="On this page">'
             '<p class="toc__title">On this page</p><ul>%s</ul></nav>'
             % "".join(links))
 
 
+def build_search_index(rendered):
+    """One entry per heading section, so results land on the right paragraph."""
+    entries = []
+    for slug, label, _description, body in rendered:
+        parts = re.split(r'<h2 id="([^"]+)">(.*?)</h2>', body, flags=re.S)
+        intro = strip_tags(parts[0])[:520]
+        if intro:
+            entries.append({
+                "page": label,
+                "title": label,
+                "url": "docs/%s.html" % slug,
+                "text": intro,
+            })
+        for i in range(1, len(parts) - 2, 3):
+            anchor, heading, rest = parts[i], parts[i + 1], parts[i + 2]
+            text = strip_tags(rest)[:700]
+            if not text:
+                continue
+            entries.append({
+                "page": label,
+                "title": strip_tags(heading),
+                "url": "docs/%s.html#%s" % (slug, anchor),
+                "text": text,
+            })
+    return entries
+
+
 def docs_nav(current):
+    labels = dict((s, l) for s, l, _ in DOC_PAGES)
     groups = []
     for name, slugs in DOC_GROUPS:
         links = []
         for slug in slugs:
-            label = dict((s, l) for s, l, _ in DOC_PAGES)[slug]
             current_attr = ' aria-current="page"' if slug == current else ""
             links.append('<li><a href="%s.html"%s>%s</a></li>'
-                         % (slug, current_attr, label))
+                         % (slug, current_attr, labels[slug]))
         groups.append(
             '<div class="docs-nav__group"><p class="docs-nav__title">%s</p>'
             "<ul>%s</ul></div>" % (name, "".join(links))
@@ -171,12 +210,12 @@ def pager(current):
     parts = []
     if index > 0:
         prev_slug = slugs[index - 1]
-        parts.append('<a class="prev" href="%s.html">%s%s</a>'
-                     % (prev_slug, '<span>Previous</span>', labels[prev_slug]))
+        parts.append('<a class="prev" href="%s.html"><span>Previous</span>%s</a>'
+                     % (prev_slug, labels[prev_slug]))
     if index < len(slugs) - 1:
         next_slug = slugs[index + 1]
-        parts.append('<a class="next" href="%s.html">%s%s</a>'
-                     % (next_slug, '<span>Next</span>', labels[next_slug]))
+        parts.append('<a class="next" href="%s.html"><span>Next</span>%s</a>'
+                     % (next_slug, labels[next_slug]))
     return '<div class="pager">%s</div>' % "".join(parts)
 
 
@@ -188,25 +227,37 @@ def write(path, text):
     return full
 
 
+# --------------------------------------------------------------------------
+# pages
+# --------------------------------------------------------------------------
 def build_home():
     page = {
-        "title": "Silica Programming Language — an open-source language built to create",
-        "description": "Silica is an open-source, high-level general-purpose "
-                       "programming language with its own syntax, a checked "
-                       "compiler, versioned bytecode and a capability-based "
-                       "security model. Created by Umaiz Sufiyan.",
+        "title": "Silica — A Language Built to Create",
+        "description": "Discover Silica, an open-source high-level general-purpose "
+                       "programming language created by Umaiz Sufiyan. Explore its "
+                       "syntax, features, documentation, and development journey.",
         "canonical": BASE_URL + "/",
         "root": "",
         "json_ld": script_tag(home_json_ld()),
     }
-    document = (head(page) + header("") + '<main id="main">' + pages_home.body()
-                + "</main>" + footer(""))
+    document = (
+        head(page)
+        + header("")
+        + search_dialog("")
+        + '<main id="main">' + pages_home.body() + "</main>"
+        + footer("")
+    )
     return write("index.html", document)
 
 
 def build_docs():
     written = []
+    rendered = []
+
     for slug, label, description in DOC_PAGES:
+        body = pages_docs.PAGES[slug]()
+        rendered.append((slug, label, description, body))
+
         page = {
             "title": "%s — Silica documentation" % label,
             "description": description,
@@ -215,7 +266,7 @@ def build_docs():
             "og_type": "article",
             "json_ld": script_tag(doc_json_ld(slug, label, description)),
         }
-        body = pages_docs.PAGES[slug]()
+
         article = (
             '<main id="main"><div class="wrap"><div class="docs">'
             + '<div class="docs-menu" data-docs-menu>'
@@ -226,7 +277,8 @@ def build_docs():
             + '<article class="article">'
             + '<nav class="breadcrumbs" aria-label="Breadcrumb">'
             + '<a href="../index.html">Home</a><span aria-hidden="true">/</span>'
-            + '<a href="getting-started.html">Docs</a><span aria-hidden="true">/</span>'
+            + '<a href="introduction.html">Documentation</a>'
+            + '<span aria-hidden="true">/</span>'
             + "<span>%s</span></nav>" % html.escape(label)
             + "<h1>%s</h1>" % label
             + body
@@ -235,9 +287,16 @@ def build_docs():
             + build_toc(body)
             + "</div></div></main>"
         )
-        written.append(write("docs/%s.html" % slug,
-                             head(page) + header("../", "Docs") + article + footer("../")))
-    return written
+        written.append(write(
+            "docs/%s.html" % slug,
+            head(page) + header("../", "Documentation") + search_dialog("../")
+            + article + footer("../"),
+        ))
+
+    index = build_search_index(rendered)
+    write("assets/search-index.json",
+          json.dumps(index, ensure_ascii=False, separators=(",", ":")))
+    return written, index
 
 
 def build_404():
@@ -266,24 +325,23 @@ def build_404():
       exist here. The documentation index is the best place to pick up again.</p>
       <div class="btn-row" style="justify-content:center">
         <a class="btn btn--primary" href="/silica-website/index.html">%(home)s Home</a>
-        <a class="btn btn--ghost" href="/silica-website/docs/getting-started.html">%(book)s Documentation</a>
+        <a class="btn btn--ghost" href="/silica-website/docs/introduction.html">%(book)s Documentation</a>
       </div>
       %(code)s
     </div>
   </div>
 </main>
 """ % {
-        "home": icon("arrow-right"),
-        "book": icon("book"),
-        "code": '<div class="code" style="max-width:420px;margin-inline:auto">'
+        "home": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
+        "book": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>',
+        "code": '<div class="code code--plain" style="max-width:420px;margin-inline:auto">'
                 '<div class="code__bar"><span class="code__dots"><i></i><i></i>'
                 '<i></i></span><span class="code__name">404.sc</span></div>'
-                '<pre><code><span class="tok-kw">sfn</span> '
+                '<div class="code__body"><pre><code><span class="tok-kw">sfn</span> '
                 '<span class="tok-fn">main</span>() {\n'
                 '    <span class="tok-fn">halt</span>(<span class="tok-num">404</span>)\n'
-                "}</code></pre></div>",
+                "}</code></pre></div></div>",
     }
-    # the 404 page is served from any path, so links are site-absolute
     return write("404.html", head(page) + header("/silica-website/") + body
                  + footer("/silica-website/"))
 
@@ -304,23 +362,18 @@ def build_seo():
             "  </url>" % (loc, TODAY, priority)
         )
 
-    sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
-               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-               + "\n".join(entries) + "\n</urlset>\n")
-    write("sitemap.xml", sitemap)
+    write("sitemap.xml",
+          '<?xml version="1.0" encoding="UTF-8"?>\n'
+          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+          + "\n".join(entries) + "\n</urlset>\n")
 
-    robots = ("User-agent: *\n"
-              "Allow: /\n"
-              "\n"
-              "Sitemap: %s/sitemap.xml\n" % BASE_URL)
-    write("robots.txt", robots)
-
-    # GitHub Pages: serve files as-is instead of running Jekyll
+    write("robots.txt",
+          "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % BASE_URL)
     write(".nojekyll", "")
-    return sitemap
+    return urls
 
 
-README = """# Silica website
+README = """# Silica — official website
 
 The official website for [Silica](https://github.com/sufiyan-sabeel/silica), an
 open-source general-purpose programming language created by Umaiz Sufiyan.
@@ -329,37 +382,54 @@ Live at **https://sufiyan-sabeel.github.io/silica-website/**
 
 ## What this is
 
-A static site: plain HTML, one stylesheet, one small script. No framework, no
-bundler, no runtime dependency. It is served by GitHub Pages directly from the
-`main` branch, so a push is a deploy.
-
-## Layout
+A static site served by GitHub Pages straight from `main`: plain HTML, one
+stylesheet, two small scripts, no framework and no bundler. A push is a deploy.
 
 ```
-index.html              homepage
-docs/*.html             eleven documentation pages
-assets/css/site.css     the whole design system
-assets/js/site.js       theme switch, mobile nav, copy buttons, tabs
-assets/img/             logo, mark, icons, social card
-sitemap.xml robots.txt  search-engine plumbing
-404.html                not-found page
-tools/                  the generator that produced the pages above
+index.html                 homepage (hero 3D, features, playground, roadmap, …)
+docs/*.html                thirteen documentation pages
+assets/css/site.css        the whole design system ("Silica Midnight")
+assets/js/site.js          theme, nav, tabs, copy, search, live repo status
+assets/js/crystal.js       the hero crystal — hand-written WebGL, no library
+assets/img/                logo, mark, icons, social card
+assets/search-index.json   generated index for the documentation search
+sitemap.xml robots.txt     search-engine plumbing
+404.html                   not-found page
+tools/                     the generator that produced everything above
 ```
 
-The pages are generated, then committed. `python3 tools/build_site.py`
-rewrites them in place from `tools/`, so the repository is both the source and
-the published output — which is what GitHub Pages serves.
+## The 3D hero
+
+`assets/js/crystal.js` draws an icosahedron with raw WebGL: two translucent
+shells (back faces, then front faces), an inner solid, and edge lines, lit by a
+key light plus a fresnel rim. No three.js, no model file, no network request.
+
+It is deliberately defensive: device pixel ratio capped at 2, rendering stops
+when the canvas leaves the viewport or the tab is hidden, `prefers-reduced-motion`
+renders one still frame, and if WebGL is unavailable the inline SVG fallback in
+`index.html` stays on screen. `tools/crystal_svg.py` generates that fallback from
+the same geometry, so the two views are the same object.
+
+## Live repository status
+
+`tools/fetch_repo_status.py` captures stars, forks, open issues, the latest
+release and the last push into `tools/repo_status.json`. The build bakes those
+values into the page, and `site.js` refreshes them from the public GitHub API on
+load — no token, no backend. If the API is rate-limited the baked values and their
+timestamp stand.
 
 ## Editing
 
-Edit the HTML in place, or regenerate it from the generator that produced it:
+Edit the HTML in place, or regenerate it:
 
 ```
-tools/build_site.py       page chrome, docs layout, sitemap
-tools/pages_home.py       homepage sections
-tools/pages_docs.py       documentation pages
-tools/snippets.py         every code example, in one place
-tools/verify_snippets.py  runs each example against the real toolchain
+tools/build_site.py        page chrome, docs layout, search index, sitemap
+tools/pages_home.py        homepage sections
+tools/pages_docs.py        documentation pages
+tools/snippets.py          every code example, in one place
+tools/verify_snippets.py   runs each example against the real toolchain
+tools/crystal_svg.py       the SVG fallback for the hero
+tools/check_site.py        links, metadata, structure, overflow
 ```
 
 Every code example on the site is executed against the Silica implementation
@@ -367,32 +437,35 @@ before publication, so the documentation cannot drift from the language.
 
 ## Accessibility and performance
 
-Semantic landmarks, a skip link, keyboard-operable tabs, visible focus states,
-`prefers-reduced-motion` support, a light and dark theme, no web fonts and no
-third-party scripts.
+Semantic landmarks, a skip link, keyboard-operable tabs and search, visible focus
+states, `prefers-reduced-motion` support, a light and dark theme, no layout shift
+from the canvas, and no third-party scripts. Inter and JetBrains Mono are loaded
+from Google Fonts with `display=swap`; the design falls back to the system stack
+if that request fails.
 
 ## Licence
 
-The website content is MIT licensed, like Silica itself. Copyright (c) 2026
-Umaiz Sufiyan.
+MIT, like Silica itself. Copyright (c) 2026 Umaiz Sufiyan.
 """
 
 
 def main():
     if not os.path.isdir(os.path.join(OUT, "assets")):
-        raise SystemExit("missing assets/ — the stylesheet and images must exist "
-                         "before building")
+        raise SystemExit("missing assets/ — the stylesheet and images must exist")
+
     written = [build_home()]
-    written += build_docs()
+    docs_written, index = build_docs()
+    written += docs_written
     written.append(build_404())
-    build_seo()
+    urls = build_seo()
     write("README.md", README)
 
-    total = 0
-    for path in written:
-        total += os.path.getsize(path)
-    print("built %d pages, %.1f KB of HTML" % (len(written), total / 1024.0))
-    print("output: %s" % OUT)
+    total = sum(os.path.getsize(path) for path in written)
+    print("built %d pages (%d documentation), %.1f KB of HTML"
+          % (len(written), len(docs_written), total / 1024.0))
+    print("search index: %d entries" % len(index))
+    print("sitemap: %d urls" % len(urls))
+    print("release: %s (captured %s)" % (RELEASE, BUILT))
 
 
 if __name__ == "__main__":
