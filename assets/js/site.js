@@ -8,6 +8,8 @@
 
   var root = document.documentElement;
   var STORE = "silica-theme";
+  var ACCENT_STORE = "silica-accent";
+  var ACCENTS = ["indigo", "teal", "violet", "amber", "rose"];
 
   /* ---------- theme ------------------------------------------------------ */
   function applyTheme(theme) {
@@ -37,19 +39,118 @@
     return "dark";
   }
 
+  function syncThemeChoices() {
+    var theme = root.getAttribute("data-theme");
+    document.querySelectorAll("[data-theme-choice]").forEach(function (btn) {
+      btn.setAttribute(
+        "aria-pressed",
+        btn.getAttribute("data-theme-choice") === theme ? "true" : "false"
+      );
+    });
+  }
+
+  function setTheme(next, persist) {
+    applyTheme(next);
+    syncThemeChoices();
+    if (persist) {
+      try {
+        localStorage.setItem(STORE, next);
+      } catch (err) {
+        /* private mode: the choice simply does not persist */
+      }
+    }
+    /* the crystal reads its colours from these tokens */
+    document.dispatchEvent(new CustomEvent("silica:palette"));
+  }
+
+  function currentAccent() {
+    var saved = null;
+    try {
+      saved = localStorage.getItem(ACCENT_STORE);
+    } catch (err) {
+      saved = null;
+    }
+    return ACCENTS.indexOf(saved) > -1 ? saved : "indigo";
+  }
+
+  function setAccent(name, persist) {
+    if (ACCENTS.indexOf(name) === -1) name = "indigo";
+    root.setAttribute("data-accent", name);
+    document.querySelectorAll("[data-accent-choice]").forEach(function (btn) {
+      btn.setAttribute(
+        "aria-pressed",
+        btn.getAttribute("data-accent-choice") === name ? "true" : "false"
+      );
+    });
+    if (persist) {
+      try {
+        localStorage.setItem(ACCENT_STORE, name);
+      } catch (err) {
+        /* ignore */
+      }
+    }
+    document.dispatchEvent(new CustomEvent("silica:palette"));
+  }
+
   applyTheme(currentTheme());
+  syncThemeChoices();
+  setAccent(currentAccent(), false);
 
   document.addEventListener("click", function (event) {
-    var btn = event.target.closest("[data-theme-toggle]");
-    if (!btn) return;
-    var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-    applyTheme(next);
-    try {
-      localStorage.setItem(STORE, next);
-    } catch (err) {
-      /* private mode: the choice simply does not persist */
+    var toggle = event.target.closest("[data-theme-toggle]");
+    if (toggle) {
+      setTheme(root.getAttribute("data-theme") === "light" ? "dark" : "light", true);
+      return;
+    }
+
+    var themeChoice = event.target.closest("[data-theme-choice]");
+    if (themeChoice) {
+      setTheme(themeChoice.getAttribute("data-theme-choice"), true);
+      return;
+    }
+
+    var accentChoice = event.target.closest("[data-accent-choice]");
+    if (accentChoice) {
+      setAccent(accentChoice.getAttribute("data-accent-choice"), true);
+      return;
     }
   });
+
+  /* ---------- appearance customiser panel -------------------------------- */
+  var customizer = document.querySelector("[data-customizer]");
+  if (customizer) {
+    var customizerToggle = customizer.querySelector("[data-customizer-toggle]");
+    var customizerPanel = customizer.querySelector(".customizer__panel");
+
+    function closeCustomizer() {
+      customizerPanel.hidden = true;
+      customizerToggle.setAttribute("aria-expanded", "false");
+    }
+
+    customizerToggle.addEventListener("click", function (event) {
+      event.stopPropagation();
+      var open = customizerPanel.hidden;
+      customizerPanel.hidden = !open;
+      customizerToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    document.addEventListener("click", function (event) {
+      if (customizerPanel.hidden) return;
+      if (customizer.contains(event.target)) return;
+      closeCustomizer();
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !customizerPanel.hidden) {
+        closeCustomizer();
+        customizerToggle.focus();
+      }
+    });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 560) closeCustomizer();
+    });
+  }
 
   /* ---------- mobile navigation ----------------------------------------- */
   var toggle = document.querySelector("[data-nav-toggle]");
@@ -85,7 +186,7 @@
     });
 
     window.addEventListener("resize", function () {
-      if (window.innerWidth > 860) closeNav();
+      if (window.innerWidth > 940) closeNav();
     });
   }
 
