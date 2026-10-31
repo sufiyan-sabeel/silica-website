@@ -12,6 +12,7 @@
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="article">
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="FAQ — Silica documentation">
 <meta property="og:description" content="Straight answers about performance, completeness, platforms, licensing and where Silica is going.">
@@ -29,6 +30,8 @@
 <link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+<link rel="preload" as="image" href="../assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="../assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="../assets/css/site.css">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -102,7 +105,7 @@
     <nav class="nav" id="site-nav" aria-label="Primary">
       <a href="../index.html#features">Features</a>
       <a href="../index.html#playground">Playground</a>
-      <a href="../docs/getting-started.html">Docs</a>
+      <a href="../docs/getting-started.html" aria-current="page">Docs</a>
       <a href="../index.html#install">Install</a>
       <a href="../index.html#roadmap">Roadmap</a>
     </nav>
@@ -118,8 +121,9 @@
       </button>
     </div>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
-<main id="main"><div class="wrap"><div class="docs"><nav class="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html" aria-current="page">FAQ</a></li></ul></div></nav><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>FAQ</span></nav><h1>FAQ</h1>
+<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html" aria-current="page">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>FAQ</span></nav><h1>FAQ</h1>
 <p>Short answers to the questions that come up most, including the ones where the
 answer is "no".</p>
 
@@ -146,8 +150,8 @@ that turn into useful answers get added to this page.</p>
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
-        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.
         Created by Umaiz Sufiyan.</p>
