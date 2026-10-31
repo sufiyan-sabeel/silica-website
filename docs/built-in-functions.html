@@ -4,32 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Built-in Functions — Silica documentation</title>
-<meta name="description" content="The core, math, string, collections, json and fs modules, with real output for every example.">
+<meta name="description" content="The core, math, string, collections, json, colors and fs modules, with real output for every example.">
 <link rel="canonical" href="https://sufiyan-sabeel.github.io/silica-website/docs/built-in-functions.html">
 <meta name="author" content="Umaiz Sufiyan">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0b0d10">
+<meta name="theme-color" content="#0b1020">
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="Silica">
 <meta property="og:locale" content="en_IN">
-<meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="Built-in Functions — Silica documentation">
-<meta property="og:description" content="The core, math, string, collections, json and fs modules, with real output for every example.">
+<meta property="og:description" content="The core, math, string, collections, json, colors and fs modules, with real output for every example.">
 <meta property="og:url" content="https://sufiyan-sabeel.github.io/silica-website/docs/built-in-functions.html">
-<meta property="og:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.jpg">
+<meta property="og:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Silica — a language built to create">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Built-in Functions — Silica documentation">
-<meta name="twitter:description" content="The core, math, string, collections, json and fs modules, with real output for every example.">
-<meta name="twitter:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.jpg">
+<meta name="twitter:description" content="The core, math, string, collections, json, colors and fs modules, with real output for every example.">
+<meta name="twitter:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.png">
 
 <link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="preload" as="image" href="../assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
 <link rel="preload" as="image" href="../assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="../assets/css/site.css">
@@ -39,7 +43,7 @@
     {
       "@type": "TechArticle",
       "headline": "Built-in Functions",
-      "description": "The core, math, string, collections, json and fs modules, with real output for every example.",
+      "description": "The core, math, string, collections, json, colors and fs modules, with real output for every example.",
       "url": "https://sufiyan-sabeel.github.io/silica-website/docs/built-in-functions.html",
       "inLanguage": "en",
       "author": {
@@ -69,7 +73,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Documentation",
-          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/getting-started.html"
+          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/introduction.html"
         },
         {
           "@type": "ListItem",
@@ -97,33 +101,52 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="../index.html" aria-label="Silica home">
-      <img src="../assets/img/mark-dark.png" alt="" class="logo-dark" width="24" height="31">
-      <img src="../assets/img/mark-light.png" alt="" class="logo-light" width="24" height="31">
+    <a class="brand" href="../index.html" aria-label="Silica — home">
+      <img src="../assets/img/mark-dark.png" alt="" class="logo-dark" width="22" height="28">
+      <img src="../assets/img/mark-light.png" alt="" class="logo-light" width="22" height="28">
       <span>Silica</span>
     </a>
     <nav class="nav" id="site-nav" aria-label="Primary">
+      <a href="../index.html#overview">Overview</a>
       <a href="../index.html#features">Features</a>
+      <a href="../docs/introduction.html" aria-current="page">Documentation</a>
       <a href="../index.html#playground">Playground</a>
-      <a href="../docs/getting-started.html" aria-current="page">Docs</a>
-      <a href="../index.html#install">Install</a>
       <a href="../index.html#roadmap">Roadmap</a>
+      <a href="../index.html#creator">About</a>
+      <div class="nav-drawer-cta">
+        <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> GitHub</a>
+        <a class="btn btn--primary btn--sm" href="../docs/getting-started.html">Get Started</a>
+      </div>
     </nav>
     <div class="nav-actions">
-      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <button class="search-open" type="button" data-search-open aria-label="Search the documentation">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span><kbd>/</kbd>
       </button>
-      <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span>GitHub</span>
-      </a>
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+      <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span>GitHub</span></a>
+      <a class="btn btn--primary btn--sm" href="../docs/getting-started.html">Get Started</a>
       <button class="icon-btn nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
       </button>
     </div>
   </div>
   <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
-<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html" aria-current="page">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Built-in Functions</span></nav><h1>Built-in Functions</h1>
+<div class="search-dialog" id="search-dialog" data-index="../assets/search-index.json" hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the documentation">
+    <div class="search-field">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" placeholder="Search the documentation…" aria-label="Search the documentation" autocomplete="off" spellcheck="false">
+      <button class="search-close" type="button" data-search-close>esc</button>
+    </div>
+    <p class="search-empty" role="status">Type to search the documentation.</p>
+    <ul class="search-results"></ul>
+    <div class="search-hint"><span>↑ ↓ to move · Enter to open</span><span>Esc to close</span></div>
+  </div>
+</div>
+<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Language Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li><li><a href="structs.html">Structs</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html" aria-current="page">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="introduction.html">Documentation</a><span aria-hidden="true">/</span><span>Built-in Functions</span></nav><h1>Built-in Functions</h1>
 <p>Silica's standard library is a set of native functions grouped into modules.
 <code>core</code> is always in scope; everything else needs a
 <code>use</code> statement. Types in the tables below are the ones the static
@@ -132,23 +155,41 @@ checker enforces.</p>
 <h2 id="core">core — always available</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Function</th><th scope="col">Signature</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><code>sprint(x)</code></td><td><code>Any → Unit</code></td><td>print with a newline</td></tr><tr><td><code>dit(x)</code></td><td><code>Any → Unit</code></td><td>print without a newline</td></tr><tr><td><code>input(prompt)</code></td><td><code>String → String</code></td><td>read one line of stdin</td></tr><tr><td><code>type_of(x)</code></td><td><code>Any → String</code></td><td>the runtime type name</td></tr><tr><td><code>assert(cond, message)</code></td><td><code>Bool, String → Unit</code></td><td>abort if false</td></tr><tr><td><code>str(x)</code> / <code>int(x)</code> / <code>float(x)</code></td><td><code>Any → String / Int / Float</code></td><td>explicit conversion</td></tr><tr><td><code>len(x)</code></td><td><code>Any → Int</code></td><td>length of a string, list or map</td></tr><tr><td><code>range(a, b, step)</code></td><td><code>Int… → List</code></td><td>1–3 arguments</td></tr><tr><td><code>push(list, value)</code></td><td><code>List, Any → Unit</code></td><td>append in place</td></tr><tr><td><code>keys(map)</code> / <code>values(map)</code></td><td><code>Map → List</code></td><td>map contents</td></tr><tr><td><code>has(container, key)</code></td><td><code>Any, Any → Bool</code></td><td>key or membership test</td></tr></tbody></table></div>
 <p>Example — <code>type_of</code>, <code>str</code> and <code>len</code>:</p>
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">core.sc</span><button class="code__copy" type="button" data-copy="code-core-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-core-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">core.sc</span><button class="code__copy" type="button" data-copy="code-core-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7</div><pre id="code-core-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">let</span> items<span class="tok-op">:</span> <span class="tok-type">List</span> <span class="tok-op">=</span> <span class="tok-op">[</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">2</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">]</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">type_of</span><span class="tok-op">(</span>items<span class="tok-op">)</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">len</span><span class="tok-op">(</span>items<span class="tok-op">)</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">str</span><span class="tok-op">(</span><span class="tok-num">42</span><span class="tok-op">)</span> <span class="tok-op">+</span> <span class="tok-str">&quot;!&quot;</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">has</span><span class="tok-op">(</span>items<span class="tok-op">,</span> <span class="tok-num">2</span><span class="tok-op">)</span><span class="tok-op">)</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-33" tabindex="0"><code><span class="tok-type">List</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-41" tabindex="0"><code><span class="tok-type">List</span>
 <span class="tok-num">3</span>
 <span class="tok-num">42</span><span class="tok-op">!</span>
-<span class="tok-kw">oui</span></code></pre></div>
+<span class="tok-kw">oui</span></code></pre></div></div>
 
 <h2 id="math">math</h2>
 <p>Import with <code>use math</code>. <code>math.pi</code>, <code>math.e</code> and
 <code>math.tau</code> are constants, not functions.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Function</th><th scope="col">Returns</th></tr></thead><tbody><tr><td><code>math.abs(x)</code></td><td>same type as the argument</td></tr><tr><td><code>math.min(a, b)</code> / <code>math.max(a, b)</code></td><td>the smaller / larger value</td></tr><tr><td><code>math.sqrt(x)</code></td><td><code>Float</code></td></tr><tr><td><code>math.pow(a, b)</code></td><td><code>Float</code></td></tr><tr><td><code>math.floor(x)</code> / <code>math.ceil(x)</code> / <code>math.round(x)</code></td><td><code>Int</code></td></tr></tbody></table></div>
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">math_demo.sc</span><button class="code__copy" type="button" data-copy="code-math_demo-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-math_demo-sc-1" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">math</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">math_demo.sc</span><button class="code__copy" type="button" data-copy="code-math_demo-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13</div><pre id="code-math_demo-sc-1" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">math</span>
 
 <span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-mod">math</span><span class="tok-op">.</span><span class="tok-fn">abs</span><span class="tok-op">(</span><span class="tok-op">-</span><span class="tok-num">17</span><span class="tok-op">)</span><span class="tok-op">)</span>
@@ -160,8 +201,8 @@ checker enforces.</p>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-mod">math</span><span class="tok-op">.</span><span class="tok-fn">ceil</span><span class="tok-op">(</span><span class="tok-num">3.01</span><span class="tok-op">)</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-mod">math</span><span class="tok-op">.</span><span class="tok-fn">round</span><span class="tok-op">(</span><span class="tok-num">2.5</span><span class="tok-op">)</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-mod">math</span><span class="tok-op">.</span>pi<span class="tok-op">)</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-34" tabindex="0"><code><span class="tok-num">17</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-42" tabindex="0"><code><span class="tok-num">17</span>
 <span class="tok-num">3</span>
 <span class="tok-num">8</span>
 <span class="tok-num">9.0</span>
@@ -169,7 +210,7 @@ checker enforces.</p>
 <span class="tok-num">3</span>
 <span class="tok-num">4</span>
 <span class="tok-num">3</span>
-<span class="tok-num">3.141592653589793</span></code></pre></div>
+<span class="tok-num">3.141592653589793</span></code></pre></div></div>
 
 <h2 id="string">string</h2>
 <p>Import with <code>use string</code>. The full list is on the
@@ -178,7 +219,25 @@ checker enforces.</p>
 <h2 id="collections">collections</h2>
 <p>Import with <code>use collections</code>.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Function</th><th scope="col">Returns</th><th scope="col">Notes</th></tr></thead><tbody><tr><td><code>collections.sort(list)</code></td><td><code>List</code></td><td>a sorted copy</td></tr><tr><td><code>collections.reverse(list)</code></td><td><code>List</code></td><td>a reversed copy</td></tr><tr><td><code>collections.index_of(list, value)</code></td><td><code>Int</code></td><td>position, or -1</td></tr><tr><td><code>collections.sum(list)</code></td><td><code>Any</code></td><td>numeric total</td></tr></tbody></table></div>
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">collections.sc</span><button class="code__copy" type="button" data-copy="code-collections-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-collections-sc-2" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">collections</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">collections.sc</span><button class="code__copy" type="button" data-copy="code-collections-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</div><pre id="code-collections-sc-2" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">collections</span>
 
 <span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">let</span> nums<span class="tok-op">:</span> <span class="tok-type">List</span> <span class="tok-op">=</span> <span class="tok-op">[</span><span class="tok-num">5</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">,</span> <span class="tok-num">9</span><span class="tok-op">,</span> <span class="tok-num">1</span><span class="tok-op">]</span>
@@ -196,22 +255,33 @@ checker enforces.</p>
     <span class="tok-fn">push</span><span class="tok-op">(</span>bag<span class="tok-op">,</span> <span class="tok-str">&quot;apple&quot;</span><span class="tok-op">)</span>
     <span class="tok-fn">push</span><span class="tok-op">(</span>bag<span class="tok-op">,</span> <span class="tok-str">&quot;pear&quot;</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span>bag<span class="tok-op">)</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-35" tabindex="0"><code><span class="tok-op">[</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">,</span> <span class="tok-num">5</span><span class="tok-op">,</span> <span class="tok-num">9</span><span class="tok-op">]</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-43" tabindex="0"><code><span class="tok-op">[</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">,</span> <span class="tok-num">5</span><span class="tok-op">,</span> <span class="tok-num">9</span><span class="tok-op">]</span>
 <span class="tok-op">[</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">9</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">,</span> <span class="tok-num">5</span><span class="tok-op">]</span>
 <span class="tok-num">18</span>
 <span class="tok-num">2</span>
 <span class="tok-num">31</span>
 <span class="tok-kw">oui</span>
 <span class="tok-op">[</span><span class="tok-str">&quot;anita&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;rahul&quot;</span><span class="tok-op">]</span>
-<span class="tok-op">[</span><span class="tok-str">&quot;apple&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;pear&quot;</span><span class="tok-op">]</span></code></pre></div>
+<span class="tok-op">[</span><span class="tok-str">&quot;apple&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;pear&quot;</span><span class="tok-op">]</span></code></pre></div></div>
 
 <h2 id="json">json</h2>
 <p>Import with <code>use json</code>. The mapping is deliberate:
 <code>oui</code>/<code>nein</code> become <code>true</code>/<code>false</code>,
 <code>null</code> parses to <code>Unit</code>, and errors carry a position.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Function</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead><tbody><tr><td><code>json.parse(text)</code></td><td><code>String → Any</code></td><td>errors report a position</td></tr><tr><td><code>json.stringify(value)</code></td><td><code>Any → String</code></td><td>compact form</td></tr><tr><td><code>json.stringify(value, indent)</code></td><td><code>Any, Int → String</code></td><td>pretty-printed</td></tr></tbody></table></div>
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">json_demo.sc</span><button class="code__copy" type="button" data-copy="code-json_demo-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-json_demo-sc-1" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">json</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">json_demo.sc</span><button class="code__copy" type="button" data-copy="code-json_demo-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</div><pre id="code-json_demo-sc-1" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">json</span>
 
 <span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">let</span> settings<span class="tok-op">:</span> <span class="tok-type">Map</span> <span class="tok-op">=</span> <span class="tok-op">{</span><span class="tok-str">&quot;width&quot;</span><span class="tok-op">:</span> <span class="tok-num">80</span><span class="tok-op">,</span> <span class="tok-str">&quot;ratio&quot;</span><span class="tok-op">:</span> <span class="tok-num">1.5</span><span class="tok-op">,</span> <span class="tok-str">&quot;wrap&quot;</span><span class="tok-op">:</span> <span class="tok-kw">oui</span><span class="tok-op">,</span> <span class="tok-str">&quot;tags&quot;</span><span class="tok-op">:</span> <span class="tok-op">[</span><span class="tok-str">&quot;a&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;b&quot;</span><span class="tok-op">]</span><span class="tok-op">}</span>
@@ -222,8 +292,8 @@ checker enforces.</p>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">type_of</span><span class="tok-op">(</span>parsed<span class="tok-op">)</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span>parsed<span class="tok-op">[</span><span class="tok-str">&quot;width&quot;</span><span class="tok-op">]</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-mod">json</span><span class="tok-op">.</span><span class="tok-fn">stringify</span><span class="tok-op">(</span>parsed<span class="tok-op">,</span> <span class="tok-num">2</span><span class="tok-op">)</span><span class="tok-op">)</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-36" tabindex="0"><code><span class="tok-op">{</span><span class="tok-str">&quot;width&quot;</span><span class="tok-op">:</span><span class="tok-num">80</span><span class="tok-op">,</span><span class="tok-str">&quot;ratio&quot;</span><span class="tok-op">:</span><span class="tok-num">1.5</span><span class="tok-op">,</span><span class="tok-str">&quot;wrap&quot;</span><span class="tok-op">:</span>true<span class="tok-op">,</span><span class="tok-str">&quot;tags&quot;</span><span class="tok-op">:</span><span class="tok-op">[</span><span class="tok-str">&quot;a&quot;</span><span class="tok-op">,</span><span class="tok-str">&quot;b&quot;</span><span class="tok-op">]</span><span class="tok-op">}</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-44" tabindex="0"><code><span class="tok-op">{</span><span class="tok-str">&quot;width&quot;</span><span class="tok-op">:</span><span class="tok-num">80</span><span class="tok-op">,</span><span class="tok-str">&quot;ratio&quot;</span><span class="tok-op">:</span><span class="tok-num">1.5</span><span class="tok-op">,</span><span class="tok-str">&quot;wrap&quot;</span><span class="tok-op">:</span>true<span class="tok-op">,</span><span class="tok-str">&quot;tags&quot;</span><span class="tok-op">:</span><span class="tok-op">[</span><span class="tok-str">&quot;a&quot;</span><span class="tok-op">,</span><span class="tok-str">&quot;b&quot;</span><span class="tok-op">]</span><span class="tok-op">}</span>
 <span class="tok-type">Map</span>
 <span class="tok-num">80</span>
 <span class="tok-op">{</span>
@@ -234,44 +304,83 @@ checker enforces.</p>
     <span class="tok-str">&quot;a&quot;</span><span class="tok-op">,</span>
     <span class="tok-str">&quot;b&quot;</span>
   <span class="tok-op">]</span>
-<span class="tok-op">}</span></code></pre></div>
+<span class="tok-op">}</span></code></pre></div></div>
+
+<h2 id="colors">colors</h2>
+<p>Import with <code>use colors</code>. 29 functions, no dependencies: perceptual
+colour spaces (sRGB, linear sRGB, HSL, OKLab, OKLCH, Display P3), gamut mapping
+instead of clipping, palettes, themes, WCAG audits and CSS output.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Function</th><th scope="col">Returns</th><th scope="col">Notes</th></tr></thead><tbody><tr><td><code>colors.parse(text)</code></td><td><code>Map</code></td><td>accepts <code>#hex</code>, <code>rgb()</code>, <code>hsl()</code>, named colours</td></tr><tr><td><code>colors.hex(colour)</code></td><td><code>String</code></td><td>the 8-bit hex form</td></tr><tr><td><code>colors.oklch(l, c, h, a)</code></td><td><code>Map</code></td><td>perceptual, wide-gamut aware</td></tr><tr><td><code>colors.contrast(a, b)</code></td><td><code>Float</code></td><td>WCAG 2.1 ratio</td></tr><tr><td><code>colors.passes(a, b, level, large)</code></td><td><code>Map</code></td><td>a verdict, not a guess</td></tr><tr><td><code>colors.palette(base, steps)</code></td><td><code>Map</code></td><td>50–950 scale with perceptual lightness targets</td></tr><tr><td><code>colors.theme(base, dark)</code></td><td><code>Map</code></td><td>semantic tokens with a contrast-chosen <code>on_accent</code></td></tr><tr><td><code>colors.audit(theme)</code></td><td><code>Map</code></td><td>a verdict per token pair</td></tr><tr><td><code>colors.mix(a, b, t)</code></td><td><code>Map</code></td><td>perceptual mixing</td></tr><tr><td><code>colors.css(colour, format)</code></td><td><code>String</code></td><td>CSS output</td></tr></tbody></table></div>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">colors.sc</span><button class="code__copy" type="button" data-copy="code-colors-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11</div><pre id="code-colors-sc-2" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">colors</span>
+
+<span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> accent <span class="tok-op">=</span> <span class="tok-mod">colors</span><span class="tok-op">.</span><span class="tok-fn">parse</span><span class="tok-op">(</span><span class="tok-str">&quot;#8B9BFF&quot;</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-mod">colors</span><span class="tok-op">.</span><span class="tok-fn">hex</span><span class="tok-op">(</span>accent<span class="tok-op">)</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-mod">colors</span><span class="tok-op">.</span><span class="tok-fn">contrast</span><span class="tok-op">(</span><span class="tok-str">&quot;#8B9BFF&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;#0B1020&quot;</span><span class="tok-op">)</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-mod">colors</span><span class="tok-op">.</span><span class="tok-fn">passes</span><span class="tok-op">(</span><span class="tok-str">&quot;#8B9BFF&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;#0B1020&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;AA&quot;</span><span class="tok-op">,</span> <span class="tok-kw">oui</span><span class="tok-op">)</span><span class="tok-op">)</span>
+    <span class="tok-kw">let</span> scale <span class="tok-op">=</span> <span class="tok-mod">colors</span><span class="tok-op">.</span><span class="tok-fn">palette</span><span class="tok-op">(</span><span class="tok-str">&quot;#8B9BFF&quot;</span><span class="tok-op">,</span> <span class="tok-op">[</span><span class="tok-num">50</span><span class="tok-op">,</span> <span class="tok-num">500</span><span class="tok-op">,</span> <span class="tok-num">950</span><span class="tok-op">]</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span>scale<span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-mod">colors</span><span class="tok-op">.</span><span class="tok-fn">css</span><span class="tok-op">(</span>accent<span class="tok-op">,</span> <span class="tok-str">&quot;hex&quot;</span><span class="tok-op">)</span><span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-45" tabindex="0"><code><span class="tok-com">#8b9bff</span>
+<span class="tok-num">7.42</span>
+<span class="tok-op">{</span><span class="tok-str">&quot;ratio&quot;</span><span class="tok-op">:</span> <span class="tok-num">7.42</span><span class="tok-op">,</span> <span class="tok-str">&quot;required&quot;</span><span class="tok-op">:</span> <span class="tok-num">3.0</span><span class="tok-op">,</span> <span class="tok-str">&quot;passes&quot;</span><span class="tok-op">:</span> <span class="tok-kw">oui</span><span class="tok-op">,</span> <span class="tok-str">&quot;level&quot;</span><span class="tok-op">:</span> <span class="tok-str">&quot;AA&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;large&quot;</span><span class="tok-op">:</span> <span class="tok-kw">oui</span><span class="tok-op">}</span>
+<span class="tok-op">{</span><span class="tok-str">&quot;50&quot;</span><span class="tok-op">:</span> <span class="tok-op">{</span><span class="tok-str">&quot;r&quot;</span><span class="tok-op">:</span> <span class="tok-num">0.9604619325061122</span><span class="tok-op">,</span> <span class="tok-str">&quot;g&quot;</span><span class="tok-op">:</span> <span class="tok-num">0.9686339334549338</span><span class="tok-op">,</span> <span class="tok-str">&quot;b&quot;</span><span class="tok-op">:</span> <span class="tok-num">1.0</span><span class="tok-op">,</span> <span class="tok-str">&quot;a&quot;</span><span class="tok-op">:</span> <span class="tok-num">1.0</span><span class="tok-op">}</span><span class="tok-op">,</span> <span class="tok-str">&quot;500&quot;</span><span class="tok-op">:</span> <span class="tok-op">{</span><span class="tok-str">&quot;r&quot;</span><span class="tok-op">:</span> <span class="tok-num">0.44516579061087086</span><span class="tok-op">,</span> <span class="tok-str">&quot;g&quot;</span><span class="tok-op">:</span> <span class="tok-num">0.5002084259552051</span><span class="tok-op">,</span> <span class="tok-str">&quot;b&quot;</span><span class="tok-op">:</span> <span class="tok-num">0.8822999831715481</span><span class="tok-op">,</span> <span class="tok-str">&quot;a&quot;</span><span class="tok-op">:</span> <span class="tok-num">1.0</span><span class="tok-op">}</span><span class="tok-op">,</span> <span class="tok-str">&quot;950&quot;</span><span class="tok-op">:</span> <span class="tok-op">{</span><span class="tok-str">&quot;r&quot;</span><span class="tok-op">:</span> <span class="tok-num">0.10333615408918106</span><span class="tok-op">,</span> <span class="tok-str">&quot;g&quot;</span><span class="tok-op">:</span> <span class="tok-num">0.12102108573344897</span><span class="tok-op">,</span> <span class="tok-str">&quot;b&quot;</span><span class="tok-op">:</span> <span class="tok-num">0.2623174666489806</span><span class="tok-op">,</span> <span class="tok-str">&quot;a&quot;</span><span class="tok-op">:</span> <span class="tok-num">1.0</span><span class="tok-op">}</span><span class="tok-op">}</span>
+<span class="tok-com">#8b9bff</span></code></pre></div></div>
 
 <h2 id="fs">fs — behind capabilities</h2>
 <p>Import with <code>use fs</code>. Every function is behind a capability, and
 nothing is granted by default:</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Function</th><th scope="col">Capability required</th></tr></thead><tbody><tr><td><code>fs.read_text(path)</code></td><td><code>fs.read</code></td></tr><tr><td><code>fs.write_text(path, text)</code></td><td><code>fs.write</code></td></tr><tr><td><code>fs.list_dir(path)</code></td><td><code>fs.list</code></td></tr><tr><td><code>fs.exists(path)</code></td><td>none — metadata only</td></tr></tbody></table></div>
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">bash</span><button class="code__copy" type="button" data-copy="code-bash-14" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__label">Granting a capability</div><pre id="code-bash-14" tabindex="0"><code>$ silica run app<span class="tok-op">.</span>sc <span class="tok-op">-</span><span class="tok-op">-</span>allow<span class="tok-op">-</span><span class="tok-mod">fs</span><span class="tok-op">-</span>read <span class="tok-op">.</span><span class="tok-op">/</span>data <span class="tok-op">-</span><span class="tok-op">-</span>allow<span class="tok-op">-</span><span class="tok-mod">fs</span><span class="tok-op">-</span>write <span class="tok-op">.</span><span class="tok-op">/</span>out
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">bash</span><button class="code__copy" type="button" data-copy="code-bash-15" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__label">Granting a capability</div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5</div><pre id="code-bash-15" tabindex="0"><code>$ silica run app<span class="tok-op">.</span>sc <span class="tok-op">-</span><span class="tok-op">-</span>allow<span class="tok-op">-</span><span class="tok-mod">fs</span><span class="tok-op">-</span>read <span class="tok-op">.</span><span class="tok-op">/</span>data <span class="tok-op">-</span><span class="tok-op">-</span>allow<span class="tok-op">-</span><span class="tok-mod">fs</span><span class="tok-op">-</span>write <span class="tok-op">.</span><span class="tok-op">/</span>out
 
 <span class="tok-com"># without the grant:</span>
 <span class="tok-com"># capability error: &#x27;fs.read&#x27; is not granted</span>
-<span class="tok-com">#   hint: run with --allow-fs-read DIR</span></code></pre></div>
+<span class="tok-com">#   hint: run with --allow-fs-read DIR</span></code></pre></div></div>
 
 <h2 id="modules">Modules</h2>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Module</th><th scope="col">Import</th><th scope="col">Status</th></tr></thead><tbody><tr><td><code>core</code></td><td>always in scope</td><td>implemented</td></tr><tr><td><code>math</code></td><td><code>use math</code></td><td>implemented</td></tr><tr><td><code>string</code></td><td><code>use string</code></td><td>implemented</td></tr><tr><td><code>collections</code></td><td><code>use collections</code></td><td>implemented</td></tr><tr><td><code>json</code></td><td><code>use json</code></td><td>implemented</td></tr><tr><td><code>fs</code></td><td><code>use fs</code></td><td>implemented, capability-gated</td></tr><tr><td><code>ui</code>, <code>tui</code>, <code>gui</code>, <code>speech</code></td><td><code>use ui</code> …</td><td>implemented; UI namespaces are separate</td></tr><tr><td><code>path</code>, <code>time</code>, <code>random</code>, <code>regex</code>, <code>http</code>, <code>net</code>, <code>crypto</code></td><td>—</td><td>planned; importing is a compile error</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Module</th><th scope="col">Import</th><th scope="col">Status</th></tr></thead><tbody><tr><td><code>core</code></td><td>always in scope</td><td>implemented</td></tr><tr><td><code>math</code></td><td><code>use math</code></td><td>implemented</td></tr><tr><td><code>string</code></td><td><code>use string</code></td><td>implemented</td></tr><tr><td><code>collections</code></td><td><code>use collections</code></td><td>implemented</td></tr><tr><td><code>json</code></td><td><code>use json</code></td><td>implemented</td></tr><tr><td><code>colors</code></td><td><code>use colors</code></td><td>implemented (0.9.1) — 29 functions</td></tr><tr><td><code>fs</code></td><td><code>use fs</code></td><td>implemented, capability-gated</td></tr><tr><td><code>ui</code>, <code>tui</code>, <code>gui</code>, <code>speech</code></td><td><code>use ui</code> …</td><td>implemented; UI namespaces are separate</td></tr><tr><td><code>path</code>, <code>time</code>, <code>random</code>, <code>regex</code>, <code>http</code>, <code>net</code>, <code>crypto</code></td><td>—</td><td>planned; importing is a compile error</td></tr></tbody></table></div>
 
 <h2 id="planned">Importing something that does not exist</h2>
-<div class="callout"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>A planned module is refused at compile time with a message that names it — it never pretends to load. For example, <code>use net</code> reports that the module is planned and not implemented. The list of planned modules is fixed in the source, so the message cannot drift from reality.</p></div>
-<div class="pager"><a class="prev" href="strings.html"><span>Previous</span>Strings</a><a class="next" href="cli-reference.html"><span>Next</span>CLI Reference</a></div></article><nav class="toc" aria-label="On this page"><p class="toc__title">On this page</p><ul><li><a href="#core">core — always available</a></li><li><a href="#math">math</a></li><li><a href="#string">string</a></li><li><a href="#collections">collections</a></li><li><a href="#json">json</a></li><li><a href="#fs">fs — behind capabilities</a></li><li><a href="#modules">Modules</a></li><li><a href="#planned">Importing something that does not exist</a></li></ul></nav></div></div></main><footer class="site-footer">
+<div class="callout"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>A planned module is refused at compile time with a message that names it — it never pretends to load. For example, <code>use net</code> reports that the module is planned and not implemented. The list of planned modules is fixed in the source, so the message cannot drift from reality.</p></div>
+<div class="pager"><a class="prev" href="structs.html"><span>Previous</span>Structs</a><a class="next" href="cli-reference.html"><span>Next</span>CLI Reference</a></div></article><nav class="toc" aria-label="On this page"><p class="toc__title">On this page</p><ul><li><a href="#core">core — always available</a></li><li><a href="#math">math</a></li><li><a href="#string">string</a></li><li><a href="#collections">collections</a></li><li><a href="#json">json</a></li><li><a href="#colors">colors</a></li><li><a href="#fs">fs — behind capabilities</a></li><li><a href="#modules">Modules</a></li><li><a href="#planned">Importing something that does not exist</a></li></ul></nav></div></div></main><footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
-        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="120" height="48" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="120" height="48" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
-        own syntax, a checked compiler and a versioned bytecode format.
-        Created by Umaiz Sufiyan.</p>
+        own syntax, a checked compiler and a versioned bytecode format.</p>
+        <div class="footer-meta">
+          <span class="pill"><span class="pill__dot"></span><span data-version-label>v0.9.3</span></span>
+          <span class="pill">MIT licence</span>
+          <span class="pill">Python 3.9+</span>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Documentation</h4>
         <ul>
+        <li><a href="../docs/introduction.html">Introduction</a></li>
         <li><a href="../docs/getting-started.html">Getting Started</a></li>
         <li><a href="../docs/installation.html">Installation</a></li>
-        <li><a href="../docs/syntax.html">Syntax</a></li>
+        <li><a href="../docs/syntax.html">Language Syntax</a></li>
         <li><a href="../docs/variables-and-data-types.html">Variables and Data Types</a></li>
         <li><a href="../docs/functions.html">Functions</a></li>
         <li><a href="../docs/control-flow.html">Control Flow</a></li>
-        <li><a href="../docs/strings.html">Strings</a></li>
-        <li><a href="../docs/built-in-functions.html">Built-in Functions</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -281,7 +390,7 @@ nothing is granted by default:</p>
           <li><a href="https://github.com/sufiyan-sabeel/silica/releases" rel="noopener">Releases</a></li>
           <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li>
           <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/docs/LANGUAGE_SPEC.md" rel="noopener">Language spec</a></li>
-          <li><a href="https://github.com/sufiyan-sabeel/silica/issues" rel="noopener">Issues</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/issues" rel="noopener">Issues (4)</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -291,12 +400,13 @@ nothing is granted by default:</p>
           <li><a href="https://www.instagram.com/umaizsufiyan.78/" rel="noopener">Instagram</a></li>
           <li><a href="../index.html#creator">About the creator</a></li>
           <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/LICENSE" rel="noopener">MIT licence</a></li>
+          <li><a href="../docs/faq.html">FAQ</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p style="margin:0">© 2026 Umaiz Sufiyan. Silica is released under the MIT licence.</p>
-      <p style="margin:0">Designed and developed with curiosity by Umaiz Sufiyan.</p>
+      <p>© 2026 Umaiz Sufiyan. Silica is released under the MIT licence.</p>
+      <p>Created by Umaiz Sufiyan.</p>
     </div>
   </div>
 </footer>
