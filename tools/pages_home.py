@@ -27,10 +27,10 @@ def hero():
     return """
 <section class="hero">
   <div class="wrap">
-    <div>
+    <div class="hero-copy">
       <div class="hero-mark">
-        <img src="assets/img/mark-dark.png" alt="Silica logo" class="logo-dark" width="44" height="56">
-        <img src="assets/img/mark-light.png" alt="Silica logo" class="logo-light" width="44" height="56">
+        <img src="assets/img/mark-dark.png" alt="Silica logo" class="logo-dark" width="38" height="49">
+        <img src="assets/img/mark-light.png" alt="Silica logo" class="logo-light" width="38" height="49">
         <span>Silica %(version)s · open source · MIT</span>
       </div>
       <h1>Meet Silica.<br>A Language Built to <em>Create.</em></h1>
@@ -48,7 +48,7 @@ def hero():
         <span class="pill">no runtime dependencies</span>
       </div>
     </div>
-    <div>
+    <div class="hero-stack">
       %(code)s
       %(output)s
     </div>
@@ -177,7 +177,7 @@ def what():
 
 def story():
     return """
-<section id="story" style="border-top:1px solid var(--border-soft)">
+<section id="story">
   <div class="wrap">
     <div class="split">
       <div class="reveal">
@@ -205,8 +205,8 @@ def story():
         as an open-source project. This is a journey of building something from an
         idea.</p>
         <div class="signature">
-          <img src="assets/img/mark-dark.png" alt="" class="logo-dark" width="40" height="51">
-          <img src="assets/img/mark-light.png" alt="" class="logo-light" width="40" height="51">
+          <img src="assets/img/mark-dark.png" alt="" class="logo-dark" width="34" height="44">
+          <img src="assets/img/mark-light.png" alt="" class="logo-light" width="34" height="44">
           <p><strong>Umaiz Sufiyan</strong>Creator of Silica</p>
         </div>
       </div>
@@ -310,7 +310,7 @@ def features():
         )
 
     return """
-<section id="features" style="border-top:1px solid var(--border-soft);background:var(--bg-elev)">
+<section id="features" class="section--alt">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Language features</p>
@@ -374,7 +374,7 @@ def playground():
         )
 
     return """
-<section id="playground" style="border-top:1px solid var(--border-soft)">
+<section id="playground">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Code playground</p>
@@ -409,7 +409,7 @@ def playground():
 
 def install():
     return """
-<section id="install" style="border-top:1px solid var(--border-soft);background:var(--bg-elev)">
+<section id="install" class="section--alt">
   <div class="wrap">
     <div class="split">
       <div class="reveal">
@@ -491,7 +491,7 @@ def docs_section():
         )
 
     return """
-<section id="docs" style="border-top:1px solid var(--border-soft)">
+<section id="docs">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Documentation</p>
@@ -553,7 +553,7 @@ def roadmap():
         )
 
     return """
-<section id="roadmap" style="border-top:1px solid var(--border-soft);background:var(--bg-elev)">
+<section id="roadmap" class="section--alt">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Roadmap</p>
@@ -601,7 +601,7 @@ def roadmap():
 
 def creator():
     return """
-<section id="creator" style="border-top:1px solid var(--border-soft)">
+<section id="creator">
   <div class="wrap">
     <div class="creator reveal">
       <div class="creator-grid">
