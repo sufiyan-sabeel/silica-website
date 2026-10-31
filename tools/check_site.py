@@ -6,6 +6,7 @@ Fails loudly on a broken internal link, a missing image, a missing SEO tag, a
 stray template placeholder, or unbalanced markup.
 """
 
+import json
 import os
 import re
 import sys
@@ -156,6 +157,28 @@ def main():
             if not os.path.exists(resolved):
                 problems.append("%s: broken reference %s" % (rel, target))
 
+    # search index
+    index_path = os.path.join(SITE, "assets", "search-index.json")
+    try:
+        with open(index_path, encoding="utf-8") as handle:
+            index = json.load(handle)
+        if not isinstance(index, list) or not index:
+            problems.append("search-index.json is empty")
+        for entry in index[:200]:
+            for field in ("page", "title", "url", "text"):
+                if field not in entry:
+                    problems.append("search-index entry missing %s" % field)
+                    break
+            else:
+                continue
+            break
+        urls = {e["url"].split("#")[0] for e in index}
+        for url in urls:
+            if not os.path.exists(os.path.join(SITE, url)):
+                problems.append("search index points at missing %s" % url)
+    except Exception as exc:  # noqa: BLE001
+        problems.append("search-index.json: %s" % exc)
+
     # sitemap
     sitemap = os.path.join(SITE, "sitemap.xml")
     try:
@@ -170,7 +193,8 @@ def main():
                         % (len(urls), len(pages) - 1))
 
     for required in ("robots.txt", ".nojekyll", "assets/css/site.css",
-                     "assets/js/site.js", "assets/img/og-cover.jpg"):
+                     "assets/js/site.js", "assets/js/crystal.js",
+                     "assets/search-index.json", "assets/img/og-cover.png"):
         if not os.path.exists(os.path.join(SITE, required)):
             problems.append("missing %s" % required)
 
