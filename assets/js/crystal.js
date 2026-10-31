@@ -466,17 +466,18 @@
     });
   }
 
-  /* the theme switch changes the accent; repaint from the new tokens */
-  document.addEventListener("click", function (event) {
-    if (!event.target.closest("[data-theme-toggle]")) return;
-    window.setTimeout(function () {
-      var s = getComputedStyle(document.documentElement);
-      accent = s.getPropertyValue("--accent").trim() || accent;
-      violet = s.getPropertyValue("--violet").trim() || violet;
-      accentRgb = hexToRgb(accent);
-      violetRgb = hexToRgb(violet);
-      draw();
-    }, 30);
+  /* the palette or theme changed: repaint from the new tokens */
+  function readPalette() {
+    var computed = getComputedStyle(document.documentElement);
+    accent = computed.getPropertyValue("--accent").trim() || accent;
+    violet = computed.getPropertyValue("--violet").trim() || violet;
+    accentRgb = hexToRgb(accent);
+    violetRgb = hexToRgb(violet);
+    draw();
+  }
+
+  document.addEventListener("silica:palette", function () {
+    window.setTimeout(readPalette, 20);
   });
 
   sync();
