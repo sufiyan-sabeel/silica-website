@@ -12,6 +12,7 @@
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="article">
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="Examples — Silica documentation">
 <meta property="og:description" content="Runnable Silica programs from the repository, each verified against the v0.9.0 implementation.">
@@ -29,6 +30,8 @@
 <link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+<link rel="preload" as="image" href="../assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="../assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="../assets/css/site.css">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -102,7 +105,7 @@
     <nav class="nav" id="site-nav" aria-label="Primary">
       <a href="../index.html#features">Features</a>
       <a href="../index.html#playground">Playground</a>
-      <a href="../docs/getting-started.html">Docs</a>
+      <a href="../docs/getting-started.html" aria-current="page">Docs</a>
       <a href="../index.html#install">Install</a>
       <a href="../index.html#roadmap">Roadmap</a>
     </nav>
@@ -118,8 +121,9 @@
       </button>
     </div>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
-<main id="main"><div class="wrap"><div class="docs"><nav class="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html" aria-current="page">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Examples</span></nav><h1>Examples</h1>
+<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html" aria-current="page">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Examples</span></nav><h1>Examples</h1>
 <p>Every program on this page is a file from the repository, or an equivalent
 written for the documentation, and every one was executed against v0.9.0
 before publication. The output shown is the real output.</p>
@@ -304,14 +308,14 @@ s</code></pre></div>
 <h2 id="more">Examples that need more than a terminal</h2>
 <p>The repository ships more examples that need a capability, a display or
 stdin:</p>
-<table><thead><tr><th>File</th><th>Needs</th></tr></thead><tbody><tr><td><code>examples/calculator.sc</code></td><td>stdin</td></tr><tr><td><code>examples/json_demo.sc</code></td><td>nothing</td></tr><tr><td><code>examples/fs_demo.sc</code></td><td><code>--allow-fs-read</code> / <code>--allow-fs-write</code></td></tr><tr><td><code>examples/tui_demo.sc</code></td><td><code>--allow-tui</code> and a real terminal</td></tr><tr><td><code>examples/gui_demo.sc</code></td><td><code>--allow-gui</code> and a display</td></tr><tr><td><code>examples/ui_hello.sc</code></td><td>the web UI renderer</td></tr></tbody></table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">File</th><th scope="col">Needs</th></tr></thead><tbody><tr><td><code>examples/calculator.sc</code></td><td>stdin</td></tr><tr><td><code>examples/json_demo.sc</code></td><td>nothing</td></tr><tr><td><code>examples/fs_demo.sc</code></td><td><code>--allow-fs-read</code> / <code>--allow-fs-write</code></td></tr><tr><td><code>examples/tui_demo.sc</code></td><td><code>--allow-tui</code> and a real terminal</td></tr><tr><td><code>examples/gui_demo.sc</code></td><td><code>--allow-gui</code> and a display</td></tr><tr><td><code>examples/ui_hello.sc</code></td><td>the web UI renderer</td></tr></tbody></table></div>
 <div class="callout"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>Run any of them with <code>silica run examples/&lt;name&gt;.sc</code>. The full set, with what each one demonstrates, is in the <a href="https://github.com/sufiyan-sabeel/silica/tree/main/examples">repository's examples directory</a>.</p></div>
 <div class="pager"><a class="prev" href="cli-reference.html"><span>Previous</span>CLI Reference</a><a class="next" href="faq.html"><span>Next</span>FAQ</a></div></article></div></div></main><footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
-        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.
         Created by Umaiz Sufiyan.</p>
