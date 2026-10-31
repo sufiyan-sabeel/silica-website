@@ -38,6 +38,33 @@ VERSION = RELEASE.lstrip("v")
 BUILT = (STATUS.get("fetched_at") or "")[:10]
 
 SITE_NAME = "Silica"
+
+# --- asset versioning -------------------------------------------------------
+# Every asset URL carries a short hash of the files it depends on, so a visitor
+# who cached the previous build (including the corrupt logo that shipped once)
+# gets the current bytes without clearing anything.
+def _asset_version():
+    import hashlib
+    digest = hashlib.sha256()
+    for relative in ("assets/css/site.css", "assets/js/site.js",
+                     "assets/js/crystal.js", "assets/img/logo-dark.png",
+                     "assets/img/logo-light.png", "assets/img/mark-dark.png",
+                     "assets/img/mark-light.png"):
+        path = os.path.join(os.path.dirname(HERE), relative)
+        try:
+            with open(path, "rb") as handle:
+                digest.update(handle.read())
+        except OSError:
+            digest.update(relative.encode())
+    return digest.hexdigest()[:8]
+
+
+ASSET_V = _asset_version()
+
+
+def asset(root, relative):
+    """A versioned URL for a file under assets/."""
+    return "%sassets/%s?v=%s" % (root, relative, ASSET_V)
 BASE_URL = "https://sufiyan-sabeel.github.io/silica-website"
 GITHUB = "https://github.com/sufiyan-sabeel/silica"
 CREATOR_GITHUB = "https://github.com/sufiyan-sabeel"
@@ -336,16 +363,16 @@ def head(page):
 <meta name="twitter:description" content="%(description)s">
 <meta name="twitter:image" content="%(og_image)s">
 
-<link rel="icon" href="%(root)sassets/img/favicon.ico" sizes="32x32">
-<link rel="icon" href="%(root)sassets/img/icon-192.png" type="image/png" sizes="192x192">
-<link rel="apple-touch-icon" href="%(root)sassets/img/icon-192.png">
+<link rel="icon" href="%(favicon)s" sizes="32x32">
+<link rel="icon" href="%(icon192)s" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="%(icon192)s">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="preload" as="image" href="%(root)sassets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
-<link rel="preload" as="image" href="%(root)sassets/img/mark-light.png" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="%(root)sassets/css/site.css">
+<link rel="preload" as="image" href="%(markdark)s" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="%(marklight)s" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="%(stylesheet)s">
 %(json_ld)s</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -358,6 +385,11 @@ def head(page):
         "og_image": og_image,
         "robots": page.get("robots", "index, follow, max-image-preview:large"),
         "json_ld": json_ld,
+        "stylesheet": asset(root, "css/site.css"),
+        "favicon": asset(root, "img/favicon.ico"),
+        "icon192": asset(root, "img/icon-192.png"),
+        "markdark": asset(root, "img/mark-dark.png"),
+        "marklight": asset(root, "img/mark-light.png"),
     }
 
 
@@ -386,8 +418,8 @@ def header(root, current=None):
     return """<header class="site-header">
   <div class="wrap">
     <a class="brand" href="%(root)sindex.html" aria-label="Silica — home">
-      <img src="%(root)sassets/img/mark-dark.png" alt="" class="logo-dark" width="22" height="28">
-      <img src="%(root)sassets/img/mark-light.png" alt="" class="logo-light" width="22" height="28">
+      <img src="%(markdark)s" alt="" class="logo-dark" width="22" height="28">
+      <img src="%(marklight)s" alt="" class="logo-light" width="22" height="28">
       <span>Silica</span>
     </a>
     <nav class="nav" id="site-nav" aria-label="Primary">
@@ -442,6 +474,8 @@ def header(root, current=None):
         "sun": icon("sun"),
         "menu": icon("menu"),
         "palette": icon("palette"),
+        "markdark": asset(root, "img/mark-dark.png"),
+        "marklight": asset(root, "img/mark-light.png"),
         "swatches": "".join(
             '<button class="swatch" type="button" data-accent-choice="%s" '
             'aria-pressed="%s"><span style="--sw: %s"></span>%s</button>'
@@ -470,8 +504,8 @@ def footer(root):
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="%(root)sassets/img/logo-dark.png" alt="Silica" class="logo-dark" width="120" height="48" loading="lazy" decoding="async">
-        <img src="%(root)sassets/img/logo-light.png" alt="Silica" class="logo-light" width="120" height="48" loading="lazy" decoding="async">
+        <img src="%(logodark)s" alt="Silica" class="logo-dark" width="120" height="48" loading="lazy" decoding="async">
+        <img src="%(logolight)s" alt="Silica" class="logo-light" width="120" height="48" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.</p>
         <div class="footer-meta">
@@ -513,7 +547,7 @@ def footer(root):
     </div>
   </div>
 </footer>
-<script src="%(root)sassets/js/site.js" defer></script>
+<script src="%(scripts)s" defer></script>
 %(extra_script)s</body>
 </html>
 """ % {
@@ -525,5 +559,8 @@ def footer(root):
         "release": RELEASE,
         "license": LICENSE,
         "issues": issues,
+        "logodark": asset(root, "img/logo-dark.png"),
+        "logolight": asset(root, "img/logo-light.png"),
+        "scripts": asset(root, "js/site.js"),
         "extra_script": "",
     }
