@@ -4,32 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Variables and Data Types — Silica documentation</title>
-<meta name="description" content="let and const, type annotations, inference, and the eight types Silica checks: Int, Float, Bool, String, Unit, List, Map, Any.">
+<meta name="description" content="let and const, type annotations, inference, and the types Silica checks.">
 <link rel="canonical" href="https://sufiyan-sabeel.github.io/silica-website/docs/variables-and-data-types.html">
 <meta name="author" content="Umaiz Sufiyan">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0b0d10">
+<meta name="theme-color" content="#0b1020">
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="Silica">
 <meta property="og:locale" content="en_IN">
-<meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="Variables and Data Types — Silica documentation">
-<meta property="og:description" content="let and const, type annotations, inference, and the eight types Silica checks: Int, Float, Bool, String, Unit, List, Map, Any.">
+<meta property="og:description" content="let and const, type annotations, inference, and the types Silica checks.">
 <meta property="og:url" content="https://sufiyan-sabeel.github.io/silica-website/docs/variables-and-data-types.html">
-<meta property="og:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.jpg">
+<meta property="og:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Silica — a language built to create">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Variables and Data Types — Silica documentation">
-<meta name="twitter:description" content="let and const, type annotations, inference, and the eight types Silica checks: Int, Float, Bool, String, Unit, List, Map, Any.">
-<meta name="twitter:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.jpg">
+<meta name="twitter:description" content="let and const, type annotations, inference, and the types Silica checks.">
+<meta name="twitter:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.png">
 
 <link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="preload" as="image" href="../assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
 <link rel="preload" as="image" href="../assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="../assets/css/site.css">
@@ -39,7 +43,7 @@
     {
       "@type": "TechArticle",
       "headline": "Variables and Data Types",
-      "description": "let and const, type annotations, inference, and the eight types Silica checks: Int, Float, Bool, String, Unit, List, Map, Any.",
+      "description": "let and const, type annotations, inference, and the types Silica checks.",
       "url": "https://sufiyan-sabeel.github.io/silica-website/docs/variables-and-data-types.html",
       "inLanguage": "en",
       "author": {
@@ -69,7 +73,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Documentation",
-          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/getting-started.html"
+          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/introduction.html"
         },
         {
           "@type": "ListItem",
@@ -97,38 +101,74 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="../index.html" aria-label="Silica home">
-      <img src="../assets/img/mark-dark.png" alt="" class="logo-dark" width="24" height="31">
-      <img src="../assets/img/mark-light.png" alt="" class="logo-light" width="24" height="31">
+    <a class="brand" href="../index.html" aria-label="Silica — home">
+      <img src="../assets/img/mark-dark.png" alt="" class="logo-dark" width="22" height="28">
+      <img src="../assets/img/mark-light.png" alt="" class="logo-light" width="22" height="28">
       <span>Silica</span>
     </a>
     <nav class="nav" id="site-nav" aria-label="Primary">
+      <a href="../index.html#overview">Overview</a>
       <a href="../index.html#features">Features</a>
+      <a href="../docs/introduction.html" aria-current="page">Documentation</a>
       <a href="../index.html#playground">Playground</a>
-      <a href="../docs/getting-started.html" aria-current="page">Docs</a>
-      <a href="../index.html#install">Install</a>
       <a href="../index.html#roadmap">Roadmap</a>
+      <a href="../index.html#creator">About</a>
+      <div class="nav-drawer-cta">
+        <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> GitHub</a>
+        <a class="btn btn--primary btn--sm" href="../docs/getting-started.html">Get Started</a>
+      </div>
     </nav>
     <div class="nav-actions">
-      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <button class="search-open" type="button" data-search-open aria-label="Search the documentation">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span><kbd>/</kbd>
       </button>
-      <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span>GitHub</span>
-      </a>
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+      <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span>GitHub</span></a>
+      <a class="btn btn--primary btn--sm" href="../docs/getting-started.html">Get Started</a>
       <button class="icon-btn nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
       </button>
     </div>
   </div>
   <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
-<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html" aria-current="page">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Variables and Data Types</span></nav><h1>Variables and Data Types</h1>
+<div class="search-dialog" id="search-dialog" data-index="../assets/search-index.json" hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the documentation">
+    <div class="search-field">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" placeholder="Search the documentation…" aria-label="Search the documentation" autocomplete="off" spellcheck="false">
+      <button class="search-close" type="button" data-search-close>esc</button>
+    </div>
+    <p class="search-empty" role="status">Type to search the documentation.</p>
+    <ul class="search-results"></ul>
+    <div class="search-hint"><span>↑ ↓ to move · Enter to open</span><span>Esc to close</span></div>
+  </div>
+</div>
+<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Language Syntax</a></li><li><a href="variables-and-data-types.html" aria-current="page">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li><li><a href="structs.html">Structs</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="introduction.html">Documentation</a><span aria-hidden="true">/</span><span>Variables and Data Types</span></nav><h1>Variables and Data Types</h1>
 <p>A binding is introduced with <code>let</code> (mutable) or <code>const</code>
 (immutable). The type annotation is optional: when it is omitted, the checker
 infers the type from the initialiser.</p>
 
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">variables.sc</span><button class="code__copy" type="button" data-copy="code-variables-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-variables-sc-2" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">noop</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">variables.sc</span><button class="code__copy" type="button" data-copy="code-variables-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18</div><pre id="code-variables-sc-2" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">noop</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
 <span class="tok-op">}</span>
 
 <span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
@@ -145,28 +185,45 @@ infers the type from the initialiser.</p>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">type_of</span><span class="tok-op">(</span>ready<span class="tok-op">)</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">type_of</span><span class="tok-op">(</span>nothing<span class="tok-op">)</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span>version<span class="tok-op">)</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-11" tabindex="0"><code><span class="tok-type">Int</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-16" tabindex="0"><code><span class="tok-type">Int</span>
 <span class="tok-type">Float</span>
 <span class="tok-type">String</span>
 <span class="tok-type">Bool</span>
 <span class="tok-type">Unit</span>
-<span class="tok-num">0.9.0</span></code></pre></div>
+<span class="tok-num">0.9.0</span></code></pre></div></div>
 
 <h2 id="mutability">let, const and assignment</h2>
 <p>Assigning to a <code>const</code> is a compile-time error, not a runtime
 surprise:</p>
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">const.sc</span><button class="code__copy" type="button" data-copy="code-const-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-const-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">const.sc</span><button class="code__copy" type="button" data-copy="code-const-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4</div><pre id="code-const-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">const</span> x<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> <span class="tok-num">1</span>
     x <span class="tok-op">=</span> <span class="tok-num">2</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-12" tabindex="0"><code><span class="tok-op">/</span>scratch<span class="tok-op">/</span>work<span class="tok-op">/</span>tools<span class="tok-op">/</span><span class="tok-op">.</span>snippet_work<span class="tok-op">/</span><span class="tok-kw">const</span><span class="tok-op">.</span>sc<span class="tok-op">:</span><span class="tok-num">3</span><span class="tok-op">:</span><span class="tok-num">5</span><span class="tok-op">:</span> type error<span class="tok-op">:</span> cannot assign to <span class="tok-str">&#x27;x&#x27;</span><span class="tok-op">:</span> it is a constant
-  hint<span class="tok-op">:</span> declare it with <span class="tok-str">&#x27;let&#x27;</span> instead of <span class="tok-str">&#x27;const&#x27;</span></code></pre></div>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-17" tabindex="0"><code><span class="tok-op">/</span>scratch<span class="tok-op">/</span>work<span class="tok-op">/</span>websrc<span class="tok-op">/</span>tools<span class="tok-op">/</span><span class="tok-op">.</span>snippet_work<span class="tok-op">/</span><span class="tok-kw">const</span><span class="tok-op">.</span>sc<span class="tok-op">:</span><span class="tok-num">3</span><span class="tok-op">:</span><span class="tok-num">5</span><span class="tok-op">:</span> type error<span class="tok-op">:</span> cannot assign to <span class="tok-str">&#x27;x&#x27;</span><span class="tok-op">:</span> it is a constant
+  hint<span class="tok-op">:</span> declare it with <span class="tok-str">&#x27;let&#x27;</span> instead of <span class="tok-str">&#x27;const&#x27;</span></code></pre></div></div>
 
 <h2 id="types">The eight types</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Type</th><th scope="col">What it is</th><th scope="col">Example</th></tr></thead><tbody><tr><td><code>Int</code></td><td>signed 64-bit integer, wraps on overflow</td><td><code>42</code></td></tr><tr><td><code>Float</code></td><td>IEEE-754 double precision</td><td><code>3.14159</code></td></tr><tr><td><code>Bool</code></td><td><code>oui</code> or <code>nein</code></td><td><code>oui</code></td></tr><tr><td><code>String</code></td><td>UTF-8 text, four delimiter forms</td><td><code>"Silica"</code></td></tr><tr><td><code>Unit</code></td><td>the absence of a value</td><td>the result of <code>sprint</code></td></tr><tr><td><code>List</code></td><td>ordered, indexed from 0, mutable</td><td><code>[1, 2, 3]</code></td></tr><tr><td><code>Map</code></td><td>string-keyed, mutable</td><td><code>{"a": 1}</code></td></tr><tr><td><code>Any</code></td><td>accepted by the checker without inspection</td><td>element type of List and Map</td></tr></tbody></table></div>
 
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">types.sc</span><button class="code__copy" type="button" data-copy="code-types-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-types-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">types.sc</span><button class="code__copy" type="button" data-copy="code-types-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15</div><pre id="code-types-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">let</span> total<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> <span class="tok-num">42</span>
     <span class="tok-kw">let</span> pi<span class="tok-op">:</span> <span class="tok-type">Float</span> <span class="tok-op">=</span> <span class="tok-num">3.14159</span>
     <span class="tok-kw">let</span> name<span class="tok-op">:</span> <span class="tok-type">String</span> <span class="tok-op">=</span> <span class="tok-str">&quot;Silica&quot;</span>
@@ -180,13 +237,13 @@ surprise:</p>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-kw">non</span> ok<span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">len</span><span class="tok-op">(</span>items<span class="tok-op">)</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span>record<span class="tok-op">[</span><span class="tok-str">&quot;version&quot;</span><span class="tok-op">]</span><span class="tok-op">)</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-13" tabindex="0"><code><span class="tok-num">43</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-18" tabindex="0"><code><span class="tok-num">43</span>
 <span class="tok-num">6.28318</span>
 S
 <span class="tok-kw">nein</span>
 <span class="tok-num">3</span>
-<span class="tok-num">0.9.0</span></code></pre></div>
+<span class="tok-num">0.9.0</span></code></pre></div></div>
 
 <h2 id="numbers">Numbers</h2>
 <p><code>Int</code> is a signed 64-bit integer that wraps on overflow.
@@ -196,24 +253,49 @@ type error — convert explicitly with <code>float(x)</code> or <code>int(x)</co
 <p>Integer division truncates toward zero, and <code>%</code> keeps the sign of
 the dividend. Division or modulo by zero is a runtime error for both
 <code>Int</code> and <code>Float</code>:</p>
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">zero.sc</span><button class="code__copy" type="button" data-copy="code-zero-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-zero-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">zero.sc</span><button class="code__copy" type="button" data-copy="code-zero-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5</div><pre id="code-zero-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">let</span> a<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> <span class="tok-num">1</span>
     <span class="tok-kw">let</span> b<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> <span class="tok-num">0</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span>a <span class="tok-op">/</span> b<span class="tok-op">)</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-14" tabindex="0"><code><span class="tok-op">/</span>scratch<span class="tok-op">/</span>work<span class="tok-op">/</span>tools<span class="tok-op">/</span><span class="tok-op">.</span>snippet_work<span class="tok-op">/</span>zero<span class="tok-op">.</span>sc<span class="tok-op">:</span><span class="tok-num">4</span><span class="tok-op">:</span> runtime error<span class="tok-op">:</span> division by zero
-  hint<span class="tok-op">:</span> guard the divisor with <span class="tok-str">&#x27;si&#x27;</span> before dividing</code></pre></div>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-19" tabindex="0"><code><span class="tok-op">/</span>scratch<span class="tok-op">/</span>work<span class="tok-op">/</span>websrc<span class="tok-op">/</span>tools<span class="tok-op">/</span><span class="tok-op">.</span>snippet_work<span class="tok-op">/</span>zero<span class="tok-op">.</span>sc<span class="tok-op">:</span><span class="tok-num">4</span><span class="tok-op">:</span> runtime error<span class="tok-op">:</span> division by zero
+  hint<span class="tok-op">:</span> guard the divisor with <span class="tok-str">&#x27;si&#x27;</span> before dividing</code></pre></div></div>
 
 <h2 id="containers">Lists and maps</h2>
+<p>Struct names are types too: a field, parameter, return value or annotation may
+use any struct declared in the program. See <a href="structs.html">Structs</a>.</p>
+
 <p><code>List</code> and <code>Map</code> are containers whose element type is
-<code>Any</code> in v0.9.0 — there are no generics yet, so an element is
+<code>Any</code> in v0.9.3 — there are no generics yet, so an element is
 accepted whatever it is and checked at runtime. This is a documented limitation,
 not an oversight.</p>
 
 <p><code>==</code> compares <code>List</code> and <code>Map</code> structurally, by
 value, and scalars by value. Negative indices and missing map keys are runtime
 errors rather than silent <code>Unit</code> values.</p>
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">collections.sc</span><button class="code__copy" type="button" data-copy="code-collections-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-collections-sc-1" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">collections</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">collections.sc</span><button class="code__copy" type="button" data-copy="code-collections-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</div><pre id="code-collections-sc-1" tabindex="0"><code><span class="tok-kw">use</span> <span class="tok-mod">collections</span>
 
 <span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">let</span> nums<span class="tok-op">:</span> <span class="tok-type">List</span> <span class="tok-op">=</span> <span class="tok-op">[</span><span class="tok-num">5</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">,</span> <span class="tok-num">9</span><span class="tok-op">,</span> <span class="tok-num">1</span><span class="tok-op">]</span>
@@ -231,51 +313,60 @@ errors rather than silent <code>Unit</code> values.</p>
     <span class="tok-fn">push</span><span class="tok-op">(</span>bag<span class="tok-op">,</span> <span class="tok-str">&quot;apple&quot;</span><span class="tok-op">)</span>
     <span class="tok-fn">push</span><span class="tok-op">(</span>bag<span class="tok-op">,</span> <span class="tok-str">&quot;pear&quot;</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span>bag<span class="tok-op">)</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-15" tabindex="0"><code><span class="tok-op">[</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">,</span> <span class="tok-num">5</span><span class="tok-op">,</span> <span class="tok-num">9</span><span class="tok-op">]</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-20" tabindex="0"><code><span class="tok-op">[</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">,</span> <span class="tok-num">5</span><span class="tok-op">,</span> <span class="tok-num">9</span><span class="tok-op">]</span>
 <span class="tok-op">[</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">9</span><span class="tok-op">,</span> <span class="tok-num">3</span><span class="tok-op">,</span> <span class="tok-num">5</span><span class="tok-op">]</span>
 <span class="tok-num">18</span>
 <span class="tok-num">2</span>
 <span class="tok-num">31</span>
 <span class="tok-kw">oui</span>
 <span class="tok-op">[</span><span class="tok-str">&quot;anita&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;rahul&quot;</span><span class="tok-op">]</span>
-<span class="tok-op">[</span><span class="tok-str">&quot;apple&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;pear&quot;</span><span class="tok-op">]</span></code></pre></div>
+<span class="tok-op">[</span><span class="tok-str">&quot;apple&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;pear&quot;</span><span class="tok-op">]</span></code></pre></div></div>
 
 <h2 id="any">Why Any appears</h2>
-<div class="callout callout--warn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><p><strong>No generics in 0.9.0.</strong> <code>List</code> and <code>Map</code> elements check as <code>Any</code>, which is compatible with every type. The implementation still validates at runtime and raises a located error on a mismatch, so a wrong element fails loudly — just later than a static check would.</p></div>
+<div class="callout callout--warn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><p><strong>No generics in 0.9.3.</strong> <code>List</code> and <code>Map</code> elements check as <code>Any</code>, which is compatible with every type. The implementation still validates at runtime and raises a located error on a mismatch, so a wrong element fails loudly — just later than a static check would.</p></div>
 
 <h2 id="unit">Unit</h2>
 <p>There is no <code>null</code>. A function that returns nothing returns
 <code>Unit</code>, and <code>sprint</code> renders it as <code>unit</code>.</p>
-<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">unit.sc</span><button class="code__copy" type="button" data-copy="code-unit-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-unit-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">noop</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">unit.sc</span><button class="code__copy" type="button" data-copy="code-unit-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7</div><pre id="code-unit-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">noop</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
 <span class="tok-op">}</span>
 
 <span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">let</span> nothing<span class="tok-op">:</span> <span class="tok-type">Unit</span> <span class="tok-op">=</span> <span class="tok-fn">noop</span><span class="tok-op">(</span><span class="tok-op">)</span>
     <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">type_of</span><span class="tok-op">(</span>nothing<span class="tok-op">)</span><span class="tok-op">)</span>
-<span class="tok-op">}</span></code></pre></div>
-<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-16" tabindex="0"><code><span class="tok-type">Unit</span></code></pre></div>
-<div class="pager"><a class="prev" href="syntax.html"><span>Previous</span>Syntax</a><a class="next" href="functions.html"><span>Next</span>Functions</a></div></article><nav class="toc" aria-label="On this page"><p class="toc__title">On this page</p><ul><li><a href="#mutability">let, const and assignment</a></li><li><a href="#types">The eight types</a></li><li><a href="#numbers">Numbers</a></li><li><a href="#containers">Lists and maps</a></li><li><a href="#any">Why Any appears</a></li><li><a href="#unit">Unit</a></li></ul></nav></div></div></main><footer class="site-footer">
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-21" tabindex="0"><code><span class="tok-type">Unit</span></code></pre></div></div>
+<div class="pager"><a class="prev" href="syntax.html"><span>Previous</span>Language Syntax</a><a class="next" href="functions.html"><span>Next</span>Functions</a></div></article><nav class="toc" aria-label="On this page"><p class="toc__title">On this page</p><ul><li><a href="#mutability">let, const and assignment</a></li><li><a href="#types">The eight types</a></li><li><a href="#numbers">Numbers</a></li><li><a href="#containers">Lists and maps</a></li><li><a href="#any">Why Any appears</a></li><li><a href="#unit">Unit</a></li></ul></nav></div></div></main><footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
-        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="120" height="48" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="120" height="48" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
-        own syntax, a checked compiler and a versioned bytecode format.
-        Created by Umaiz Sufiyan.</p>
+        own syntax, a checked compiler and a versioned bytecode format.</p>
+        <div class="footer-meta">
+          <span class="pill"><span class="pill__dot"></span><span data-version-label>v0.9.3</span></span>
+          <span class="pill">MIT licence</span>
+          <span class="pill">Python 3.9+</span>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Documentation</h4>
         <ul>
+        <li><a href="../docs/introduction.html">Introduction</a></li>
         <li><a href="../docs/getting-started.html">Getting Started</a></li>
         <li><a href="../docs/installation.html">Installation</a></li>
-        <li><a href="../docs/syntax.html">Syntax</a></li>
+        <li><a href="../docs/syntax.html">Language Syntax</a></li>
         <li><a href="../docs/variables-and-data-types.html">Variables and Data Types</a></li>
         <li><a href="../docs/functions.html">Functions</a></li>
         <li><a href="../docs/control-flow.html">Control Flow</a></li>
-        <li><a href="../docs/strings.html">Strings</a></li>
-        <li><a href="../docs/built-in-functions.html">Built-in Functions</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -285,7 +376,7 @@ errors rather than silent <code>Unit</code> values.</p>
           <li><a href="https://github.com/sufiyan-sabeel/silica/releases" rel="noopener">Releases</a></li>
           <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li>
           <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/docs/LANGUAGE_SPEC.md" rel="noopener">Language spec</a></li>
-          <li><a href="https://github.com/sufiyan-sabeel/silica/issues" rel="noopener">Issues</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/issues" rel="noopener">Issues (4)</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -295,12 +386,13 @@ errors rather than silent <code>Unit</code> values.</p>
           <li><a href="https://www.instagram.com/umaizsufiyan.78/" rel="noopener">Instagram</a></li>
           <li><a href="../index.html#creator">About the creator</a></li>
           <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/LICENSE" rel="noopener">MIT licence</a></li>
+          <li><a href="../docs/faq.html">FAQ</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p style="margin:0">© 2026 Umaiz Sufiyan. Silica is released under the MIT licence.</p>
-      <p style="margin:0">Designed and developed with curiosity by Umaiz Sufiyan.</p>
+      <p>© 2026 Umaiz Sufiyan. Silica is released under the MIT licence.</p>
+      <p>Created by Umaiz Sufiyan.</p>
     </div>
   </div>
 </footer>
