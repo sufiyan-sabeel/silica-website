@@ -308,7 +308,7 @@ def head(page):
     json_ld = page.get("json_ld", "")
 
     return """<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-accent="indigo">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -404,6 +404,26 @@ def header(root, current=None):
       <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">
         %(sun)s
       </button>
+      <div class="customizer" data-customizer>
+        <button class="icon-btn" type="button" data-customizer-toggle aria-expanded="false" aria-controls="customizer-panel" aria-label="Customise appearance">
+          %(palette)s
+        </button>
+        <div class="customizer__panel" id="customizer-panel" hidden>
+          <div class="customizer__group">
+            <p class="customizer__title">Accent</p>
+            <div class="swatches" role="group" aria-label="Accent colour">
+              %(swatches)s
+            </div>
+          </div>
+          <div class="customizer__group">
+            <p class="customizer__title">Theme</p>
+            <div class="segmented" role="group" aria-label="Theme">
+              <button type="button" data-theme-choice="dark" aria-pressed="true">Dark</button>
+              <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <a class="btn btn--ghost btn--sm" href="%(github)s" rel="noopener">%(github_icon)s<span>GitHub</span></a>
       <a class="btn btn--primary btn--sm" href="%(root)sdocs/getting-started.html">Get Started</a>
       <button class="icon-btn nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
@@ -421,6 +441,19 @@ def header(root, current=None):
         "search": icon("search"),
         "sun": icon("sun"),
         "menu": icon("menu"),
+        "palette": icon("palette"),
+        "swatches": "".join(
+            '<button class="swatch" type="button" data-accent-choice="%s" '
+            'aria-pressed="%s"><span style="--sw: %s"></span>%s</button>'
+            % (slug, "true" if slug == "indigo" else "false", colour, label)
+            for slug, label, colour in (
+                ("indigo", "Indigo", "#8b9bff"),
+                ("teal", "Teal", "#5fd3c0"),
+                ("violet", "Violet", "#b79cff"),
+                ("amber", "Amber", "#e8b765"),
+                ("rose", "Rose", "#f08c9a"),
+            )
+        ),
     }
 
 
