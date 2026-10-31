@@ -12,6 +12,7 @@
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="article">
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="Installation — Silica documentation">
 <meta property="og:description" content="Every supported way to install Silica 0.9.0 — the installer, Termux, pip, and running from a checkout — with troubleshooting.">
@@ -29,6 +30,8 @@
 <link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+<link rel="preload" as="image" href="../assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="../assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="../assets/css/site.css">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -102,7 +105,7 @@
     <nav class="nav" id="site-nav" aria-label="Primary">
       <a href="../index.html#features">Features</a>
       <a href="../index.html#playground">Playground</a>
-      <a href="../docs/getting-started.html">Docs</a>
+      <a href="../docs/getting-started.html" aria-current="page">Docs</a>
       <a href="../index.html#install">Install</a>
       <a href="../index.html#roadmap">Roadmap</a>
     </nav>
@@ -118,14 +121,15 @@
       </button>
     </div>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
-<main id="main"><div class="wrap"><div class="docs"><nav class="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html" aria-current="page">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Installation</span></nav><h1>Installation</h1>
+<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html" aria-current="page">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Installation</span></nav><h1>Installation</h1>
 <p>There are four ways to get Silica, in order of how much you should trust them.
 All of them install the same thing: a Python package named
 <code>silica-lang</code>, importable as <code>silica</code>, with one console
 script.</p>
 
-<table><thead><tr><th>Method</th><th>Best for</th><th>Needs</th></tr></thead><tbody><tr><td>Installer script</td><td>Linux and Termux users who want the release build</td><td><code>curl</code>, Python 3.9+</td></tr><tr><td>Termux native</td><td>Android through Termux</td><td><code>pkg install python</code></td></tr><tr><td>From source</td><td>Reading the code you run</td><td><code>git</code>, Python 3.9+</td></tr><tr><td>System-wide</td><td>Every user on one machine</td><td>root</td></tr></tbody></table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Method</th><th scope="col">Best for</th><th scope="col">Needs</th></tr></thead><tbody><tr><td>Installer script</td><td>Linux and Termux users who want the release build</td><td><code>curl</code>, Python 3.9+</td></tr><tr><td>Termux native</td><td>Android through Termux</td><td><code>pkg install python</code></td></tr><tr><td>From source</td><td>Reading the code you run</td><td><code>git</code>, Python 3.9+</td></tr><tr><td>System-wide</td><td>Every user on one machine</td><td>root</td></tr></tbody></table></div>
 
 <h2 id="installer">1. The installer</h2>
 <p>The installer is the supported path on Linux and Termux. It detects the
@@ -199,18 +203,18 @@ silica examples<span class="tok-op">/</span>hello<span class="tok-op">.</span>sc
 silica                  <span class="tok-com"># the interpreter; Ctrl+D to leave</span></code></pre></div>
 
 <h2 id="platforms">Platforms</h2>
-<table><thead><tr><th>Platform</th><th>Status</th></tr></thead><tbody><tr><td>Debian / Ubuntu (x86_64, aarch64)</td><td>Tested in CI and by hand</td></tr><tr><td>Other Linux with Python 3.9+</td><td>Expected to work — the installer checks only <code>uname</code> and Python</td></tr><tr><td>Termux (Android, aarch64)</td><td>Termux code path tested; <strong>not run on a device</strong></td></tr><tr><td>macOS</td><td><code>install.sh</code> exits early; <code>pip install .</code> should work</td></tr><tr><td>Windows</td><td>No installer and no testing</td></tr></tbody></table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Platform</th><th scope="col">Status</th></tr></thead><tbody><tr><td>Debian / Ubuntu (x86_64, aarch64)</td><td>Tested in CI and by hand</td></tr><tr><td>Other Linux with Python 3.9+</td><td>Expected to work — the installer checks only <code>uname</code> and Python</td></tr><tr><td>Termux (Android, aarch64)</td><td>Termux code path tested; <strong>not run on a device</strong></td></tr><tr><td>macOS</td><td><code>install.sh</code> exits early; <code>pip install .</code> should work</td></tr><tr><td>Windows</td><td>No installer and no testing</td></tr></tbody></table></div>
 
 <h2 id="troubleshooting">Troubleshooting</h2>
-<table><thead><tr><th>Symptom</th><th>Cause and fix</th></tr></thead><tbody><tr><td><code>silica: command not found</code></td><td>The launcher directory is not on <code>PATH</code>. Add <code>export PATH="$HOME/.local/bin:$PATH"</code> to your shell profile.</td></tr><tr><td><code>error: Python 3.9+ not found</code></td><td>Install Python, and on Debian/Ubuntu also <code>python3-venv</code>: <code>sudo apt install python3 python3-venv</code>.</td></tr><tr><td><code>error: the Python venv module is missing</code></td><td><code>sudo apt install python3-venv</code> on Debian/Ubuntu, <code>pkg install python</code> on Termux.</td></tr><tr><td><code>error: checksum mismatch</code></td><td>The download was corrupted or altered. Re-run; if it persists, do not install and verify the release yourself.</td></tr><tr><td><code>silica ide</code> says <code>No module named silica</code></td><td>You are running from a checkout without <code>PYTHONPATH</code>. Use <code>python3 -m silica ide</code>.</td></tr><tr><td>The REPL prints <code>&gt; </code> instead of <code>¢</code></td><td>Your terminal is not UTF-8. Set <code>LANG=C.UTF-8</code>.</td></tr></tbody></table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Symptom</th><th scope="col">Cause and fix</th></tr></thead><tbody><tr><td><code>silica: command not found</code></td><td>The launcher directory is not on <code>PATH</code>. Add <code>export PATH="$HOME/.local/bin:$PATH"</code> to your shell profile.</td></tr><tr><td><code>error: Python 3.9+ not found</code></td><td>Install Python, and on Debian/Ubuntu also <code>python3-venv</code>: <code>sudo apt install python3 python3-venv</code>.</td></tr><tr><td><code>error: the Python venv module is missing</code></td><td><code>sudo apt install python3-venv</code> on Debian/Ubuntu, <code>pkg install python</code> on Termux.</td></tr><tr><td><code>error: checksum mismatch</code></td><td>The download was corrupted or altered. Re-run; if it persists, do not install and verify the release yourself.</td></tr><tr><td><code>silica ide</code> says <code>No module named silica</code></td><td>You are running from a checkout without <code>PYTHONPATH</code>. Use <code>python3 -m silica ide</code>.</td></tr><tr><td>The REPL prints <code>&gt; </code> instead of <code>¢</code></td><td>Your terminal is not UTF-8. Set <code>LANG=C.UTF-8</code>.</td></tr></tbody></table></div>
 
 <div class="callout callout--warn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><p><strong>The trust model, stated plainly.</strong> Piping a script into a shell means you trust that script and whatever it fetches. <code>install.sh</code> is short and readable; it downloads only from this repository's releases over HTTPS and verifies the wheel's SHA-256 against <code>SHA256SUMS.txt</code> from the same release. That protects against a corrupt or tampered download, not against a compromised GitHub account. If you need more than that, install from a source archive you verify yourself.</p></div>
-<div class="pager"><a class="prev" href="getting-started.html"><span>Previous</span>Getting Started</a><a class="next" href="syntax.html"><span>Next</span>Syntax</a></div></article></div></div></main><footer class="site-footer">
+<div class="pager"><a class="prev" href="getting-started.html"><span>Previous</span>Getting Started</a><a class="next" href="syntax.html"><span>Next</span>Syntax</a></div></article><nav class="toc" aria-label="On this page"><p class="toc__title">On this page</p><ul><li><a href="#installer">1. The installer</a></li><li><a href="#version">2. Pinning or upgrading</a></li><li><a href="#uninstall">3. Uninstalling</a></li><li><a href="#termux">4. Termux (Android)</a></li><li><a href="#source">5. From source</a></li><li><a href="#system">6. System-wide</a></li><li><a href="#verify">Verifying an installation</a></li><li><a href="#platforms">Platforms</a></li><li><a href="#troubleshooting">Troubleshooting</a></li></ul></nav></div></div></main><footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
-        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.
         Created by Umaiz Sufiyan.</p>
