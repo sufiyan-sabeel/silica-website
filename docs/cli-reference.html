@@ -12,6 +12,7 @@
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="article">
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="CLI Reference — Silica documentation">
 <meta property="og:description" content="Every silica command and flag: run, check, compile, repl, fmt, test, ide, voice, capabilities.">
@@ -29,6 +30,8 @@
 <link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+<link rel="preload" as="image" href="../assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="../assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="../assets/css/site.css">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -102,7 +105,7 @@
     <nav class="nav" id="site-nav" aria-label="Primary">
       <a href="../index.html#features">Features</a>
       <a href="../index.html#playground">Playground</a>
-      <a href="../docs/getting-started.html">Docs</a>
+      <a href="../docs/getting-started.html" aria-current="page">Docs</a>
       <a href="../index.html#install">Install</a>
       <a href="../index.html#roadmap">Roadmap</a>
     </nav>
@@ -118,18 +121,19 @@
       </button>
     </div>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
-<main id="main"><div class="wrap"><div class="docs"><nav class="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html" aria-current="page">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>CLI Reference</span></nav><h1>CLI Reference</h1>
+<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html" aria-current="page">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>CLI Reference</span></nav><h1>CLI Reference</h1>
 <p>One command, <code>silica</code>, with a small set of subcommands. Run
 <code>silica --help</code> for the same list on your machine.</p>
 
 <h2 id="commands">Commands</h2>
-<table><thead><tr><th>Command</th><th>What it does</th></tr></thead><tbody><tr><td><code>silica &lt;file.sc&gt;</code></td><td>run a source file directly</td></tr><tr><td><code>silica &lt;file.sbc&gt;</code></td><td>run verified bytecode</td></tr><tr><td><code>silica</code></td><td>start the interactive interpreter</td></tr><tr><td><code>silica run &lt;file&gt;</code></td><td>compile if needed, then execute</td></tr><tr><td><code>silica check &lt;file.sc&gt;</code></td><td>parse and type-check only</td></tr><tr><td><code>silica compile &lt;file.sc&gt; [-o out.sbc]</code></td><td>compile to versioned bytecode</td></tr><tr><td><code>silica repl</code></td><td>interactive session</td></tr><tr><td><code>silica fmt &lt;file.sc&gt; [--check]</code></td><td>rewrite in canonical style, or verify it</td></tr><tr><td><code>silica test [dir]</code></td><td>run <code>*_test.sc</code> files under a directory</td></tr><tr><td><code>silica ide [--root DIR] [--port N] [--host H]</code></td><td>Script Mode IDE in your browser</td></tr><tr><td><code>silica voice &lt;subcommand&gt;</code></td><td>speech: list, install, speak, transcribe</td></tr><tr><td><code>silica capabilities [flags]</code></td><td>print the effective capability set</td></tr><tr><td><code>silica --version</code> / <code>--help</code></td><td>version or usage</td></tr></tbody></table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Command</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><code>silica &lt;file.sc&gt;</code></td><td>run a source file directly</td></tr><tr><td><code>silica &lt;file.sbc&gt;</code></td><td>run verified bytecode</td></tr><tr><td><code>silica</code></td><td>start the interactive interpreter</td></tr><tr><td><code>silica run &lt;file&gt;</code></td><td>compile if needed, then execute</td></tr><tr><td><code>silica check &lt;file.sc&gt;</code></td><td>parse and type-check only</td></tr><tr><td><code>silica compile &lt;file.sc&gt; [-o out.sbc]</code></td><td>compile to versioned bytecode</td></tr><tr><td><code>silica repl</code></td><td>interactive session</td></tr><tr><td><code>silica fmt &lt;file.sc&gt; [--check]</code></td><td>rewrite in canonical style, or verify it</td></tr><tr><td><code>silica test [dir]</code></td><td>run <code>*_test.sc</code> files under a directory</td></tr><tr><td><code>silica ide [--root DIR] [--port N] [--host H]</code></td><td>Script Mode IDE in your browser</td></tr><tr><td><code>silica voice &lt;subcommand&gt;</code></td><td>speech: list, install, speak, transcribe</td></tr><tr><td><code>silica capabilities [flags]</code></td><td>print the effective capability set</td></tr><tr><td><code>silica --version</code> / <code>--help</code></td><td>version or usage</td></tr></tbody></table></div>
 
 <h2 id="flags">Capability flags</h2>
 <p>Capability flags apply to <code>run</code> and to running a file directly.
 Nothing is granted by default.</p>
-<table><thead><tr><th>Flag</th><th>Effect</th></tr></thead><tbody><tr><td><code>--allow-fs-read DIR</code></td><td>allow reading files under DIR</td></tr><tr><td><code>--allow-fs-write DIR</code></td><td>allow writing files under DIR</td></tr><tr><td><code>--allow-fs-list DIR</code></td><td>allow listing directories under DIR</td></tr><tr><td><code>--allow-tui</code></td><td>allow terminal applications</td></tr><tr><td><code>--allow-gui</code></td><td>allow desktop windows</td></tr><tr><td><code>--deny-fs-read</code>, <code>--deny-fs-write</code>, <code>--deny-fs-list</code></td><td>remove a capability a config file granted — a denial always wins</td></tr><tr><td><code>--capabilities FILE</code></td><td>read grants from a TOML <code>[capabilities]</code> table</td></tr></tbody></table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Flag</th><th scope="col">Effect</th></tr></thead><tbody><tr><td><code>--allow-fs-read DIR</code></td><td>allow reading files under DIR</td></tr><tr><td><code>--allow-fs-write DIR</code></td><td>allow writing files under DIR</td></tr><tr><td><code>--allow-fs-list DIR</code></td><td>allow listing directories under DIR</td></tr><tr><td><code>--allow-tui</code></td><td>allow terminal applications</td></tr><tr><td><code>--allow-gui</code></td><td>allow desktop windows</td></tr><tr><td><code>--deny-fs-read</code>, <code>--deny-fs-write</code>, <code>--deny-fs-list</code></td><td>remove a capability a config file granted — a denial always wins</td></tr><tr><td><code>--capabilities FILE</code></td><td>read grants from a TOML <code>[capabilities]</code> table</td></tr></tbody></table></div>
 
 <h2 id="usage">Worked example</h2>
 <div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">bash</span><button class="code__copy" type="button" data-copy="code-bash-15" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__label">Terminal</div><pre id="code-bash-15" tabindex="0"><code>$ silica <span class="tok-op">-</span><span class="tok-op">-</span>version
@@ -145,16 +149,16 @@ $ silica test tests
 <span class="tok-num">5</span><span class="tok-op">/</span><span class="tok-num">5</span> test files passed</code></pre></div>
 
 <h2 id="exit-codes">Exit codes</h2>
-<table><thead><tr><th>Situation</th><th>Exit code</th></tr></thead><tbody><tr><td>the program finished normally</td><td>0</td></tr><tr><td><code>halt(n)</code></td><td>n</td></tr><tr><td>a compile or runtime error</td><td>non-zero</td></tr><tr><td><code>silica check</code> found a problem</td><td>1</td></tr></tbody></table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Situation</th><th scope="col">Exit code</th></tr></thead><tbody><tr><td>the program finished normally</td><td>0</td></tr><tr><td><code>halt(n)</code></td><td>n</td></tr><tr><td>a compile or runtime error</td><td>non-zero</td></tr><tr><td><code>silica check</code> found a problem</td><td>1</td></tr></tbody></table></div>
 
 <h2 id="not-implemented">Not implemented</h2>
 <div class="callout callout--warn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><p><code>new</code>, <code>add</code>, <code>remove</code>, <code>install</code> and <code>build</code> belong to the packaging milestone and are not implemented. Running them reports that they are not implemented rather than failing obscurely — the CLI does not fake a package manager.</p></div>
-<div class="pager"><a class="prev" href="built-in-functions.html"><span>Previous</span>Built-in Functions</a><a class="next" href="examples.html"><span>Next</span>Examples</a></div></article></div></div></main><footer class="site-footer">
+<div class="pager"><a class="prev" href="built-in-functions.html"><span>Previous</span>Built-in Functions</a><a class="next" href="examples.html"><span>Next</span>Examples</a></div></article><nav class="toc" aria-label="On this page"><p class="toc__title">On this page</p><ul><li><a href="#commands">Commands</a></li><li><a href="#flags">Capability flags</a></li><li><a href="#usage">Worked example</a></li><li><a href="#exit-codes">Exit codes</a></li><li><a href="#not-implemented">Not implemented</a></li></ul></nav></div></div></main><footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
-        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.
         Created by Umaiz Sufiyan.</p>
