@@ -6,8 +6,8 @@ import os
 
 import crystal_svg
 from site_chrome import (BASE_URL, BUILT, CREATOR_GITHUB, DOC_PAGES, GITHUB,
-                         INSTAGRAM, LICENSE, RELEASE, STATUS, VERSION, callout,
-                         code_block, icon, output_block)
+                         INSTAGRAM, LICENSE, RELEASE, STATUS, VERSION, asset,
+                         callout, code_block, icon, output_block)
 from snippets import SNIPPETS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -36,8 +36,8 @@ def hero():
   <div class="wrap">
     <div class="hero-copy">
       <p class="hero-label">
-        <img src="assets/img/mark-dark.png" alt="" class="logo-dark" width="18" height="23">
-        <img src="assets/img/mark-light.png" alt="" class="logo-light" width="18" height="23">
+        <img src="%(markdark)s" alt="" class="logo-dark" width="18" height="23">
+        <img src="%(marklight)s" alt="" class="logo-light" width="18" height="23">
         Open-source programming language
       </p>
       <h1>A Language Built to <em>Create.</em></h1>
@@ -94,6 +94,8 @@ def hero():
         "star_word": "star" if STARS == 1 else "stars",
         "fork_word": "fork" if FORKS == 1 else "forks",
         "issue_word": "open issue" if ISSUES == 1 else "open issues",
+        "markdark": asset("", "img/mark-dark.png"),
+        "marklight": asset("", "img/mark-light.png"),
         "star": icon("star"),
         "branch": icon("git-branch"),
         "issues": icon("git-commit"),
@@ -376,8 +378,8 @@ def story():
       <div class="story__aside reveal">
         <p class="eyebrow">Why I built Silica</p>
         <h2>Built From Curiosity.<br>Driven By Creation.</h2>
-        <img class="story__mark logo-dark" src="assets/img/mark-dark.png" alt="" width="46" height="59">
-        <img class="story__mark logo-light" src="assets/img/mark-light.png" alt="" width="46" height="59">
+        <img class="story__mark logo-dark" src="%(markdark)s" alt="" width="46" height="59">
+        <img class="story__mark logo-light" src="%(marklight)s" alt="" width="46" height="59">
         <ol class="story__timeline">
           <li><strong>Curiosity</strong>Wanting to know what happens underneath the code.</li>
           <li><strong>Experiment</strong>Syntax, interpreters, runtime architecture, tooling.</li>
@@ -385,8 +387,8 @@ def story():
           <li><strong>Today</strong>%(release)s — an open-source project still being built.</li>
         </ol>
         <div class="signature">
-          <img src="assets/img/mark-dark.png" alt="" class="logo-dark" width="32" height="41">
-          <img src="assets/img/mark-light.png" alt="" class="logo-light" width="32" height="41">
+          <img src="%(markdark)s" alt="" class="logo-dark" width="32" height="41">
+          <img src="%(marklight)s" alt="" class="logo-light" width="32" height="41">
           <p><strong>Umaiz Sufiyan</strong>Creator of Silica</p>
         </div>
       </div>
@@ -414,7 +416,11 @@ def story():
     </div>
   </div>
 </section>
-""" % {"release": RELEASE}
+""" % {
+        "release": RELEASE,
+        "markdark": asset("", "img/mark-dark.png"),
+        "marklight": asset("", "img/mark-light.png"),
+    }
 
 
 def architecture():
@@ -689,6 +695,8 @@ def creator():
         "gh": icon("github"),
         "ig": icon("instagram"),
         "card": code_block(src("creator_card"), "creator.sc", show_copy=False),
+        "markdark": asset("", "img/mark-dark.png"),
+        "marklight": asset("", "img/mark-light.png"),
     }
 
 
