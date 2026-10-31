@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Control Flow — Silica documentation</title>
+<meta name="description" content="si/sino, tant, per, break, continue and halt — with the short-circuit operators und, ou and non.">
+<link rel="canonical" href="https://sufiyan-sabeel.github.io/silica-website/docs/control-flow.html">
+<meta name="author" content="Umaiz Sufiyan">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0d10">
+<meta name="color-scheme" content="dark light">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Silica Programming Language">
+<meta property="og:title" content="Control Flow — Silica documentation">
+<meta property="og:description" content="si/sino, tant, per, break, continue and halt — with the short-circuit operators und, ou and non.">
+<meta property="og:url" content="https://sufiyan-sabeel.github.io/silica-website/docs/control-flow.html">
+<meta property="og:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Silica — a language built to create">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Control Flow — Silica documentation">
+<meta name="twitter:description" content="si/sino, tant, per, break, continue and halt — with the short-circuit operators und, ou and non.">
+<meta name="twitter:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.jpg">
+
+<link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
+<link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Control Flow",
+      "description": "si/sino, tant, per, break, continue and halt — with the short-circuit operators und, ou and non.",
+      "url": "https://sufiyan-sabeel.github.io/silica-website/docs/control-flow.html",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#creator"
+      },
+      "publisher": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#creator"
+      },
+      "isPartOf": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#website"
+      },
+      "about": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#software"
+      },
+      "proficiencyLevel": "Beginner"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sufiyan-sabeel.github.io/silica-website/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Documentation",
+          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/getting-started.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Control Flow",
+          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/control-flow.html"
+        }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://sufiyan-sabeel.github.io/silica-website/#creator",
+      "name": "Umaiz Sufiyan",
+      "url": "https://github.com/sufiyan-sabeel",
+      "jobTitle": "Student Developer and Creator of Silica",
+      "sameAs": [
+        "https://github.com/sufiyan-sabeel",
+        "https://www.instagram.com/umaizsufiyan.78/"
+      ]
+    }
+  ]
+}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Silica home">
+      <img src="../assets/img/mark-dark.png" alt="" class="logo-dark" width="24" height="31">
+      <img src="../assets/img/mark-light.png" alt="" class="logo-light" width="24" height="31">
+      <span>Silica</span>
+    </a>
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#playground">Playground</a>
+      <a href="../docs/getting-started.html">Docs</a>
+      <a href="../index.html#install">Install</a>
+      <a href="../index.html#roadmap">Roadmap</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+      <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span>GitHub</span>
+      </a>
+      <button class="icon-btn nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="main"><div class="wrap"><div class="docs"><nav class="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html" aria-current="page">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Control Flow</span></nav><h1>Control Flow</h1>
+<p>Control flow is expressed with Silica's own keywords: <code>si</code> /
+<code>sino</code> for conditionals, <code>tant</code> for while loops,
+<code>per … in …</code> for iteration, and <code>break</code> /
+<code>continue</code> inside loops.</p>
+
+<h2 id="if">si / sino</h2>
+<p>Braces are required. <code>sino</code> must follow an <code>si</code> block; a
+newline between them is fine. There is no <code>sino si</code> chain form, so
+nesting is explicit:</p>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">conditionals.sc</span><button class="code__copy" type="button" data-copy="code-conditionals-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-conditionals-sc-2" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> score<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> <span class="tok-num">85</span>
+    <span class="tok-kw">si</span> score <span class="tok-op">&gt;</span><span class="tok-op">=</span> <span class="tok-num">50</span> <span class="tok-op">{</span>
+        <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;Pass&quot;</span><span class="tok-op">)</span>
+    <span class="tok-op">}</span> <span class="tok-kw">sino</span> <span class="tok-op">{</span>
+        <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;Fail&quot;</span><span class="tok-op">)</span>
+    <span class="tok-op">}</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-22" tabindex="0"><code>Pass</code></pre></div>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">grades.sc</span><button class="code__copy" type="button" data-copy="code-grades-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-grades-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">grade</span><span class="tok-op">(</span>score<span class="tok-op">:</span> <span class="tok-type">Int</span><span class="tok-op">)</span> <span class="tok-op">-</span><span class="tok-op">&gt;</span> <span class="tok-type">String</span> <span class="tok-op">{</span>
+    <span class="tok-kw">si</span> score <span class="tok-op">&gt;</span><span class="tok-op">=</span> <span class="tok-num">90</span> <span class="tok-op">{</span>
+        <span class="tok-kw">ret</span> <span class="tok-str">&quot;A&quot;</span>
+    <span class="tok-op">}</span> <span class="tok-kw">sino</span> <span class="tok-op">{</span>
+        <span class="tok-kw">si</span> score <span class="tok-op">&gt;</span><span class="tok-op">=</span> <span class="tok-num">75</span> <span class="tok-op">{</span>
+            <span class="tok-kw">ret</span> <span class="tok-str">&quot;B&quot;</span>
+        <span class="tok-op">}</span> <span class="tok-kw">sino</span> <span class="tok-op">{</span>
+            <span class="tok-kw">ret</span> <span class="tok-str">&quot;C&quot;</span>
+        <span class="tok-op">}</span>
+    <span class="tok-op">}</span>
+<span class="tok-op">}</span>
+
+<span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">grade</span><span class="tok-op">(</span><span class="tok-num">94</span><span class="tok-op">)</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">grade</span><span class="tok-op">(</span><span class="tok-num">80</span><span class="tok-op">)</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">grade</span><span class="tok-op">(</span><span class="tok-num">61</span><span class="tok-op">)</span><span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-23" tabindex="0"><code>A
+B
+C</code></pre></div>
+
+<h2 id="logic">und, ou, non</h2>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">logic.sc</span><button class="code__copy" type="button" data-copy="code-logic-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-logic-sc-2" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> ready<span class="tok-op">:</span> <span class="tok-type">Bool</span> <span class="tok-op">=</span> <span class="tok-kw">oui</span>
+    <span class="tok-kw">let</span> blocked<span class="tok-op">:</span> <span class="tok-type">Bool</span> <span class="tok-op">=</span> <span class="tok-kw">nein</span>
+
+    <span class="tok-kw">si</span> ready <span class="tok-kw">und</span> <span class="tok-kw">non</span> blocked <span class="tok-op">{</span>
+        <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;Ready&quot;</span><span class="tok-op">)</span>
+    <span class="tok-op">}</span> <span class="tok-kw">sino</span> <span class="tok-op">{</span>
+        <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;Not ready&quot;</span><span class="tok-op">)</span>
+    <span class="tok-op">}</span>
+
+    <span class="tok-kw">si</span> ready <span class="tok-kw">ou</span> blocked <span class="tok-op">{</span>
+        <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;At least one is true&quot;</span><span class="tok-op">)</span>
+    <span class="tok-op">}</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-24" tabindex="0"><code>Ready
+At least one is true</code></pre></div>
+
+<h2 id="while">tant — while</h2>
+<p><code>tant</code> tests its condition before each iteration. The condition must
+be a <code>Bool</code>.</p>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">while.sc</span><button class="code__copy" type="button" data-copy="code-while-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-while-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> n<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> <span class="tok-num">5</span>
+    <span class="tok-kw">tant</span> n <span class="tok-op">&gt;</span> <span class="tok-num">0</span> <span class="tok-op">{</span>
+        <span class="tok-kw">dit</span><span class="tok-op">(</span>n<span class="tok-op">)</span>
+        <span class="tok-kw">dit</span><span class="tok-op">(</span><span class="tok-str">&quot; &quot;</span><span class="tok-op">)</span>
+        n <span class="tok-op">=</span> n <span class="tok-op">-</span> <span class="tok-num">1</span>
+    <span class="tok-op">}</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;&quot;</span><span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-25" tabindex="0"><code><span class="tok-num">5</span> <span class="tok-num">4</span> <span class="tok-num">3</span> <span class="tok-num">2</span> <span class="tok-num">1</span> </code></pre></div>
+
+<h2 id="for">per — for each</h2>
+<p><code>per</code> iterates a <code>List</code> by value, a <code>Map</code> by
+key, and the list produced by <code>range</code>. The loop variable is immutable
+inside the body.</p>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">loop_list.sc</span><button class="code__copy" type="button" data-copy="code-loop_list-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-loop_list-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> languages<span class="tok-op">:</span> <span class="tok-type">List</span> <span class="tok-op">=</span> <span class="tok-op">[</span><span class="tok-str">&quot;Silica&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;Python&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;Rust&quot;</span><span class="tok-op">]</span>
+    <span class="tok-kw">per</span> name <span class="tok-kw">in</span> languages <span class="tok-op">{</span>
+        <span class="tok-kw">sprint</span><span class="tok-op">(</span>name<span class="tok-op">)</span>
+    <span class="tok-op">}</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-26" tabindex="0"><code>Silica
+Python
+Rust</code></pre></div>
+
+<h2 id="break">break and continue</h2>
+<p><code>break</code> leaves the innermost loop and <code>continue</code> starts
+its next iteration. Both are compiled to jumps — no new opcode, no change to the
+bytecode format — and both are compile-time errors outside a loop.</p>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">loop_control.sc</span><button class="code__copy" type="button" data-copy="code-loop_control-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-loop_control-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">per</span> i <span class="tok-kw">in</span> <span class="tok-fn">range</span><span class="tok-op">(</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">11</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+        <span class="tok-kw">si</span> i <span class="tok-op">=</span><span class="tok-op">=</span> <span class="tok-num">4</span> <span class="tok-op">{</span>
+            <span class="tok-kw">continue</span>
+        <span class="tok-op">}</span>
+        <span class="tok-kw">si</span> i <span class="tok-op">=</span><span class="tok-op">=</span> <span class="tok-num">7</span> <span class="tok-op">{</span>
+            <span class="tok-kw">break</span>
+        <span class="tok-op">}</span>
+        <span class="tok-kw">dit</span><span class="tok-op">(</span>i<span class="tok-op">)</span>
+        <span class="tok-kw">dit</span><span class="tok-op">(</span><span class="tok-str">&quot; &quot;</span><span class="tok-op">)</span>
+    <span class="tok-op">}</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;&quot;</span><span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-27" tabindex="0"><code><span class="tok-num">1</span> <span class="tok-num">2</span> <span class="tok-num">3</span> <span class="tok-num">5</span> <span class="tok-num">6</span> </code></pre></div>
+
+<h2 id="halt">halt</h2>
+<p><code>halt</code> terminates the program immediately. With an argument, that
+value becomes the process exit code.</p>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">halt.sc</span><button class="code__copy" type="button" data-copy="code-halt-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-halt-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;before&quot;</span><span class="tok-op">)</span>
+    <span class="tok-kw">halt</span><span class="tok-op">(</span><span class="tok-num">3</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;never printed&quot;</span><span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-28" tabindex="0"><code>before</code></pre></div>
+
+<h2 id="example">A complete example</h2>
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">loops.sc</span><button class="code__copy" type="button" data-copy="code-loops-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-loops-sc-2" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> total<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> <span class="tok-num">0</span>
+    <span class="tok-kw">per</span> i <span class="tok-kw">in</span> <span class="tok-fn">range</span><span class="tok-op">(</span><span class="tok-num">1</span><span class="tok-op">,</span> <span class="tok-num">11</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+        total <span class="tok-op">=</span> total <span class="tok-op">+</span> i
+    <span class="tok-op">}</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span>total<span class="tok-op">)</span>
+
+    <span class="tok-kw">let</span> n<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> <span class="tok-num">5</span>
+    <span class="tok-kw">tant</span> n <span class="tok-op">&gt;</span> <span class="tok-num">0</span> <span class="tok-op">{</span>
+        <span class="tok-kw">dit</span><span class="tok-op">(</span>n<span class="tok-op">)</span>
+        <span class="tok-kw">dit</span><span class="tok-op">(</span><span class="tok-str">&quot; &quot;</span><span class="tok-op">)</span>
+        n <span class="tok-op">=</span> n <span class="tok-op">-</span> <span class="tok-num">1</span>
+    <span class="tok-op">}</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-str">&quot;&quot;</span><span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div>
+<div class="code code--out"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><pre id="code-output-29" tabindex="0"><code><span class="tok-num">55</span>
+<span class="tok-num">5</span> <span class="tok-num">4</span> <span class="tok-num">3</span> <span class="tok-num">2</span> <span class="tok-num">1</span> </code></pre></div>
+<div class="pager"><a class="prev" href="functions.html"><span>Previous</span>Functions</a><a class="next" href="strings.html"><span>Next</span>Strings</a></div></article></div></div></main><footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <p>An open-source, high-level general-purpose programming language with its
+        own syntax, a checked compiler and a versioned bytecode format.
+        Created by Umaiz Sufiyan.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Documentation</h4>
+        <ul>
+        <li><a href="../docs/getting-started.html">Getting Started</a></li>
+        <li><a href="../docs/installation.html">Installation</a></li>
+        <li><a href="../docs/syntax.html">Syntax</a></li>
+        <li><a href="../docs/variables-and-data-types.html">Variables and Data Types</a></li>
+        <li><a href="../docs/functions.html">Functions</a></li>
+        <li><a href="../docs/control-flow.html">Control Flow</a></li>
+        <li><a href="../docs/strings.html">Strings</a></li>
+        <li><a href="../docs/built-in-functions.html">Built-in Functions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/sufiyan-sabeel/silica" rel="noopener">Source on GitHub</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/releases" rel="noopener">Releases</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/docs/LANGUAGE_SPEC.md" rel="noopener">Language spec</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/issues" rel="noopener">Issues</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Creator</h4>
+        <ul>
+          <li><a href="https://github.com/sufiyan-sabeel" rel="noopener">Umaiz Sufiyan</a></li>
+          <li><a href="https://www.instagram.com/umaizsufiyan.78/" rel="noopener">Instagram</a></li>
+          <li><a href="../index.html#creator">About the creator</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/LICENSE" rel="noopener">MIT licence</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p style="margin:0">© 2026 Umaiz Sufiyan. Silica is released under the MIT licence.</p>
+      <p style="margin:0">Designed and developed with curiosity by Umaiz Sufiyan.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>
