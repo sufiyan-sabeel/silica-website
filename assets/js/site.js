@@ -1,17 +1,21 @@
-/* Silica website — progressive enhancement only.
-   Every page works without JavaScript; this adds theme switching, the mobile
-   menu, copy-to-clipboard, the code tabs and a subtle scroll reveal. */
+/* Silica website — interaction layer.
+
+   Everything here is progressive enhancement: the pages are readable and
+   navigable with this file missing. Order matters — theme first, so the first
+   paint is already correct. */
 (function () {
   "use strict";
 
   var root = document.documentElement;
   var STORE = "silica-theme";
 
-  /* ---------- theme ---------------------------------------------------- */
+  /* ---------- theme ------------------------------------------------------ */
   function applyTheme(theme) {
     root.setAttribute("data-theme", theme);
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", theme === "light" ? "#fbfbfc" : "#0b0d10");
+    if (meta) {
+      meta.setAttribute("content", theme === "light" ? "#f7f8fc" : "#0b1020");
+    }
     document.querySelectorAll("[data-theme-toggle]").forEach(function (btn) {
       var label = theme === "light" ? "Switch to dark theme" : "Switch to light theme";
       btn.setAttribute("aria-label", label);
@@ -28,8 +32,8 @@
       saved = null;
     }
     if (saved === "light" || saved === "dark") return saved;
-    /* Silica's own design is the dark theme; the switch is there for readers
-       who prefer light, but it is not imposed by the operating system. */
+    /* Silica's identity is the dark theme; the switch is a choice, not a
+       default imposed by the operating system. */
     return "dark";
   }
 
@@ -47,7 +51,7 @@
     }
   });
 
-  /* ---------- mobile navigation ---------------------------------------- */
+  /* ---------- mobile navigation ----------------------------------------- */
   var toggle = document.querySelector("[data-nav-toggle]");
   var nav = document.getElementById("site-nav");
   var backdrop = document.querySelector("[data-nav-backdrop]");
@@ -74,30 +78,28 @@
       if (event.target.closest("a")) closeNav();
     });
 
-    if (backdrop) {
-      backdrop.addEventListener("click", closeNav);
-    }
+    if (backdrop) backdrop.addEventListener("click", closeNav);
 
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape") closeNav();
     });
 
     window.addEventListener("resize", function () {
-      if (window.innerWidth > 800) closeNav();
+      if (window.innerWidth > 860) closeNav();
     });
   }
 
-  /* ---------- sticky header shadow ------------------------------------- */
+  /* ---------- sticky header --------------------------------------------- */
   var header = document.querySelector(".site-header");
   if (header) {
     var onScroll = function () {
-      header.classList.toggle("is-stuck", window.scrollY > 8);
+      header.classList.toggle("is-stuck", window.scrollY > 6);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  /* ---------- copy to clipboard ---------------------------------------- */
+  /* ---------- copy to clipboard ----------------------------------------- */
   document.addEventListener("click", function (event) {
     var btn = event.target.closest("[data-copy]");
     if (!btn) return;
@@ -106,18 +108,13 @@
     var text = target.innerText;
 
     function done() {
-      var original = btn.getAttribute("data-label") || btn.textContent.trim();
-      btn.setAttribute("data-label", original);
+      if (!btn.getAttribute("data-label")) {
+        btn.setAttribute("data-label", btn.textContent.trim());
+      }
       btn.textContent = "Copied";
       window.setTimeout(function () {
-        btn.textContent = original;
+        btn.textContent = btn.getAttribute("data-label");
       }, 1600);
-    }
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, fallback);
-    } else {
-      fallback();
     }
 
     function fallback() {
@@ -132,13 +129,19 @@
         document.execCommand("copy");
         done();
       } catch (err) {
-        /* nothing sensible to do; the code is still selectable by hand */
+        /* the code stays selectable by hand */
       }
       document.body.removeChild(area);
     }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
   });
 
-  /* ---------- code tabs ------------------------------------------------- */
+  /* ---------- code tabs -------------------------------------------------- */
   document.querySelectorAll("[data-tabs]").forEach(function (group) {
     var tabs = Array.prototype.slice.call(group.querySelectorAll('[role="tab"]'));
     if (!tabs.length) return;
@@ -189,11 +192,8 @@
     }
 
     syncDocsMenu();
-    if (narrow.addEventListener) {
-      narrow.addEventListener("change", syncDocsMenu);
-    } else if (narrow.addListener) {
-      narrow.addListener(syncDocsMenu);
-    }
+    if (narrow.addEventListener) narrow.addEventListener("change", syncDocsMenu);
+    else if (narrow.addListener) narrow.addListener(syncDocsMenu);
 
     if (docsToggle) {
       docsToggle.addEventListener("click", function () {
@@ -204,7 +204,7 @@
     }
   }
 
-  /* ---------- "on this page" highlight ---------------------------------- */
+  /* ---------- "on this page" -------------------------------------------- */
   var tocLinks = Array.prototype.slice.call(
     document.querySelectorAll(".toc a[href^='#']")
   );
@@ -219,12 +219,6 @@
       headings.push(heading);
     });
 
-    var setActive = function (id) {
-      tocLinks.forEach(function (link) {
-        link.classList.toggle("is-active", link === byId[id]);
-      });
-    };
-
     var spy = new IntersectionObserver(
       function (entries) {
         var visible = entries
@@ -234,9 +228,13 @@
           .sort(function (a, b) {
             return a.boundingClientRect.top - b.boundingClientRect.top;
           });
-        if (visible.length) setActive(visible[0].target.id);
+        if (!visible.length) return;
+        var id = visible[0].target.id;
+        tocLinks.forEach(function (link) {
+          link.classList.toggle("is-active", link === byId[id]);
+        });
       },
-      { rootMargin: "-" + 72 + "px 0px -70% 0px", threshold: 0 }
+      { rootMargin: "-80px 0px -68% 0px", threshold: 0 }
     );
 
     headings.forEach(function (heading) {
@@ -244,17 +242,272 @@
     });
   }
 
-  /* ---------- scroll reveal -------------------------------------------- */
-  var revealables = Array.prototype.slice.call(
-    document.querySelectorAll(".reveal")
-  );
+  /* ---------- documentation search --------------------------------------- */
+  var dialog = document.getElementById("search-dialog");
+  var openers = Array.prototype.slice.call(document.querySelectorAll("[data-search-open]"));
+  var input = dialog ? dialog.querySelector("input[type='search']") : null;
+  var results = dialog ? dialog.querySelector(".search-results") : null;
+  var empty = dialog ? dialog.querySelector(".search-empty") : null;
+  var closeBtn = dialog ? dialog.querySelector("[data-search-close]") : null;
+  var index = null;
+  var loading = false;
+  var active = -1;
+  var items = [];
+
+  function openSearch() {
+    if (!dialog) return;
+    dialog.classList.add("is-open");
+    dialog.removeAttribute("hidden");
+    document.body.classList.add("nav-open");
+    if (!index && !loading) loadIndex();
+    window.setTimeout(function () {
+      if (input) input.focus();
+    }, 20);
+  }
+
+  function closeSearch() {
+    if (!dialog) return;
+    dialog.classList.remove("is-open");
+    dialog.setAttribute("hidden", "");
+    document.body.classList.remove("nav-open");
+    active = -1;
+  }
+
+  function loadIndex() {
+    loading = true;
+    var url = dialog.getAttribute("data-index");
+    fetch(url)
+      .then(function (res) {
+        if (!res.ok) throw new Error("index " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        index = data;
+        loading = false;
+        if (input && input.value.trim()) render(input.value);
+      })
+      .catch(function () {
+        loading = false;
+        if (empty) {
+          empty.textContent = "Search could not load. The documentation index is on the documentation page.";
+          empty.hidden = false;
+        }
+      });
+  }
+
+  function score(entry, query) {
+    var title = entry.title.toLowerCase();
+    var text = entry.text.toLowerCase();
+    var page = entry.page.toLowerCase();
+    var total = 0;
+    if (title === query) total += 120;
+    if (title.indexOf(query) === 0) total += 60;
+    else if (title.indexOf(query) > -1) total += 34;
+    if (page.indexOf(query) > -1) total += 16;
+    var at = text.indexOf(query);
+    if (at > -1) {
+      total += 14;
+      if (at < 90) total += 6;
+    }
+    query.split(/\s+/).forEach(function (word) {
+      if (word && text.indexOf(word) > -1) total += 4;
+      if (word && title.indexOf(word) > -1) total += 8;
+    });
+    return total;
+  }
+
+  function snippet(text, query) {
+    var at = text.toLowerCase().indexOf(query);
+    if (at < 0) return text.slice(0, 130) + (text.length > 130 ? "…" : "");
+    var start = Math.max(0, at - 48);
+    var out = text.slice(start, start + 150);
+    return (start > 0 ? "…" : "") + out + (start + 150 < text.length ? "…" : "");
+  }
+
+  function render(value) {
+    if (!results) return;
+    var query = value.trim().toLowerCase();
+    results.innerHTML = "";
+    items = [];
+    active = -1;
+
+    if (!query) {
+      if (empty) {
+        empty.textContent = "Type to search the documentation.";
+        empty.hidden = false;
+      }
+      return;
+    }
+
+    if (!index) {
+      if (empty) {
+        empty.textContent = "Loading the index…";
+        empty.hidden = false;
+      }
+      return;
+    }
+
+    var hits = index
+      .map(function (entry) {
+        return { entry: entry, score: score(entry, query) };
+      })
+      .filter(function (hit) {
+        return hit.score > 0;
+      })
+      .sort(function (a, b) {
+        return b.score - a.score;
+      })
+      .slice(0, 12);
+
+    if (!hits.length) {
+      if (empty) {
+        empty.textContent = "Nothing matched “" + value.trim() + "”.";
+        empty.hidden = false;
+      }
+      return;
+    }
+
+    if (empty) empty.hidden = true;
+
+    hits.forEach(function (hit, i) {
+      var entry = hit.entry;
+      var li = document.createElement("li");
+      var link = document.createElement("a");
+      link.href = entry.url;
+      link.innerHTML =
+        '<span class="search-results__page">' + entry.page + "</span>" +
+        '<span class="search-results__title">' + entry.title + "</span>" +
+        '<span class="search-results__snippet">' +
+        snippet(entry.text, query) +
+        "</span>";
+      li.appendChild(link);
+      results.appendChild(li);
+      items.push(link);
+    });
+  }
+
+  function moveActive(step) {
+    if (!items.length) return;
+    active = (active + step + items.length) % items.length;
+    items.forEach(function (item, i) {
+      item.classList.toggle("is-active", i === active);
+    });
+    items[active].scrollIntoView({ block: "nearest" });
+  }
+
+  openers.forEach(function (btn) {
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+      openSearch();
+    });
+  });
+
+  if (dialog) {
+    if (closeBtn) closeBtn.addEventListener("click", closeSearch);
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) closeSearch();
+    });
+    if (input) {
+      input.addEventListener("input", function () {
+        render(input.value);
+      });
+      input.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowDown") {
+          event.preventDefault();
+          moveActive(1);
+        } else if (event.key === "ArrowUp") {
+          event.preventDefault();
+          moveActive(-1);
+        } else if (event.key === "Enter") {
+          if (active > -1 && items[active]) {
+            event.preventDefault();
+            window.location.href = items[active].href;
+          }
+        } else if (event.key === "Escape") {
+          closeSearch();
+        }
+      });
+    }
+  }
+
+  document.addEventListener("keydown", function (event) {
+    var typing = /^(input|textarea|select)$/i.test(
+      (event.target.tagName || "").toLowerCase()
+    );
+    if (typing) return;
+    if (event.key === "/" || ((event.metaKey || event.ctrlKey) && event.key === "k")) {
+      if (!dialog) return;
+      event.preventDefault();
+      openSearch();
+    }
+    if (event.key === "Escape" && dialog && dialog.classList.contains("is-open")) {
+      closeSearch();
+    }
+  });
+
+  /* ---------- live repository status ------------------------------------- */
+  var statusBlock = document.querySelector("[data-repo-status]");
+  if (statusBlock) {
+    var api = "https://api.github.com/repos/sufiyan-sabeel/silica";
+    var stamp = statusBlock.querySelector("[data-status-time]");
+
+    function set(key, value) {
+      var node = statusBlock.querySelector('[data-repo="' + key + '"]');
+      if (node && value !== null && value !== undefined) node.textContent = value;
+    }
+
+    function when() {
+      var now = new Date();
+      var hh = String(now.getHours()).padStart(2, "0");
+      var mm = String(now.getMinutes()).padStart(2, "0");
+      if (stamp) stamp.textContent = "checked " + hh + ":" + mm;
+    }
+
+    fetch(api, { headers: { Accept: "application/vnd.github+json" } })
+      .then(function (res) {
+        if (!res.ok) throw new Error("status " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        set("stars", data.stargazers_count);
+        set("forks", data.forks_count);
+        set("issues", data.open_issues_count);
+        set("updated", (data.pushed_at || "").slice(0, 10));
+        statusBlock.setAttribute("data-live", "true");
+        when();
+        return fetch(api + "/releases/latest", {
+          headers: { Accept: "application/vnd.github+json" }
+        });
+      })
+      .then(function (res) {
+        if (!res || !res.ok) return null;
+        return res.json();
+      })
+      .then(function (release) {
+        if (!release || !release.tag_name) return;
+        var tag = release.tag_name;
+        set("release", tag);
+        var link = statusBlock.querySelector('[data-repo="release-link"]');
+        if (link && release.html_url) link.href = release.html_url;
+        document.querySelectorAll("[data-version-label]").forEach(function (node) {
+          node.textContent = tag;
+        });
+      })
+      .catch(function () {
+        /* rate limited or offline: the values baked at build time stand, and the
+           timestamp says when they were captured. */
+        if (stamp) {
+          stamp.textContent = "as of " + (statusBlock.getAttribute("data-built") || "");
+        }
+      });
+  }
+
+  /* ---------- scroll reveal ---------------------------------------------- */
+  var revealables = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
   if (!("IntersectionObserver" in window) || !revealables.length) return;
 
-  /* Only sections that start below the fold are hidden and then revealed, so
-     anything already on screen is painted immediately. */
   var pending = revealables.filter(function (el) {
-    var top = el.getBoundingClientRect().top;
-    if (top < window.innerHeight * 0.9) return false;
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return false;
     el.classList.add("reveal-pending");
     return true;
   });
@@ -268,18 +521,17 @@
         observer.unobserve(entry.target);
       });
     },
-    { rootMargin: "0px 0px -6% 0px", threshold: 0.05 }
+    { rootMargin: "0px 0px -6% 0px", threshold: 0.04 }
   );
 
   pending.forEach(function (el) {
     observer.observe(el);
   });
 
-  /* Safety net: never leave a section invisible if the observer never fires. */
   window.setTimeout(function () {
     pending.forEach(function (el) {
       el.classList.remove("reveal-pending");
       el.classList.add("is-visible");
     });
-  }, 2500);
+  }, 2600);
 })();
