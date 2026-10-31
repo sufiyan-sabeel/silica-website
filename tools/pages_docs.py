@@ -36,12 +36,15 @@ def code_out(name, filename="output"):
 
 
 def table(headers, rows):
-    head = "".join("<th>%s</th>" % h for h in headers)
+    """A table that scrolls inside its own box on narrow screens."""
+    head = "".join('<th scope="col">%s</th>' % h for h in headers)
     body = "".join(
         "<tr>%s</tr>" % "".join("<td>%s</td>" % cell for cell in row)
         for row in rows
     )
-    return '<table><thead><tr>%s</tr></thead><tbody>%s</tbody></table>' % (head, body)
+    return ('<div class="table-wrap" tabindex="0" role="region" aria-label="Table">'
+            "<table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>"
+            % (head, body))
 
 
 def h2(text, anchor):
