@@ -12,6 +12,7 @@
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="article">
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="Functions — Silica documentation">
 <meta property="og:description" content="Declaring functions with sfn, parameters, return types, recursion, and how Silica reports errors.">
@@ -29,6 +30,8 @@
 <link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+<link rel="preload" as="image" href="../assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="../assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="../assets/css/site.css">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -102,7 +105,7 @@
     <nav class="nav" id="site-nav" aria-label="Primary">
       <a href="../index.html#features">Features</a>
       <a href="../index.html#playground">Playground</a>
-      <a href="../docs/getting-started.html">Docs</a>
+      <a href="../docs/getting-started.html" aria-current="page">Docs</a>
       <a href="../index.html#install">Install</a>
       <a href="../index.html#roadmap">Roadmap</a>
     </nav>
@@ -118,8 +121,9 @@
       </button>
     </div>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
-<main id="main"><div class="wrap"><div class="docs"><nav class="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html" aria-current="page">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Functions</span></nav><h1>Functions</h1>
+<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html" aria-current="page">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Functions</span></nav><h1>Functions</h1>
 <p>A function is declared with <code>sfn</code>. Parameters may carry type
 annotations, and <code>-&gt; T</code> gives the return type. Without a return type
 the function returns <code>Unit</code>.</p>
@@ -208,12 +212,12 @@ cannot divide by zero
 
 <h2 id="limits">What functions cannot do yet</h2>
 <div class="callout callout--warn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><p><strong>Functions are not first-class values in 0.9.0.</strong> They can be called, not passed, returned or stored. There are no closures, no anonymous functions and no methods on user-defined types. Those are planned, not present — see the <a href="../index.html#roadmap">roadmap</a>.</p></div>
-<div class="pager"><a class="prev" href="variables-and-data-types.html"><span>Previous</span>Variables and Data Types</a><a class="next" href="control-flow.html"><span>Next</span>Control Flow</a></div></article></div></div></main><footer class="site-footer">
+<div class="pager"><a class="prev" href="variables-and-data-types.html"><span>Previous</span>Variables and Data Types</a><a class="next" href="control-flow.html"><span>Next</span>Control Flow</a></div></article><nav class="toc" aria-label="On this page"><p class="toc__title">On this page</p><ul><li><a href="#parameters">Parameters and arity</a></li><li><a href="#return">Return types</a></li><li><a href="#recursion">Recursion</a></li><li><a href="#unit">Unit functions</a></li><li><a href="#errors">Errors</a></li><li><a href="#limits">What functions cannot do yet</a></li></ul></nav></div></div></main><footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
-        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.
         Created by Umaiz Sufiyan.</p>
