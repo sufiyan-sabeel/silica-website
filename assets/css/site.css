@@ -469,6 +469,206 @@ section {
   flex: 1 1 auto;
 }
 
+/* ---------- accent presets ---------------------------------------------- */
+/* The visitor picks one; it drives --accent everywhere, including the 3D
+   crystal, which re-reads these tokens when the palette changes. */
+[data-accent="indigo"] {
+  --accent: #8b9bff;
+  --accent-strong: #a5b2ff;
+  --accent-ink: #0a1024;
+  --accent-soft: rgba(139, 155, 255, 0.12);
+  --accent-line: rgba(139, 155, 255, 0.32);
+  --violet: #b79cff;
+}
+
+[data-accent="teal"] {
+  --accent: #5fd3c0;
+  --accent-strong: #7ee3d3;
+  --accent-ink: #04231f;
+  --accent-soft: rgba(95, 211, 192, 0.12);
+  --accent-line: rgba(95, 211, 192, 0.32);
+  --violet: #8b9bff;
+}
+
+[data-accent="violet"] {
+  --accent: #b79cff;
+  --accent-strong: #cbb8ff;
+  --accent-ink: #1a0f2e;
+  --accent-soft: rgba(183, 156, 255, 0.12);
+  --accent-line: rgba(183, 156, 255, 0.32);
+  --violet: #f08c9a;
+}
+
+[data-accent="amber"] {
+  --accent: #e8b765;
+  --accent-strong: #f3ca85;
+  --accent-ink: #241703;
+  --accent-soft: rgba(232, 183, 101, 0.13);
+  --accent-line: rgba(232, 183, 101, 0.34);
+  --violet: #f08c9a;
+}
+
+[data-accent="rose"] {
+  --accent: #f08c9a;
+  --accent-strong: #f7a8b3;
+  --accent-ink: #2b0b10;
+  --accent-soft: rgba(240, 140, 154, 0.12);
+  --accent-line: rgba(240, 140, 154, 0.32);
+  --violet: #b79cff;
+}
+
+[data-theme="light"][data-accent="indigo"] {
+  --accent: #4553d8;
+  --accent-strong: #3341c4;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(69, 83, 216, 0.09);
+  --accent-line: rgba(69, 83, 216, 0.28);
+  --violet: #6b4fd0;
+}
+
+[data-theme="light"][data-accent="teal"] {
+  --accent: #0f7a6b;
+  --accent-strong: #0b6357;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(15, 122, 107, 0.09);
+  --accent-line: rgba(15, 122, 107, 0.28);
+  --violet: #4553d8;
+}
+
+[data-theme="light"][data-accent="violet"] {
+  --accent: #6b4fd0;
+  --accent-strong: #5a3fbb;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(107, 79, 208, 0.09);
+  --accent-line: rgba(107, 79, 208, 0.28);
+  --violet: #b03a4c;
+}
+
+[data-theme="light"][data-accent="amber"] {
+  --accent: #8a6318;
+  --accent-strong: #74520f;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(138, 99, 24, 0.1);
+  --accent-line: rgba(138, 99, 24, 0.3);
+  --violet: #b03a4c;
+}
+
+[data-theme="light"][data-accent="rose"] {
+  --accent: #b03a4c;
+  --accent-strong: #992f40;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(176, 58, 76, 0.09);
+  --accent-line: rgba(176, 58, 76, 0.28);
+  --violet: #6b4fd0;
+}
+
+/* ---------- appearance customiser --------------------------------------- */
+.customizer {
+  position: relative;
+  flex: none;
+}
+
+.customizer__panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 244px;
+  padding: 0.95rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  z-index: 70;
+}
+
+.customizer__panel[hidden] {
+  display: none;
+}
+
+.customizer__title {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 0.6rem;
+}
+
+.customizer__group + .customizer__group {
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.4rem;
+}
+
+.swatch {
+  display: grid;
+  place-items: center;
+  gap: 0.25rem;
+  padding: 0.4rem 0.15rem 0.3rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-soft);
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.swatch:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+}
+
+.swatch[aria-pressed="true"] {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.swatch span {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--sw);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25) inset;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3rem;
+  padding: 0.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+}
+
+.segmented button {
+  padding: 0.4rem 0.5rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-2);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.segmented button[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+
 /* ---------- buttons ------------------------------------------------------ */
 .btn {
   display: inline-flex;
@@ -2342,7 +2542,7 @@ body.nav-open {
   }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 940px) {
   :root {
     --nav-h: 60px;
   }
@@ -2393,6 +2593,19 @@ body.nav-open {
   .nav-actions .btn--ghost,
   .nav-actions .btn--primary {
     display: none;
+  }
+
+  /* search + palette + menu; the theme switch lives in the palette panel */
+  .nav-actions [data-theme-toggle] {
+    display: none;
+  }
+
+  .customizer__panel {
+    position: fixed;
+    top: calc(var(--nav-h) + 8px);
+    right: 0.875rem;
+    left: 0.875rem;
+    width: auto;
   }
 
   .nav-drawer-cta {
@@ -2470,7 +2683,8 @@ body.nav-open {
   }
 
   .stage {
-    max-height: 44vh;
+    aspect-ratio: 4 / 3;
+    max-height: 340px;
   }
 
   .stage__caption {
