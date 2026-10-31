@@ -7,8 +7,8 @@ real implementation before the site is built.
 import json
 import os
 
-from site_chrome import (DOC_PAGES, GITHUB, VERSION, callout, code_block,
-                         icon, output_block)
+from site_chrome import (DOC_PAGES, GITHUB, RELEASE, VERSION, callout,
+                         code_block, icon, output_block)
 from snippets import SNIPPETS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -160,8 +160,8 @@ The Run button executes the real toolchain in a subprocess.</p>
         ),
         "h_repl": h2("4. The interactive interpreter", "repl"),
         "repl_code": code_block(
-            "$ silica\nSilica 0.9.0 — Ctrl+D to exit\n> sprint(\"hello\")\nhello\n"
-            "> let x: Int = 2\n> sprint(x * 21)\n42",
+            ("$ silica\nSilica %s — Ctrl+D to exit\n> sprint(\"hello\")\nhello\n"
+             "> let x: Int = 2\n> sprint(x * 21)\n42") % VERSION,
             "bash", label="Terminal",
         ),
         "h_bytecode": h2("5. Compile to bytecode", "bytecode"),
@@ -439,6 +439,7 @@ parameter lists. Where they are given, the checker enforces them.</p>
             ["Keyword", "Meaning"],
             [
                 ["<code>sfn</code>", "declare a function"],
+                ["<code>struct</code>", "declare a record with typed fields"],
                 ["<code>ret</code>", "return a value (or nothing)"],
                 ["<code>let</code> / <code>const</code>", "mutable / immutable binding"],
                 ["<code>si</code> / <code>sino</code>", "if / else"],
@@ -517,9 +518,10 @@ parameter lists. Where they are given, the checker enforces them.</p>
             "There are exactly eight type names: <code>Int</code>, "
             "<code>Float</code>, <code>Bool</code>, <code>String</code>, "
             "<code>Unit</code>, <code>List</code>, <code>Map</code> and "
-            "<code>Any</code>. There are no user-defined types and no generic "
-            "parameters in %s — <a href=\"variables-and-data-types.html\">Variables "
-            "and Data Types</a> explains what that means in practice." % VERSION
+            "<code>Any</code>, plus the name of any struct you declare. There are "
+            "no generic parameters in %s — <a href=\"structs.html\">Structs</a> and "
+            "<a href=\"variables-and-data-types.html\">Variables and Data "
+            "Types</a> explain what that means in practice." % VERSION
         ),
     }
 
@@ -558,6 +560,9 @@ the dividend. Division or modulo by zero is a runtime error for both
 %(zero_out)s
 
 %(h_containers)s
+<p>Struct names are types too: a field, parameter, return value or annotation may
+use any struct declared in the program. See <a href="structs.html">Structs</a>.</p>
+
 <p><code>List</code> and <code>Map</code> are containers whose element type is
 <code>Any</code> in v%(version)s — there are no generics yet, so an element is
 accepted whatever it is and checked at runtime. This is a documented limitation,
@@ -682,9 +687,9 @@ message. Idiomatic Silica returns a sentinel or prints and returns early:</p>
         "limits_note": callout(
             "<strong>Functions are not first-class values in %s.</strong> They can be "
             "called, not passed, returned or stored. There are no closures, no "
-            "anonymous functions and no methods on user-defined types. Those are "
-            "planned, not present — see the <a href=\"../index.html#roadmap\">"
-            "roadmap</a>." % VERSION,
+            "anonymous functions, and no methods: a struct holds data and "
+            "functions operate on it. Those are planned, not present — see the "
+            "<a href=\"../index.html#roadmap\">roadmap</a>." % VERSION,
             kind="warn",
         ),
     }
@@ -885,6 +890,14 @@ checker enforces.</p>
 %(json_code)s
 %(json_out)s
 
+%(h_colors)s
+<p>Import with <code>use colors</code>. 29 functions, no dependencies: perceptual
+colour spaces (sRGB, linear sRGB, HSL, OKLab, OKLCH, Display P3), gamut mapping
+instead of clipping, palettes, themes, WCAG audits and CSS output.</p>
+%(colors_table)s
+%(colors_code)s
+%(colors_out)s
+
 %(h_fs)s
 <p>Import with <code>use fs</code>. Every function is behind a capability, and
 nothing is granted by default:</p>
@@ -954,6 +967,35 @@ nothing is granted by default:</p>
         ),
         "json_code": code("json", "json_demo.sc"),
         "json_out": code_out("json"),
+        "h_colors": h2("colors", "colors"),
+        "colors_table": table(
+            ["Function", "Returns", "Notes"],
+            [
+                ["<code>colors.parse(text)</code>", "<code>Map</code>",
+                 "accepts <code>#hex</code>, <code>rgb()</code>, "
+                 "<code>hsl()</code>, named colours"],
+                ["<code>colors.hex(colour)</code>", "<code>String</code>",
+                 "the 8-bit hex form"],
+                ["<code>colors.oklch(l, c, h, a)</code>", "<code>Map</code>",
+                 "perceptual, wide-gamut aware"],
+                ["<code>colors.contrast(a, b)</code>", "<code>Float</code>",
+                 "WCAG 2.1 ratio"],
+                ["<code>colors.passes(a, b, level, large)</code>", "<code>Map</code>",
+                 "a verdict, not a guess"],
+                ["<code>colors.palette(base, steps)</code>", "<code>Map</code>",
+                 "50–950 scale with perceptual lightness targets"],
+                ["<code>colors.theme(base, dark)</code>", "<code>Map</code>",
+                 "semantic tokens with a contrast-chosen <code>on_accent</code>"],
+                ["<code>colors.audit(theme)</code>", "<code>Map</code>",
+                 "a verdict per token pair"],
+                ["<code>colors.mix(a, b, t)</code>", "<code>Map</code>",
+                 "perceptual mixing"],
+                ["<code>colors.css(colour, format)</code>", "<code>String</code>",
+                 "CSS output"],
+            ],
+        ),
+        "colors_code": code("colors_demo", "colors.sc"),
+        "colors_out": code_out("colors_demo"),
         "h_fs": h2("fs — behind capabilities", "fs"),
         "fs_table": table(
             ["Function", "Capability required"],
@@ -981,6 +1023,8 @@ nothing is granted by default:</p>
                 ["<code>string</code>", "<code>use string</code>", "implemented"],
                 ["<code>collections</code>", "<code>use collections</code>", "implemented"],
                 ["<code>json</code>", "<code>use json</code>", "implemented"],
+                ["<code>colors</code>", "<code>use colors</code>",
+                 "implemented (0.9.1) — 29 functions"],
                 ["<code>fs</code>", "<code>use fs</code>", "implemented, capability-gated"],
                 ["<code>ui</code>, <code>tui</code>, <code>gui</code>, <code>speech</code>",
                  "<code>use ui</code> …", "implemented; UI namespaces are separate"],
@@ -1109,6 +1153,10 @@ def examples():
         ("strings", "Strings", "Split, join, replace and index."),
         ("json", "JSON", "Parse and re-emit a document, compact and pretty."),
         ("math", "Math", "The math module and its constant <code>pi</code>."),
+        ("struct_basic", "Structs", "A record with typed fields, constructed, read "
+                                    "and modified."),
+        ("colors_demo", "Colours", "Perceptual colour, contrast and a generated "
+                                   "palette."),
     ]
 
     blocks = []
@@ -1170,10 +1218,16 @@ def faq():
         ("Can Silica compile itself?",
          "Not yet. Self-hosting is a staged plan in the repository's bootstrap "
          "document, not a finished feature."),
-        ("Does it have classes, structs or generics?",
-         "No. There are no user-defined types, no fields or methods, and no generic "
+        ("Does it have structs?",
+         "Yes, since 0.9.2. A <code>struct</code> is a named record with typed "
+         "fields, constructed by name or position, with field access and "
+         "assignment at any depth, equality by value and a printed form. "
+         "<code>const</code> freezes the whole reachable tree. Structs hold data; "
+         "they have no methods."),
+        ("Does it have classes or generics?",
+         "No. There are no classes, no inheritance and no methods, and no generic "
          "parameters — <code>List</code> and <code>Map</code> elements check as "
-         "<code>Any</code>. These are on the roadmap."),
+         "<code>Any</code>. Both are on the roadmap."),
         ("Are there closures or first-class functions?",
          "No. Functions can be called but not passed, returned or stored."),
         ("Does it support exceptions or a Result type?",
@@ -1200,9 +1254,9 @@ def faq():
          "copyright notice and permission notice are included."),
         ("How is it tested?",
          "The repository runs its suite with <code>python3 -m unittest discover -s "
-         "tests -t .</code>; on the audited commit that is 803 tests. CI runs it on "
-         "Python 3.9, 3.11 and 3.12. Silica also has its own test runner for "
-         "<code>*_test.sc</code> files: <code>silica test tests</code>."),
+         "tests -t .</code>; the 0.9.3 changelog records 936 tests with 7 skipped. "
+         "CI runs it on Python 3.9, 3.11 and 3.12. Silica also has its own test "
+         "runner for <code>*_test.sc</code> files: <code>silica test tests</code>."),
         ("Who made Silica?",
          "Umaiz Sufiyan, an independent student developer. The project is developed "
          "in the open on GitHub, and contributions are welcome."),
@@ -1237,7 +1291,162 @@ that turn into useful answers get added to this page.</p>
     }
 
 
+# --------------------------------------------------------------------------
+def introduction():
+    return """
+<p>Silica is an open-source, high-level, general-purpose programming language
+created by Umaiz Sufiyan. It has its own keywords, its own type rules and its own
+versioned bytecode format, and it is implemented from scratch in Python with no
+runtime dependencies.</p>
+
+%(quick)s
+%(quick_out)s
+
+%(h_why)s
+<p>Most developers learn to use languages. Silica starts from the other question:
+what does it take to build one? The project is an independent exploration of
+language design — lexing, parsing, static analysis, bytecode compilation and
+virtual machine execution — rather than a wrapper over an existing runtime.</p>
+
+%(h_distinct)s
+<p>The keywords are deliberately not English borrowings from Python or
+JavaScript. A function is <code>sfn</code>, printing is <code>sprint</code>,
+conditionals are <code>si</code> / <code>sino</code>, booleans are
+<code>oui</code> / <code>nein</code>, loops are <code>tant</code> and
+<code>per</code>, logic reads as <code>und</code>, <code>ou</code>,
+<code>non</code>, and records are declared with <code>struct</code>.</p>
+
+%(h_stage)s
+<p>%(release)s is an early release. The language, compiler, bytecode format and
+core standard library are implemented and tested; the project is not
+production-ready, does not compile itself, and is not fast — the VM is a Python
+loop.</p>
+
+%(status)s
+
+%(h_next)s
+<ul>
+  <li><a href="getting-started.html">Getting Started</a> — install and run
+  something in five minutes.</li>
+  <li><a href="syntax.html">Language Syntax</a> — the grammar the parser
+  accepts.</li>
+  <li><a href="structs.html">Structs</a> — the newest language feature.</li>
+  <li><a href="built-in-functions.html">Built-in Functions</a> — the standard
+  library that exists today.</li>
+</ul>
+""" % {
+        "quick": code("hero", "hello.sc"),
+        "quick_out": code_out("hero"),
+        "h_why": h2("Why it exists", "why"),
+        "h_distinct": h2("What makes it distinctive", "distinctive"),
+        "h_stage": h2("Current stage", "stage"),
+        "release": RELEASE,
+        "status": table(
+            ["Area", "Status"],
+            [
+                ["Language", "functions, <code>let</code>/<code>const</code>, "
+                             "<code>si</code>/<code>sino</code>, "
+                             "<code>tant</code>/<code>per</code>, "
+                             "<code>struct</code>, lists, maps, strings"],
+                ["Types", "eight built-in types plus struct names, checked before "
+                          "the program runs"],
+                ["Bytecode", "compile to <code>.sbc</code>, versioned, verified on "
+                             "load"],
+                ["Standard library", "25 modules including <code>colors</code>, "
+                                     "<code>json</code>, <code>fs</code>"],
+                ["Security", "capability-based, deny by default"],
+                ["Tools", "<code>run</code>, <code>check</code>, "
+                          "<code>compile</code>, <code>fmt</code>, "
+                          "<code>test</code>, <code>repl</code>, "
+                          "<code>ide</code>, <code>capabilities</code>"],
+                ["Not implemented", "generics, classes, methods, exceptions, "
+                                    "<code>net</code>/<code>http</code>, package "
+                                    "manager, self-hosting"],
+            ],
+        ),
+        "h_next": h2("Where to go next", "next"),
+    }
+
+
+# --------------------------------------------------------------------------
+def structs():
+    return """
+<p>A <code>struct</code> is a named record with typed fields. It is the first
+user-defined type in Silica, added in 0.9.2 and refined in 0.9.3 so that
+assignment works at any depth.</p>
+
+%(basic)s
+%(basic_out)s
+
+%(h_decl)s
+<p>A declaration lists fields as <code>name: Type</code>, one per line. Duplicate
+fields, duplicate struct names, empty structs, unknown field types and a struct
+that contains itself are all rejected before the program runs.</p>
+
+%(h_construct)s
+<p>Fields may be named or positional, and named fields may be given in any order.
+Every field must be supplied exactly once; a missing, unknown, duplicated or
+wrongly-typed field is a compile error that names the field and lists the real
+ones.</p>
+
+%(construct_code)s
+
+%(h_fields)s
+<p>Field access is checked against the declared field type, and so is assignment.
+A struct bound with <code>let</code> is mutable; one bound with
+<code>const</code> is frozen, including every field reachable from it.</p>
+
+%(nested)s
+%(nested_out)s
+
+%(h_equality)s
+<p><code>==</code> compares two structs by type and by field value, and
+<code>sprint</code> renders a struct the way it is written. A struct is a
+reference value: passing one to a function and modifying it there changes the
+caller's value too — that is documented behaviour, not an accident.</p>
+
+%(fn_code)s
+%(fn_out)s
+
+%(h_bytecode)s
+<p>Structs are real bytecode, not a desugaring: <code>MAKE_STRUCT</code>,
+<code>GET_FIELD</code>, <code>SET_FIELD</code> and <code>FREEZE</code> have
+operand schemas, stack effects and verifier support, so a struct program survives
+a compile to <code>.sbc</code> and reload.</p>
+
+%(h_limits)s
+%(limits)s
+""" % {
+        "basic": code("struct_basic", "structs.sc"),
+        "basic_out": code_out("struct_basic"),
+        "h_decl": h2("Declaring a struct", "declaration"),
+        "h_construct": h2("Construction", "construction"),
+        "construct_code": code_block(
+            "let a = Point(x: 1, y: 2)\n"
+            "let b = Point(1, 2)\n"
+            "let c = Point(y: 2, x: 1)      # same value as a",
+            "construct.sc", show_copy=False, line_numbers=False),
+        "h_fields": h2("Fields, nesting and mutability", "fields"),
+        "nested": code("struct_nested", "nested.sc"),
+        "nested_out": code_out("struct_nested"),
+        "h_equality": h2("Equality, display and passing", "equality"),
+        "fn_code": code("struct_fn", "struct_fn.sc"),
+        "fn_out": code_out("struct_fn"),
+        "h_bytecode": h2("Structs in bytecode", "bytecode"),
+        "h_limits": h2("What structs are not", "limits"),
+        "limits": callout(
+            "<strong>No methods, no inheritance, no generics.</strong> A struct "
+            "holds data and functions operate on it. There are no classes in the "
+            "Python sense, and because there are no generics, a struct stored in a "
+            "plain <code>List</code> is reached through <code>Any</code> — the "
+            "checker defers field access to the runtime, which then reports the "
+            "real problem if the value is not a struct.",
+            kind="warn",
+        ),
+    }
+
 PAGES = {
+    "introduction": introduction,
     "getting-started": getting_started,
     "installation": installation,
     "syntax": syntax,
@@ -1245,6 +1454,7 @@ PAGES = {
     "functions": functions,
     "control-flow": control_flow,
     "strings": strings,
+    "structs": structs,
     "built-in-functions": builtins,
     "cli-reference": cli,
     "examples": examples,
