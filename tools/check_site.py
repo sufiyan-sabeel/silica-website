@@ -99,6 +99,10 @@ def main():
     pages = []
     for base, _dirs, files in os.walk(SITE):
         for name in files:
+            # Google Search Console verification files are served verbatim and
+            # are not pages: no head, no landmarks, nothing to validate.
+            if name.startswith("google") and name.endswith(".html"):
+                continue
             if name.endswith(".html"):
                 pages.append(os.path.join(base, name))
 
