@@ -12,6 +12,7 @@
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="article">
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="Strings — Silica documentation">
 <meta property="og:description" content="Four string delimiter forms, escapes, indexing, concatenation and the string module.">
@@ -29,6 +30,8 @@
 <link rel="icon" href="../assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="../assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+<link rel="preload" as="image" href="../assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="../assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="../assets/css/site.css">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -102,7 +105,7 @@
     <nav class="nav" id="site-nav" aria-label="Primary">
       <a href="../index.html#features">Features</a>
       <a href="../index.html#playground">Playground</a>
-      <a href="../docs/getting-started.html">Docs</a>
+      <a href="../docs/getting-started.html" aria-current="page">Docs</a>
       <a href="../index.html#install">Install</a>
       <a href="../index.html#roadmap">Roadmap</a>
     </nav>
@@ -118,8 +121,9 @@
       </button>
     </div>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
-<main id="main"><div class="wrap"><div class="docs"><nav class="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html" aria-current="page">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Strings</span></nav><h1>Strings</h1>
+<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html" aria-current="page">Strings</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="getting-started.html">Docs</a><span aria-hidden="true">/</span><span>Strings</span></nav><h1>Strings</h1>
 <p>A <code>String</code> is UTF-8 text. Silica accepts four delimiter forms, and
 the triple-quoted ones may span lines.</p>
 
@@ -141,7 +145,7 @@ can span lines
 escape<span class="tok-op">:</span> tab	here<span class="tok-op">,</span> newline above<span class="tok-op">,</span> quote <span class="tok-str">&quot; inside</span></code></pre></div>
 
 <h2 id="escapes">Escape sequences</h2>
-<table><thead><tr><th>Escape</th><th>Meaning</th></tr></thead><tbody><tr><td><code>\n</code></td><td>newline</td></tr><tr><td><code>\t</code></td><td>tab</td></tr><tr><td><code>\r</code></td><td>carriage return</td></tr><tr><td><code>\0</code></td><td>null</td></tr><tr><td><code>\\</code></td><td>backslash</td></tr><tr><td><code>\"</code> / <code>\'</code></td><td>quote</td></tr><tr><td><code>\uXXXX</code></td><td>a Unicode code point</td></tr></tbody></table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Escape</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>\n</code></td><td>newline</td></tr><tr><td><code>\t</code></td><td>tab</td></tr><tr><td><code>\r</code></td><td>carriage return</td></tr><tr><td><code>\0</code></td><td>null</td></tr><tr><td><code>\\</code></td><td>backslash</td></tr><tr><td><code>\"</code> / <code>\'</code></td><td>quote</td></tr><tr><td><code>\uXXXX</code></td><td>a Unicode code point</td></tr></tbody></table></div>
 
 <h2 id="operations">Concatenation, indexing and length</h2>
 <p><code>+</code> concatenates two strings; mixing a string and a number is a type
@@ -192,16 +196,16 @@ silica language bytecode
 s</code></pre></div>
 
 <h2 id="functions">Functions in the string module</h2>
-<table><thead><tr><th>Function</th><th>Returns</th><th>Notes</th></tr></thead><tbody><tr><td><code>string.split(s, sep)</code></td><td><code>List</code></td><td>splits on a separator</td></tr><tr><td><code>string.join(list, sep)</code></td><td><code>String</code></td><td>joins list elements</td></tr><tr><td><code>string.trim(s)</code></td><td><code>String</code></td><td>removes surrounding whitespace</td></tr><tr><td><code>string.replace(s, from, to)</code></td><td><code>String</code></td><td>replaces every occurrence</td></tr><tr><td><code>string.contains(s, part)</code></td><td><code>Bool</code></td><td>substring test</td></tr><tr><td><code>string.starts_with(s, prefix)</code></td><td><code>Bool</code></td><td>prefix test</td></tr><tr><td><code>string.ends_with(s, suffix)</code></td><td><code>Bool</code></td><td>suffix test</td></tr><tr><td><code>string.upper(s)</code></td><td><code>String</code></td><td>uppercase</td></tr><tr><td><code>string.lower(s)</code></td><td><code>String</code></td><td>lowercase</td></tr></tbody></table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Function</th><th scope="col">Returns</th><th scope="col">Notes</th></tr></thead><tbody><tr><td><code>string.split(s, sep)</code></td><td><code>List</code></td><td>splits on a separator</td></tr><tr><td><code>string.join(list, sep)</code></td><td><code>String</code></td><td>joins list elements</td></tr><tr><td><code>string.trim(s)</code></td><td><code>String</code></td><td>removes surrounding whitespace</td></tr><tr><td><code>string.replace(s, from, to)</code></td><td><code>String</code></td><td>replaces every occurrence</td></tr><tr><td><code>string.contains(s, part)</code></td><td><code>Bool</code></td><td>substring test</td></tr><tr><td><code>string.starts_with(s, prefix)</code></td><td><code>Bool</code></td><td>prefix test</td></tr><tr><td><code>string.ends_with(s, suffix)</code></td><td><code>Bool</code></td><td>suffix test</td></tr><tr><td><code>string.upper(s)</code></td><td><code>String</code></td><td>uppercase</td></tr><tr><td><code>string.lower(s)</code></td><td><code>String</code></td><td>lowercase</td></tr></tbody></table></div>
 
 <h2 id="limits">What strings cannot do</h2>
 <div class="callout callout--warn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><p>There is no string interpolation and no template syntax in 0.9.0: build text with <code>+</code> and <code>str()</code>. There are also no regular expressions — <code>regex</code> is a planned module that currently fails to import with an explicit message.</p></div>
-<div class="pager"><a class="prev" href="control-flow.html"><span>Previous</span>Control Flow</a><a class="next" href="built-in-functions.html"><span>Next</span>Built-in Functions</a></div></article></div></div></main><footer class="site-footer">
+<div class="pager"><a class="prev" href="control-flow.html"><span>Previous</span>Control Flow</a><a class="next" href="built-in-functions.html"><span>Next</span>Built-in Functions</a></div></article><nav class="toc" aria-label="On this page"><p class="toc__title">On this page</p><ul><li><a href="#escapes">Escape sequences</a></li><li><a href="#operations">Concatenation, indexing and length</a></li><li><a href="#module">The string module</a></li><li><a href="#functions">Functions in the string module</a></li><li><a href="#limits">What strings cannot do</a></li></ul></nav></div></div></main><footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
-        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <img src="../assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.
         Created by Umaiz Sufiyan.</p>
