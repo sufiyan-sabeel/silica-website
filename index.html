@@ -12,6 +12,7 @@
 <meta name="color-scheme" content="dark light">
 
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="Silica Programming Language">
 <meta property="og:title" content="Silica Programming Language — an open-source language built to create">
 <meta property="og:description" content="Silica is an open-source, high-level general-purpose programming language with its own syntax, a checked compiler, versioned bytecode and a capability-based security model. Created by Umaiz Sufiyan.">
@@ -29,6 +30,8 @@
 <link rel="icon" href="assets/img/favicon.ico" sizes="32x32">
 <link rel="icon" href="assets/img/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="preload" as="image" href="assets/img/mark-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="assets/img/mark-light.png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="assets/css/site.css">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -125,14 +128,15 @@
       </button>
     </div>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
 <main id="main">
 <section class="hero">
   <div class="wrap">
-    <div>
+    <div class="hero-copy">
       <div class="hero-mark">
-        <img src="assets/img/mark-dark.png" alt="Silica logo" class="logo-dark" width="44" height="56">
-        <img src="assets/img/mark-light.png" alt="Silica logo" class="logo-light" width="44" height="56">
+        <img src="assets/img/mark-dark.png" alt="Silica logo" class="logo-dark" width="38" height="49">
+        <img src="assets/img/mark-light.png" alt="Silica logo" class="logo-light" width="38" height="49">
         <span>Silica 0.9.0 · open source · MIT</span>
       </div>
       <h1>Meet Silica.<br>A Language Built to <em>Create.</em></h1>
@@ -150,7 +154,7 @@
         <span class="pill">no runtime dependencies</span>
       </div>
     </div>
-    <div>
+    <div class="hero-stack">
       <div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">hello.sc</span><button class="code__copy" type="button" data-copy="code-hello-sc-1" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><pre id="code-hello-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
     <span class="tok-kw">let</span> name<span class="tok-op">:</span> <span class="tok-type">String</span> <span class="tok-op">=</span> <span class="tok-str">&quot;Silica&quot;</span>
     <span class="tok-kw">let</span> year<span class="tok-op">:</span> <span class="tok-type">Int</span> <span class="tok-op">=</span> <span class="tok-num">2026</span>
@@ -252,7 +256,7 @@ Built <span class="tok-kw">in</span> <span class="tok-num">2026</span></code></p
   </div>
 </section>
 
-<section id="story" style="border-top:1px solid var(--border-soft)">
+<section id="story">
   <div class="wrap">
     <div class="split">
       <div class="reveal">
@@ -280,8 +284,8 @@ Built <span class="tok-kw">in</span> <span class="tok-num">2026</span></code></p
         as an open-source project. This is a journey of building something from an
         idea.</p>
         <div class="signature">
-          <img src="assets/img/mark-dark.png" alt="" class="logo-dark" width="40" height="51">
-          <img src="assets/img/mark-light.png" alt="" class="logo-light" width="40" height="51">
+          <img src="assets/img/mark-dark.png" alt="" class="logo-dark" width="34" height="44">
+          <img src="assets/img/mark-light.png" alt="" class="logo-light" width="34" height="44">
           <p><strong>Umaiz Sufiyan</strong>Creator of Silica</p>
         </div>
       </div>
@@ -289,7 +293,7 @@ Built <span class="tok-kw">in</span> <span class="tok-num">2026</span></code></p
   </div>
 </section>
 
-<section id="features" style="border-top:1px solid var(--border-soft);background:var(--bg-elev)">
+<section id="features" class="section--alt">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Language features</p>
@@ -316,7 +320,7 @@ Built <span class="tok-kw">in</span> <span class="tok-num">2026</span></code></p
   </div>
 </section>
 
-<section id="playground" style="border-top:1px solid var(--border-soft)">
+<section id="playground">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Code playground</p>
@@ -450,7 +454,7 @@ s</code></pre></div>
   </div>
 </section>
 
-<section id="install" style="border-top:1px solid var(--border-soft);background:var(--bg-elev)">
+<section id="install" class="section--alt">
   <div class="wrap">
     <div class="split">
       <div class="reveal">
@@ -508,7 +512,7 @@ Hello from Silica</pre>
   </div>
 </section>
 
-<section id="docs" style="border-top:1px solid var(--border-soft)">
+<section id="docs">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Documentation</p>
@@ -533,7 +537,7 @@ Hello from Silica</pre>
   </div>
 </section>
 
-<section id="roadmap" style="border-top:1px solid var(--border-soft);background:var(--bg-elev)">
+<section id="roadmap" class="section--alt">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Roadmap</p>
@@ -578,7 +582,7 @@ Hello from Silica</pre>
   </div>
 </section>
 
-<section id="creator" style="border-top:1px solid var(--border-soft)">
+<section id="creator">
   <div class="wrap">
     <div class="creator reveal">
       <div class="creator-grid">
@@ -615,8 +619,8 @@ Hello from Silica</pre>
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="132" height="52">
-        <img src="assets/img/logo-light.png" alt="Silica" class="logo-light" width="132" height="52">
+        <img src="assets/img/logo-dark.png" alt="Silica" class="logo-dark" width="124" height="49" loading="lazy" decoding="async">
+        <img src="assets/img/logo-light.png" alt="Silica" class="logo-light" width="124" height="49" loading="lazy" decoding="async">
         <p>An open-source, high-level general-purpose programming language with its
         own syntax, a checked compiler and a versioned bytecode format.
         Created by Umaiz Sufiyan.</p>
