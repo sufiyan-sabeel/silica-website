@@ -50,29 +50,40 @@
   /* ---------- mobile navigation ---------------------------------------- */
   var toggle = document.querySelector("[data-nav-toggle]");
   var nav = document.getElementById("site-nav");
+  var backdrop = document.querySelector("[data-nav-backdrop]");
 
   function closeNav() {
     if (!nav || !toggle) return;
     nav.classList.remove("is-open");
     toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Open menu");
+    document.body.classList.remove("nav-open");
+    if (backdrop) backdrop.hidden = true;
   }
 
   if (toggle && nav) {
     toggle.addEventListener("click", function () {
       var open = nav.classList.toggle("is-open");
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      document.body.classList.toggle("nav-open", open);
+      if (backdrop) backdrop.hidden = !open;
     });
 
     nav.addEventListener("click", function (event) {
       if (event.target.closest("a")) closeNav();
     });
 
+    if (backdrop) {
+      backdrop.addEventListener("click", closeNav);
+    }
+
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape") closeNav();
     });
 
     window.addEventListener("resize", function () {
-      if (window.innerWidth > 760) closeNav();
+      if (window.innerWidth > 800) closeNav();
     });
   }
 
@@ -159,6 +170,79 @@
       });
     });
   });
+
+  /* ---------- collapsible documentation menu ---------------------------- */
+  var docsMenu = document.querySelector("[data-docs-menu]");
+  if (docsMenu) {
+    var docsToggle = docsMenu.querySelector("[data-docs-toggle]");
+    var narrow = window.matchMedia("(max-width: 1080px)");
+
+    function syncDocsMenu() {
+      docsMenu.setAttribute("data-ready", "");
+      if (narrow.matches) {
+        docsMenu.classList.add("is-collapsed");
+        docsToggle.setAttribute("aria-expanded", "false");
+      } else {
+        docsMenu.classList.remove("is-collapsed", "is-open");
+        docsToggle.setAttribute("aria-expanded", "true");
+      }
+    }
+
+    syncDocsMenu();
+    if (narrow.addEventListener) {
+      narrow.addEventListener("change", syncDocsMenu);
+    } else if (narrow.addListener) {
+      narrow.addListener(syncDocsMenu);
+    }
+
+    if (docsToggle) {
+      docsToggle.addEventListener("click", function () {
+        var collapsed = docsMenu.classList.toggle("is-collapsed");
+        docsMenu.classList.toggle("is-open", !collapsed);
+        docsToggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      });
+    }
+  }
+
+  /* ---------- "on this page" highlight ---------------------------------- */
+  var tocLinks = Array.prototype.slice.call(
+    document.querySelectorAll(".toc a[href^='#']")
+  );
+  if (tocLinks.length && "IntersectionObserver" in window) {
+    var byId = {};
+    var headings = [];
+    tocLinks.forEach(function (link) {
+      var id = link.getAttribute("href").slice(1);
+      var heading = document.getElementById(id);
+      if (!heading) return;
+      byId[id] = link;
+      headings.push(heading);
+    });
+
+    var setActive = function (id) {
+      tocLinks.forEach(function (link) {
+        link.classList.toggle("is-active", link === byId[id]);
+      });
+    };
+
+    var spy = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (entry) {
+            return entry.isIntersecting;
+          })
+          .sort(function (a, b) {
+            return a.boundingClientRect.top - b.boundingClientRect.top;
+          });
+        if (visible.length) setActive(visible[0].target.id);
+      },
+      { rootMargin: "-" + 72 + "px 0px -70% 0px", threshold: 0 }
+    );
+
+    headings.forEach(function (heading) {
+      spy.observe(heading);
+    });
+  }
 
   /* ---------- scroll reveal -------------------------------------------- */
   var revealables = Array.prototype.slice.call(
