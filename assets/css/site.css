@@ -218,7 +218,11 @@ samp {
   border-radius: 5px;
   padding: 0.08em 0.34em;
   color: var(--text);
-  white-space: nowrap;
+  /* a long command such as `python3 -m silica examples/hello.sc` used to push
+     the whole document wider than the viewport; it now breaks only when the
+     line genuinely cannot hold it. Block code is unaffected: it scrolls. */
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 kbd {
@@ -2062,6 +2066,7 @@ section {
   margin: 0;
   color: var(--text-2);
   line-height: 1.6;
+  min-width: 0;
 }
 
 .callout strong {
@@ -2456,6 +2461,7 @@ body.nav-open {
     max-height: 46vh;
   }
 
+  .split,
   .feature-row,
   .story,
   .creator-grid {
@@ -2657,6 +2663,14 @@ body.nav-open {
   .status-strip__time {
     margin-left: 0;
   }
+
+  .status-strip {
+    padding-block: 0.9rem;
+  }
+
+  .status-grid {
+    gap: 0.35rem 1.15rem;
+  }
 }
 
 @media (max-width: 560px) {
@@ -2669,7 +2683,13 @@ body.nav-open {
   }
 
   .hero {
-    padding-block: 1.5rem 2rem;
+    padding-block: 1.25rem 1.5rem;
+  }
+
+  /* the strip already separates the two sections, so the next one does not
+     need its full top padding as well */
+  .status-strip + section {
+    padding-top: 2.25rem;
   }
 
   .hero h1 {
@@ -2734,10 +2754,9 @@ body.nav-open {
     padding: 0.5rem 0.6rem;
   }
 
-  .article td code,
-  :not(pre) > code {
+  .article td code {
     white-space: normal;
-    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   .tab {
