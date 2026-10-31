@@ -11,6 +11,7 @@ import datetime
 import html
 import json
 import os
+import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -132,6 +133,20 @@ def script_tag(data):
             % json.dumps(data, indent=2, ensure_ascii=False))
 
 
+def build_toc(body):
+    """An "On this page" list from the page's own h2 headings."""
+    items = re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body, re.S)
+    if len(items) < 2:
+        return ""
+    links = []
+    for anchor, text in items:
+        label = re.sub(r"<[^>]+>", "", text).strip()
+        links.append('<li><a href="#%s">%s</a></li>' % (anchor, label))
+    return ('<nav class="toc" aria-label="On this page">'
+            '<p class="toc__title">On this page</p><ul>%s</ul></nav>'
+            % "".join(links))
+
+
 def docs_nav(current):
     groups = []
     for name, slugs in DOC_GROUPS:
@@ -145,7 +160,7 @@ def docs_nav(current):
             '<div class="docs-nav__group"><p class="docs-nav__title">%s</p>'
             "<ul>%s</ul></div>" % (name, "".join(links))
         )
-    return ('<nav class="docs-nav" aria-label="Documentation">%s</nav>'
+    return ('<nav class="docs-nav" id="docs-nav" aria-label="Documentation">%s</nav>'
             % "".join(groups))
 
 
@@ -203,7 +218,11 @@ def build_docs():
         body = pages_docs.PAGES[slug]()
         article = (
             '<main id="main"><div class="wrap"><div class="docs">'
+            + '<div class="docs-menu" data-docs-menu>'
+            + '<button class="docs-menu__toggle" type="button" data-docs-toggle '
+              'aria-expanded="true" aria-controls="docs-nav">Documentation menu</button>'
             + docs_nav(slug)
+            + "</div>"
             + '<article class="article">'
             + '<nav class="breadcrumbs" aria-label="Breadcrumb">'
             + '<a href="../index.html">Home</a><span aria-hidden="true">/</span>'
@@ -212,10 +231,12 @@ def build_docs():
             + "<h1>%s</h1>" % label
             + body
             + pager(slug)
-            + "</article></div></div></main>"
+            + "</article>"
+            + build_toc(body)
+            + "</div></div></main>"
         )
         written.append(write("docs/%s.html" % slug,
-                             head(page) + header("../", None) + article + footer("../")))
+                             head(page) + header("../", "Docs") + article + footer("../")))
     return written
 
 
