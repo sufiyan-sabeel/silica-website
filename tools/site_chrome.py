@@ -302,6 +302,9 @@ DOC_PAGES = [
     ("structs", "Structs",
      "Named records with typed fields: declaration, construction, field access, "
      "mutability, equality and nesting."),
+    ("generics", "Generics and Classes",
+     "Type parameters with constraints, parameterised containers, inference, "
+     "classes with methods, and what erasure means."),
     ("built-in-functions", "Built-in Functions",
      "The core, math, string, collections, json, colors and fs modules, with "
      "real output for every example."),
