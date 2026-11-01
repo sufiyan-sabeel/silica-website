@@ -547,59 +547,89 @@
   });
 
   /* ---------- live repository status ------------------------------------- */
-  var statusBlock = document.querySelector("[data-repo-status]");
-  if (statusBlock) {
+  var statusRoots = document.querySelectorAll("[data-repo-status]");
+  if (statusRoots.length) {
     var api = "https://api.github.com/repos/sufiyan-sabeel/silica";
-    var stamp = statusBlock.querySelector("[data-status-time]");
+    var headers = { Accept: "application/vnd.github+json" };
 
     function set(key, value) {
-      var node = statusBlock.querySelector('[data-repo="' + key + '"]');
-      if (node && value !== null && value !== undefined) node.textContent = value;
+      if (value === null || value === undefined || value === "") return;
+      document.querySelectorAll('[data-repo="' + key + '"]').forEach(function (node) {
+        node.textContent = value;
+      });
     }
 
-    function when() {
+    function setHref(key, url) {
+      if (!url) return;
+      document.querySelectorAll('[data-repo="' + key + '"]').forEach(function (node) {
+        node.setAttribute("href", url);
+      });
+    }
+
+    function day(value) {
+      return value ? String(value).slice(0, 10) : null;
+    }
+
+    function stamp(text) {
+      document.querySelectorAll("[data-status-time]").forEach(function (node) {
+        node.textContent = text;
+      });
+    }
+
+    function checkedNow() {
       var now = new Date();
       var hh = String(now.getHours()).padStart(2, "0");
       var mm = String(now.getMinutes()).padStart(2, "0");
-      if (stamp) stamp.textContent = "checked " + hh + ":" + mm;
+      stamp("checked " + hh + ":" + mm);
     }
 
-    fetch(api, { headers: { Accept: "application/vnd.github+json" } })
-      .then(function (res) {
+    function getJSON(url) {
+      return fetch(url, { headers: headers }).then(function (res) {
         if (!res.ok) throw new Error("status " + res.status);
         return res.json();
-      })
-      .then(function (data) {
-        set("stars", data.stargazers_count);
-        set("forks", data.forks_count);
-        set("issues", data.open_issues_count);
-        set("updated", (data.pushed_at || "").slice(0, 10));
-        statusBlock.setAttribute("data-live", "true");
-        when();
-        return fetch(api + "/releases/latest", {
-          headers: { Accept: "application/vnd.github+json" }
+      });
+    }
+
+    getJSON(api)
+      .then(function (repo) {
+        set("stars", repo.stargazers_count);
+        set("forks", repo.forks_count);
+        set("issues", repo.open_issues_count);
+        set("updated", day(repo.pushed_at));
+        statusRoots.forEach(function (root) {
+          root.setAttribute("data-live", "true");
         });
-      })
-      .then(function (res) {
-        if (!res || !res.ok) return null;
-        return res.json();
+        checkedNow();
+        return getJSON(api + "/releases/latest").catch(function () {
+          return null;
+        });
       })
       .then(function (release) {
-        if (!release || !release.tag_name) return;
-        var tag = release.tag_name;
-        set("release", tag);
-        var link = statusBlock.querySelector('[data-repo="release-link"]');
-        if (link && release.html_url) link.href = release.html_url;
-        document.querySelectorAll("[data-version-label]").forEach(function (node) {
-          node.textContent = tag;
+        if (release && release.tag_name) {
+          set("release", release.tag_name);
+          set("release-date", day(release.published_at));
+          setHref("release-link", release.html_url);
+          document.querySelectorAll("[data-version-label]").forEach(function (node) {
+            node.textContent = release.tag_name;
+          });
+        }
+        return getJSON(api + "/commits?per_page=1").catch(function () {
+          return null;
         });
+      })
+      .then(function (commits) {
+        var latest = Array.isArray(commits) ? commits[0] : null;
+        if (latest) {
+          var commit = latest.commit || {};
+          set("commit-sha", (latest.sha || "").slice(0, 7));
+          set("commit-msg", (commit.message || "").split("\n")[0]);
+          set("commit-date", day((commit.committer || {}).date));
+          setHref("commit-link", latest.html_url);
+        }
       })
       .catch(function () {
         /* rate limited or offline: the values baked at build time stand, and the
-           timestamp says when they were captured. */
-        if (stamp) {
-          stamp.textContent = "as of " + (statusBlock.getAttribute("data-built") || "");
-        }
+           stamp keeps saying when they were captured. */
       });
   }
 
