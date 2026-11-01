@@ -1344,6 +1344,122 @@ section {
   white-space: nowrap;
 }
 
+/* ---------- live status board ------------------------------------------- */
+.status-board {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--surface), var(--bg-deep));
+  padding: clamp(1.1rem, 3vw, 1.75rem);
+}
+
+.status-board__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.status-board__repo {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.status-board__repo svg {
+  width: 12px;
+  height: 12px;
+}
+
+.status-board__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  background: var(--border-soft);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.status-board__cell {
+  background: var(--bg-deep);
+  padding: 0.9rem 1rem;
+  min-width: 0;
+}
+
+.status-board__cell dt {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.35rem;
+}
+
+.status-board__cell dd {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.status-board__cell dd strong {
+  font-size: 1.05rem;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.status-board__cell dd a {
+  text-decoration: none;
+  min-width: 0;
+}
+
+.status-board__cell dd code {
+  font-size: 0.8rem;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: var(--accent);
+}
+
+.status-board__note {
+  margin: 0.9rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .status-board__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .status-board__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-board__repo {
+    margin-left: 0;
+  }
+}
+
 /* ---------- tabs (playground) -------------------------------------------- */
 .tabs {
   display: flex;
