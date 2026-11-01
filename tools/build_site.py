@@ -60,7 +60,8 @@ def home_json_ld():
                 "@type": "WebSite",
                 "@id": BASE_URL + "/#website",
                 "url": BASE_URL + "/",
-                "name": "Silica — A Language Built to Create",
+                "name": "Silica",
+                "alternateName": "Silica Programming Language",
                 "description": "The official website of Silica, an open-source, "
                                "high-level, general-purpose programming language.",
                 "inLanguage": "en",
@@ -233,9 +234,9 @@ def write(path, text):
 def build_home():
     page = {
         "title": "Silica — A Language Built to Create",
-        "description": "Discover Silica, an open-source high-level general-purpose "
-                       "programming language created by Umaiz Sufiyan. Explore its "
-                       "syntax, features, documentation, and development journey.",
+        "description": "Silica is an open-source, high-level general-purpose "
+                       "programming language created by Umaiz Sufiyan. Explore the "
+                       "syntax, features and documentation.",
         "canonical": BASE_URL + "/",
         "root": "",
         "json_ld": script_tag(home_json_ld()),
