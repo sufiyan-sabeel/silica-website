@@ -139,9 +139,10 @@ def overview():
 
         <h3>Where it stands</h3>
         <p>%(release)s is an early release with a complete toolchain, a real
-        standard library and a test suite of 900+ tests. It is not production-ready,
-        not self-hosting, and not fast — the VM is a Python loop. The
-        <a href="docs/faq.html">FAQ</a> says so plainly.</p>
+        standard library and a test suite of over a thousand tests. Generics,
+        classes and structs are checked before anything runs. It is not
+        production-ready, not self-hosting, and not fast — the VM is a Python
+        loop. The <a href="docs/faq.html">FAQ</a> says so plainly.</p>
       </div>
 
       <div class="reveal">
@@ -292,6 +293,39 @@ def features():
                      "  hint: run with --allow-fs-read DIR",
                      "bash", label="Capabilities are granted outside the program",
                      line_numbers=False)))
+
+    rows.append("""
+    <div class="feature-row reveal">
+      <div class="feature-row__text">
+        <div class="feature-row__tags"><span class="tag tag--new">new in 0.10.0</span><span class="tag">generics</span></div>
+        <h3>Type parameters that are actually checked.</h3>
+        <p><code>sfn largest&lt;T: Orderable&gt;(items: List&lt;T&gt;) -&gt; T</code>
+        parses, infers its type argument at every call site, and refuses an
+        argument that does not satisfy the constraint. <code>List&lt;T&gt;</code>
+        and <code>Map&lt;K, V&gt;</code> carry their element types through indexing
+        and iteration.</p>
+        <a class="card__more" href="docs/generics.html">Generics and classes %s</a>
+      </div>
+      <div>%s%s</div>
+    </div>""" % (icon("arrow-right"),
+                 code_block(src("generics_demo"), "generics.sc"),
+                 output_block(out("generics_demo"))))
+
+    rows.append("""
+    <div class="feature-row feature-row--flip reveal">
+      <div class="feature-row__text">
+        <div class="feature-row__tags"><span class="tag tag--new">new in 0.10.0</span><span class="tag">classes</span></div>
+        <h3>Classes, when data needs behaviour.</h3>
+        <p>A <code>class</code> keeps the typed fields of a struct and adds methods
+        that use <code>self</code>, plus <code>static</code> members and
+        <code>private</code> fields. Structs still compare by value; classes
+        compare by identity.</p>
+        <a class="card__more" href="docs/generics.html#classes">Classes %s</a>
+      </div>
+      <div>%s%s</div>
+    </div>""" % (icon("arrow-right"),
+                 code_block(src("class_demo"), "counter.sc"),
+                 output_block(out("class_demo"))))
 
     return """
 <section id="features" class="section--alt">
@@ -552,6 +586,87 @@ Hello from Silica</pre>
     }
 
 
+
+def status_board():
+    commit = LAST_COMMIT or {}
+    release = STATUS.get("latest_release") or {}
+    released = (release.get("published_at") or "")[:10]
+    commit_date = (commit.get("date") or "")[:10]
+
+    return """
+<section id="status">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Live status</p>
+      <h2>What the repository says right now.</h2>
+      <p class="lede">These numbers are read from the public GitHub API when the
+      page loads, so they are the repository's state rather than a line in a
+      template. If the API is unreachable or rate-limited, the values captured at
+      build time stay on screen with the date they were taken.</p>
+    </div>
+
+    <div class="status-board reveal" data-repo-status data-built="%(built)s">
+      <div class="status-board__head">
+        <span class="status-strip__label"><span class="status-dot"></span>sufiyan-sabeel/silica</span>
+        <a class="status-board__repo" href="%(github)s" rel="noopener">Open repository %(ext)s</a>
+      </div>
+
+      <dl class="status-board__grid">
+        <div class="status-board__cell">
+          <dt>Latest release</dt>
+          <dd><a data-repo="release-link" href="%(release_url)s"><strong data-repo="release">%(release)s</strong></a>
+          <span class="faint small" data-repo="release-date">%(released)s</span></dd>
+        </div>
+        <div class="status-board__cell">
+          <dt>Last commit</dt>
+          <dd><a data-repo="commit-link" href="%(commit_url)s"><code data-repo="commit-sha">%(sha)s</code></a>
+          <span class="small muted" data-repo="commit-msg">%(message)s</span>
+          <span class="faint small" data-repo="commit-date">%(commit_date)s</span></dd>
+        </div>
+        <div class="status-board__cell">
+          <dt>Stars</dt>
+          <dd><strong data-repo="stars">%(stars)s</strong></dd>
+        </div>
+        <div class="status-board__cell">
+          <dt>Forks</dt>
+          <dd><strong data-repo="forks">%(forks)s</strong></dd>
+        </div>
+        <div class="status-board__cell">
+          <dt>Open issues</dt>
+          <dd><strong data-repo="issues">%(issues)s</strong></dd>
+        </div>
+        <div class="status-board__cell">
+          <dt>Last push</dt>
+          <dd><strong data-repo="updated">%(pushed)s</strong></dd>
+        </div>
+      </dl>
+
+      <p class="status-board__note">
+        <span data-status-time>as of %(built)s</span> ·
+        <a href="%(github)s/releases" rel="noopener">all releases</a> ·
+        <a href="%(github)s/commits/main" rel="noopener">commit history</a>
+      </p>
+    </div>
+  </div>
+</section>
+""" % {
+        "built": BUILT,
+        "github": GITHUB,
+        "ext": icon("arrow-up-right"),
+        "release": RELEASE,
+        "released": released,
+        "release_url": release.get("url") or (GITHUB + "/releases"),
+        "sha": commit.get("sha") or "—",
+        "message": commit.get("message") or "",
+        "commit_date": commit_date,
+        "commit_url": commit.get("url") or (GITHUB + "/commits/main"),
+        "stars": STARS,
+        "forks": FORKS,
+        "issues": ISSUES,
+        "pushed": PUSHED,
+    }
+
+
 def docs_section():
     icons = ["compass", "rocket", "terminal", "code", "layers", "braces", "git-branch",
              "file-text", "box", "package", "terminal", "book", "info"]
@@ -591,6 +706,9 @@ def roadmap():
             "Functions, loops, <code>break</code>/<code>continue</code>",
             "Lists, maps, strings in four delimiter forms",
             "Structs with typed fields (0.9.2)",
+            "Generics with constraints, parameterised containers (0.10.0)",
+            "Classes with methods, <code>static</code> and <code>private</code> (0.10.0)",
+            "<code>path</code>, <code>time</code> and <code>random</code> (0.10.0)",
             "Capability model with <code>fs</code>",
             "Perceptual colour system (0.9.1)",
             "Terminal UI, desktop GUI, web UI DSL",
@@ -602,8 +720,7 @@ def roadmap():
             "Bug-fix passes on published wheels",
         ]),
         ("planned", "Planned", "not started", [
-            "Generics with real type parameters",
-            "Methods and inheritance",
+            "Inheritance between classes",
             "Enums and pattern matching",
             "<code>net</code>, <code>http</code>, <code>crypto</code>",
             "Package manager (<code>new</code>, <code>add</code>, <code>build</code>)",
@@ -722,5 +839,5 @@ def cta():
 def body():
     return "".join([
         hero(), overview(), features(), playground(), story(), architecture(),
-        install(), docs_section(), roadmap(), creator(), cta(),
+        install(), status_board(), docs_section(), roadmap(), creator(), cta(),
     ])
