@@ -363,6 +363,7 @@ def head(page):
 <meta name="twitter:description" content="%(description)s">
 <meta name="twitter:image" content="%(og_image)s">
 
+<link rel="icon" type="image/png" sizes="144x144" href="%(root)sfavicon.png">
 <link rel="icon" href="%(favicon)s" sizes="32x32">
 <link rel="icon" href="%(icon192)s" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="%(icon192)s">
