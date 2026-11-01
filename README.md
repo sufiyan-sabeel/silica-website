@@ -1,7 +1,5 @@
 <p align="center">
-  <a href="https://gitdiagram.com/sufiyan-sabeel/silica?utm_source=readme&amp;utm_medium=badge">
-    <img src="https://gitdiagram.com/diagram-badge.svg" alt="Architecture diagram">
-  </a>
+  <img src="assets/img/architecture.png" alt="Silica architecture diagram: the CLI, engine pipeline, lexer, parser, checker, compiler, bytecode, VM, capabilities, standard library, speech, Python interop and the IDE, with the files that implement each part" width="100%">
 </p>
 
 # Silica — official website
