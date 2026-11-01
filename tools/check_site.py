@@ -198,7 +198,8 @@ def main():
 
     for required in ("robots.txt", ".nojekyll", "assets/css/site.css",
                      "assets/js/site.js", "assets/js/crystal.js",
-                     "assets/search-index.json", "assets/img/og-cover.png"):
+                     "assets/search-index.json", "assets/img/og-cover.png",
+                     "favicon.png"):
         if not os.path.exists(os.path.join(SITE, required)):
             problems.append("missing %s" % required)
 
