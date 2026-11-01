@@ -1,9 +1,16 @@
+<p align="center">
+  <a href="https://gitdiagram.com/sufiyan-sabeel/silica">
+    <img src="https://gitdiagram.com/diagram-badge.svg" alt="Architecture diagram">
+  </a>
+</p>
+
 # Silica — official website
 
 The official website for [Silica](https://github.com/sufiyan-sabeel/silica), an
 open-source general-purpose programming language created by Umaiz Sufiyan.
 
-Live at **https://sufiyan-sabeel.github.io/silica-website/**
+**Live at https://sufiyan-sabeel.github.io/silica-website/**
+**Language repository: https://github.com/sufiyan-sabeel/silica**
 
 ## What this is
 
@@ -36,6 +43,11 @@ renders one still frame, and if WebGL is unavailable the inline SVG fallback in
 the same geometry, so the two views are the same object.
 
 ## Live repository status
+
+The homepage carries a status board: latest release, last commit, stars, forks and
+open issues, read from the public GitHub API in the visitor's browser. The build
+bakes the same values in as a fallback, so the page is correct with JavaScript
+disabled and honest when the API is rate-limited.
 
 `tools/fetch_repo_status.py` captures stars, forks, open issues, the latest
 release and the last push into `tools/repo_status.json`. The build bakes those
