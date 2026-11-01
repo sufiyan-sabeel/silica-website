@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="indigo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generics and Classes — Silica documentation</title>
+<meta name="description" content="Type parameters with constraints, parameterised containers, inference, classes with methods, and what erasure means.">
+<link rel="canonical" href="https://sufiyan-sabeel.github.io/silica-website/docs/generics.html">
+<meta name="author" content="Umaiz Sufiyan">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b1020">
+<meta name="color-scheme" content="dark light">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Silica">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Generics and Classes — Silica documentation">
+<meta property="og:description" content="Type parameters with constraints, parameterised containers, inference, classes with methods, and what erasure means.">
+<meta property="og:url" content="https://sufiyan-sabeel.github.io/silica-website/docs/generics.html">
+<meta property="og:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Silica — a language built to create">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Generics and Classes — Silica documentation">
+<meta name="twitter:description" content="Type parameters with constraints, parameterised containers, inference, classes with methods, and what erasure means.">
+<meta name="twitter:image" content="https://sufiyan-sabeel.github.io/silica-website/assets/img/og-cover.png">
+
+<link rel="icon" type="image/png" sizes="144x144" href="../favicon.png">
+<link rel="icon" href="../assets/img/favicon.ico?v=3f54d723" sizes="32x32">
+<link rel="icon" href="../assets/img/icon-192.png?v=3f54d723" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../assets/img/icon-192.png?v=3f54d723">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="preload" as="image" href="../assets/img/mark-dark.png?v=3f54d723" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="../assets/img/mark-light.png?v=3f54d723" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/css/site.css?v=3f54d723">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Generics and Classes",
+      "description": "Type parameters with constraints, parameterised containers, inference, classes with methods, and what erasure means.",
+      "url": "https://sufiyan-sabeel.github.io/silica-website/docs/generics.html",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#creator"
+      },
+      "publisher": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#creator"
+      },
+      "isPartOf": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#website"
+      },
+      "about": {
+        "@id": "https://sufiyan-sabeel.github.io/silica-website/#software"
+      },
+      "proficiencyLevel": "Beginner"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sufiyan-sabeel.github.io/silica-website/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Documentation",
+          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/introduction.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Generics and Classes",
+          "item": "https://sufiyan-sabeel.github.io/silica-website/docs/generics.html"
+        }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://sufiyan-sabeel.github.io/silica-website/#creator",
+      "name": "Umaiz Sufiyan",
+      "url": "https://github.com/sufiyan-sabeel",
+      "jobTitle": "Student Developer and Creator of Silica",
+      "sameAs": [
+        "https://github.com/sufiyan-sabeel",
+        "https://www.instagram.com/umaizsufiyan.78/"
+      ]
+    }
+  ]
+}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Silica — home">
+      <img src="../assets/img/mark-dark.png?v=3f54d723" alt="" class="logo-dark" width="22" height="28">
+      <img src="../assets/img/mark-light.png?v=3f54d723" alt="" class="logo-light" width="22" height="28">
+      <span>Silica</span>
+    </a>
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <a href="../index.html#overview">Overview</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../docs/introduction.html" aria-current="page">Documentation</a>
+      <a href="../index.html#playground">Playground</a>
+      <a href="../index.html#roadmap">Roadmap</a>
+      <a href="../index.html#creator">About</a>
+      <div class="nav-drawer-cta">
+        <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> GitHub</a>
+        <a class="btn btn--primary btn--sm" href="../docs/getting-started.html">Get Started</a>
+      </div>
+    </nav>
+    <div class="nav-actions">
+      <button class="search-open" type="button" data-search-open aria-label="Search the documentation">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Search</span><kbd>/</kbd>
+      </button>
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+      <div class="customizer" data-customizer>
+        <button class="icon-btn" type="button" data-customizer-toggle aria-expanded="false" aria-controls="customizer-panel" aria-label="Customise appearance">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+        </button>
+        <div class="customizer__panel" id="customizer-panel" hidden>
+          <div class="customizer__group">
+            <p class="customizer__title">Accent</p>
+            <div class="swatches" role="group" aria-label="Accent colour">
+              <button class="swatch" type="button" data-accent-choice="indigo" aria-pressed="true"><span style="--sw: #8b9bff"></span>Indigo</button><button class="swatch" type="button" data-accent-choice="teal" aria-pressed="false"><span style="--sw: #5fd3c0"></span>Teal</button><button class="swatch" type="button" data-accent-choice="violet" aria-pressed="false"><span style="--sw: #b79cff"></span>Violet</button><button class="swatch" type="button" data-accent-choice="amber" aria-pressed="false"><span style="--sw: #e8b765"></span>Amber</button><button class="swatch" type="button" data-accent-choice="rose" aria-pressed="false"><span style="--sw: #f08c9a"></span>Rose</button>
+            </div>
+          </div>
+          <div class="customizer__group">
+            <p class="customizer__title">Theme</p>
+            <div class="segmented" role="group" aria-label="Theme">
+              <button type="button" data-theme-choice="dark" aria-pressed="true">Dark</button>
+              <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="btn btn--ghost btn--sm" href="https://github.com/sufiyan-sabeel/silica" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span>GitHub</span></a>
+      <a class="btn btn--primary btn--sm" href="../docs/getting-started.html">Get Started</a>
+      <button class="icon-btn nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
+</header>
+<div class="search-dialog" id="search-dialog" data-index="../assets/search-index.json" hidden>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the documentation">
+    <div class="search-field">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" placeholder="Search the documentation…" aria-label="Search the documentation" autocomplete="off" spellcheck="false">
+      <button class="search-close" type="button" data-search-close>esc</button>
+    </div>
+    <p class="search-empty" role="status">Type to search the documentation.</p>
+    <ul class="search-results"></ul>
+    <div class="search-hint"><span>↑ ↓ to move · Enter to open</span><span>Esc to close</span></div>
+  </div>
+</div>
+<main id="main"><div class="wrap"><div class="docs"><div class="docs-menu" data-docs-menu><button class="docs-menu__toggle" type="button" data-docs-toggle aria-expanded="true" aria-controls="docs-nav">Documentation menu</button><nav class="docs-nav" id="docs-nav" aria-label="Documentation"><div class="docs-nav__group"><p class="docs-nav__title">Start here</p><ul><li><a href="introduction.html">Introduction</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="installation.html">Installation</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Language</p><ul><li><a href="syntax.html">Language Syntax</a></li><li><a href="variables-and-data-types.html">Variables and Data Types</a></li><li><a href="functions.html">Functions</a></li><li><a href="control-flow.html">Control Flow</a></li><li><a href="strings.html">Strings</a></li><li><a href="structs.html">Structs</a></li><li><a href="generics.html" aria-current="page">Generics and Classes</a></li></ul></div><div class="docs-nav__group"><p class="docs-nav__title">Reference</p><ul><li><a href="built-in-functions.html">Built-in Functions</a></li><li><a href="cli-reference.html">CLI Reference</a></li><li><a href="examples.html">Examples</a></li><li><a href="faq.html">FAQ</a></li></ul></div></nav></div><article class="article"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="introduction.html">Documentation</a><span aria-hidden="true">/</span><span>Generics and Classes</span></nav><h1>Generics and Classes</h1>
+<p>Since 0.10.0 Silica has type parameters that are actually checked: on
+functions, on structs and on classes, with parameterised <code>List&lt;T&gt;</code>
+and <code>Map&lt;K, V&gt;</code>, inference at construction and at call sites,
+and three constraints that gate the operators.</p>
+
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">generics.sc</span><button class="code__copy" type="button" data-copy="code-generics-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15</div><pre id="code-generics-sc-2" tabindex="0"><code><span class="tok-kw">sfn</span> largest<span class="tok-op">&lt;</span>T<span class="tok-op">:</span> Orderable<span class="tok-op">&gt;</span><span class="tok-op">(</span>items<span class="tok-op">:</span> <span class="tok-type">List</span><span class="tok-op">&lt;</span>T<span class="tok-op">&gt;</span><span class="tok-op">)</span> <span class="tok-op">-</span><span class="tok-op">&gt;</span> T <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> best<span class="tok-op">:</span> T <span class="tok-op">=</span> items<span class="tok-op">[</span><span class="tok-num">0</span><span class="tok-op">]</span>
+    <span class="tok-kw">per</span> item <span class="tok-kw">in</span> items <span class="tok-op">{</span>
+        <span class="tok-kw">si</span> item <span class="tok-op">&gt;</span> best <span class="tok-op">{</span>
+            best <span class="tok-op">=</span> item
+        <span class="tok-op">}</span>
+    <span class="tok-op">}</span>
+    <span class="tok-kw">ret</span> best
+<span class="tok-op">}</span>
+
+<span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> numbers<span class="tok-op">:</span> <span class="tok-type">List</span><span class="tok-op">&lt;</span><span class="tok-type">Int</span><span class="tok-op">&gt;</span> <span class="tok-op">=</span> <span class="tok-op">[</span><span class="tok-num">4</span><span class="tok-op">,</span> <span class="tok-num">9</span><span class="tok-op">,</span> <span class="tok-num">2</span><span class="tok-op">]</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">largest</span><span class="tok-op">(</span>numbers<span class="tok-op">)</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">largest</span><span class="tok-op">(</span><span class="tok-op">[</span><span class="tok-str">&quot;pear&quot;</span><span class="tok-op">,</span> <span class="tok-str">&quot;apple&quot;</span><span class="tok-op">]</span><span class="tok-op">)</span><span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-43" tabindex="0"><code><span class="tok-num">9</span>
+pear</code></pre></div></div>
+
+<h2 id="declaring">Declaring type parameters</h2>
+<p>A declaration puts <code>&lt;T&gt;</code> after the name, and optionally a
+constraint after a colon: <code>&lt;T: Orderable&gt;</code>. Several parameters
+are allowed — <code>struct Pair&lt;K, V&gt;</code> — and a parameter is in scope
+for the declaration's own signature, so <code>sfn f&lt;T&gt;(x: T) -&gt; T</code>
+checks.</p>
+
+<div class="code  code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">shapes.sc</span></div><div class="code__body"><pre id="code-shapes-sc-1" tabindex="0"><code><span class="tok-kw">sfn</span> repeat<span class="tok-op">&lt;</span>T<span class="tok-op">&gt;</span><span class="tok-op">(</span>value<span class="tok-op">:</span> T<span class="tok-op">,</span> times<span class="tok-op">:</span> <span class="tok-type">Int</span><span class="tok-op">)</span> <span class="tok-op">-</span><span class="tok-op">&gt;</span> <span class="tok-type">List</span><span class="tok-op">&lt;</span>T<span class="tok-op">&gt;</span> <span class="tok-op">{</span> <span class="tok-op">.</span><span class="tok-op">.</span><span class="tok-op">.</span> <span class="tok-op">}</span>
+<span class="tok-kw">struct</span> Box<span class="tok-op">&lt;</span>T<span class="tok-op">&gt;</span> <span class="tok-op">{</span> value<span class="tok-op">:</span> T <span class="tok-op">}</span>
+class Bag<span class="tok-op">&lt;</span>T<span class="tok-op">&gt;</span> <span class="tok-op">{</span> items<span class="tok-op">:</span> <span class="tok-type">List</span><span class="tok-op">&lt;</span>T<span class="tok-op">&gt;</span> <span class="tok-op">.</span><span class="tok-op">.</span><span class="tok-op">.</span> <span class="tok-op">}</span>
+<span class="tok-kw">struct</span> Pair<span class="tok-op">&lt;</span>K<span class="tok-op">,</span> V<span class="tok-op">&gt;</span> <span class="tok-op">{</span> key<span class="tok-op">:</span> K<span class="tok-op">,</span> value<span class="tok-op">:</span> V <span class="tok-op">}</span></code></pre></div></div>
+
+<h2 id="containers">Parameterised containers</h2>
+<p>The built-in containers are generic. Element and key types flow through
+indexing, iteration and concatenation, so <code>xs[0]</code> on a
+<code>List&lt;Int&gt;</code> is an <code>Int</code> and a <code>Map&lt;String,
+Int&gt;</code> yields <code>Int</code> values. A bare <code>List</code> or
+<code>Map</code> still means "elements unknown" and stays compatible with any
+parameterisation, which is why every 0.9.x program kept compiling.</p>
+
+<h2 id="inference">Inference</h2>
+<p>Type arguments are inferred from the arguments first, then from the binding's
+annotation — <code>let s: Stack&lt;String&gt; = Stack([])</code> is enough. A
+mismatch is a compile error that names the type argument, not a runtime surprise.</p>
+
+<h2 id="constraints">Constraints</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Constraint</th><th scope="col">Allows</th><th scope="col">Checked</th></tr></thead><tbody><tr><td><code>Numeric</code></td><td><code>+ - * / %</code></td><td>in the body and at every call site</td></tr><tr><td><code>Orderable</code></td><td><code>&lt; &lt;= &gt; &gt;=</code></td><td>the same</td></tr><tr><td><code>Equatable</code></td><td><code>== !=</code></td><td>the same</td></tr></tbody></table></div>
+<p>An unconstrained type parameter cannot be used with <code>+ - * / %</code> or
+<code>&lt; &lt;= &gt; &gt;=</code>: the checker rejects it in the body and at every
+call site, so a generic function that adds its arguments has to say
+<code>&lt;T: Numeric&gt;</code>.</p>
+
+<h2 id="classes">Classes</h2>
+<p>A <code>class</code> is a record that can also carry methods. Fields are
+declared as in a struct, methods are <code>sfn</code> declarations that use
+<code>self</code>, and <code>static</code> and <code>private</code> are keywords.
+Classes compare by identity; structs compare by value.</p>
+
+<div class="code "><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">counter.sc</span><button class="code__copy" type="button" data-copy="code-counter-sc-2" aria-label="Copy code to clipboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span>copy</span></button></div><div class="code__body"><div class="code__lines" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</div><pre id="code-counter-sc-2" tabindex="0"><code>class Counter <span class="tok-op">{</span>
+    value<span class="tok-op">:</span> <span class="tok-type">Int</span>
+
+    <span class="tok-kw">sfn</span> <span class="tok-fn">bump</span><span class="tok-op">(</span>by<span class="tok-op">:</span> <span class="tok-type">Int</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+        self<span class="tok-op">.</span>value <span class="tok-op">=</span> self<span class="tok-op">.</span>value <span class="tok-op">+</span> by
+    <span class="tok-op">}</span>
+
+    <span class="tok-kw">sfn</span> <span class="tok-fn">read</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">-</span><span class="tok-op">&gt;</span> <span class="tok-type">Int</span> <span class="tok-op">{</span>
+        <span class="tok-kw">ret</span> self<span class="tok-op">.</span>value
+    <span class="tok-op">}</span>
+<span class="tok-op">}</span>
+
+<span class="tok-kw">sfn</span> <span class="tok-fn">main</span><span class="tok-op">(</span><span class="tok-op">)</span> <span class="tok-op">{</span>
+    <span class="tok-kw">let</span> c <span class="tok-op">=</span> <span class="tok-fn">Counter</span><span class="tok-op">(</span><span class="tok-num">0</span><span class="tok-op">)</span>
+    c<span class="tok-op">.</span><span class="tok-fn">bump</span><span class="tok-op">(</span><span class="tok-num">2</span><span class="tok-op">)</span>
+    c<span class="tok-op">.</span><span class="tok-fn">bump</span><span class="tok-op">(</span><span class="tok-num">3</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span>c<span class="tok-op">.</span><span class="tok-fn">read</span><span class="tok-op">(</span><span class="tok-op">)</span><span class="tok-op">)</span>
+    <span class="tok-kw">sprint</span><span class="tok-op">(</span><span class="tok-fn">type_of</span><span class="tok-op">(</span>c<span class="tok-op">)</span><span class="tok-op">)</span>
+<span class="tok-op">}</span></code></pre></div></div>
+<div class="code code--out code--plain"><div class="code__bar"><span class="code__dots"><i></i><i></i><i></i></span><span class="code__name">output</span></div><div class="code__label">Output</div><div class="code__body"><pre id="code-output-44" tabindex="0"><code><span class="tok-num">5</span>
+Counter</code></pre></div></div>
+
+<h2 id="erasure">Erasure and what is not allowed</h2>
+<div class="callout callout--warn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><p><strong>Generics are erased.</strong> The type parameter is checked at compile time and does not exist at run time, so there is no runtime type test, a <code>static</code> method cannot use its class's type parameters, and type arguments are invariant — a <code>List&lt;Int&gt;</code> is not a <code>List&lt;Any&gt;</code>. There is no inheritance yet.</p></div>
+
+<h2 id="diagnostics">Diagnostics</h2>
+<p>Twelve new diagnostics cover the feature: unknown type argument, wrong
+argument count, constraint not satisfied, invariant argument, a type parameter
+used where a concrete type is required, and a static method reaching for its
+class's parameters. The <a href="examples.html">examples page</a> runs the code
+above against the current release.</p>
+<div class="pager"><a class="prev" href="structs.html"><span>Previous</span>Structs</a><a class="next" href="built-in-functions.html"><span>Next</span>Built-in Functions</a></div></article><nav class="toc" aria-label="On this page"><p class="toc__title">On this page</p><ul><li><a href="#declaring">Declaring type parameters</a></li><li><a href="#containers">Parameterised containers</a></li><li><a href="#inference">Inference</a></li><li><a href="#constraints">Constraints</a></li><li><a href="#classes">Classes</a></li><li><a href="#erasure">Erasure and what is not allowed</a></li><li><a href="#diagnostics">Diagnostics</a></li></ul></nav></div></div></main><footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="../assets/img/logo-dark.png?v=3f54d723" alt="Silica" class="logo-dark" width="120" height="48" loading="lazy" decoding="async">
+        <img src="../assets/img/logo-light.png?v=3f54d723" alt="Silica" class="logo-light" width="120" height="48" loading="lazy" decoding="async">
+        <p>An open-source, high-level general-purpose programming language with its
+        own syntax, a checked compiler and a versioned bytecode format.</p>
+        <div class="footer-meta">
+          <span class="pill"><span class="pill__dot"></span><span data-version-label>v0.10.0</span></span>
+          <span class="pill">MIT licence</span>
+          <span class="pill">Python 3.9+</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Documentation</h4>
+        <ul>
+        <li><a href="../docs/introduction.html">Introduction</a></li>
+        <li><a href="../docs/getting-started.html">Getting Started</a></li>
+        <li><a href="../docs/installation.html">Installation</a></li>
+        <li><a href="../docs/syntax.html">Language Syntax</a></li>
+        <li><a href="../docs/variables-and-data-types.html">Variables and Data Types</a></li>
+        <li><a href="../docs/functions.html">Functions</a></li>
+        <li><a href="../docs/control-flow.html">Control Flow</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/sufiyan-sabeel/silica" rel="noopener">Source on GitHub</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/releases" rel="noopener">Releases</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/docs/LANGUAGE_SPEC.md" rel="noopener">Language spec</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/issues" rel="noopener">Issues (4)</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Creator</h4>
+        <ul>
+          <li><a href="https://github.com/sufiyan-sabeel" rel="noopener">Umaiz Sufiyan</a></li>
+          <li><a href="https://www.instagram.com/umaizsufiyan.78/" rel="noopener">Instagram</a></li>
+          <li><a href="../index.html#creator">About the creator</a></li>
+          <li><a href="https://github.com/sufiyan-sabeel/silica/blob/main/LICENSE" rel="noopener">MIT licence</a></li>
+          <li><a href="../docs/faq.html">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Umaiz Sufiyan. Silica is released under the MIT licence.</p>
+      <p>Created by Umaiz Sufiyan.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/js/site.js?v=3f54d723" defer></script>
+</body>
+</html>
