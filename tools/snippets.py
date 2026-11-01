@@ -506,6 +506,51 @@ sfn main() {
     },
 })
 
+SNIPPETS.update({
+    # ------------------------------------------------- 0.10.0: generics
+    "generics_demo": {
+        "file": "generics.sc",
+        "code": """sfn largest<T: Orderable>(items: List<T>) -> T {
+    let best: T = items[0]
+    per item in items {
+        si item > best {
+            best = item
+        }
+    }
+    ret best
+}
+
+sfn main() {
+    let numbers: List<Int> = [4, 9, 2]
+    sprint(largest(numbers))
+    sprint(largest(["pear", "apple"]))
+}""",
+    },
+    # ------------------------------------------------- 0.10.0: classes
+    "class_demo": {
+        "file": "counter.sc",
+        "code": """class Counter {
+    value: Int
+
+    sfn bump(by: Int) {
+        self.value = self.value + by
+    }
+
+    sfn read() -> Int {
+        ret self.value
+    }
+}
+
+sfn main() {
+    let c = Counter(0)
+    c.bump(2)
+    c.bump(3)
+    sprint(c.read())
+    sprint(type_of(c))
+}""",
+    },
+})
+
 # Defaults: stdin or capability-bound snippets are checked but not executed.
 for _entry in SNIPPETS.values():
     _entry.setdefault("skip_run", False)
