@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://gitdiagram.com/sufiyan-sabeel/silica">
+  <a href="https://gitdiagram.com/sufiyan-sabeel/silica?utm_source=readme&amp;utm_medium=badge">
     <img src="https://gitdiagram.com/diagram-badge.svg" alt="Architecture diagram">
   </a>
 </p>
