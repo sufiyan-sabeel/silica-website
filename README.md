@@ -7,8 +7,8 @@
 The official website for [Silica](https://github.com/sufiyan-sabeel/silica), an
 open-source general-purpose programming language created by Umaiz Sufiyan.
 
-**Live at https://sufiyan-sabeel.github.io/silica-website/**
-**Language repository: https://github.com/sufiyan-sabeel/silica**
+**Live at [sufiyan-sabeel.github.io/silica-website](https://sufiyan-sabeel.github.io/silica-website/)**
+**Language repository: [github.com/sufiyan-sabeel/silica](https://github.com/sufiyan-sabeel/silica)**
 
 ## What this is
 
