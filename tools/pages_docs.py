@@ -440,6 +440,9 @@ parameter lists. Where they are given, the checker enforces them.</p>
             [
                 ["<code>sfn</code>", "declare a function"],
                 ["<code>struct</code>", "declare a record with typed fields"],
+                ["<code>class</code>", "declare a record with methods"],
+                ["<code>static</code>", "a class member that has no receiver"],
+                ["<code>private</code>", "a class member only its methods may use"],
                 ["<code>ret</code>", "return a value (or nothing)"],
                 ["<code>let</code> / <code>const</code>", "mutable / immutable binding"],
                 ["<code>si</code> / <code>sino</code>", "if / else"],
@@ -563,10 +566,12 @@ the dividend. Division or modulo by zero is a runtime error for both
 <p>Struct names are types too: a field, parameter, return value or annotation may
 use any struct declared in the program. See <a href="structs.html">Structs</a>.</p>
 
-<p><code>List</code> and <code>Map</code> are containers whose element type is
-<code>Any</code> in v%(version)s — there are no generics yet, so an element is
-accepted whatever it is and checked at runtime. This is a documented limitation,
-not an oversight.</p>
+<p><code>List&lt;T&gt;</code> and <code>Map&lt;K, V&gt;</code> are parameterised
+since 0.10.0: the element and key types flow through indexing, iteration and
+concatenation, so <code>xs[0]</code> on a <code>List&lt;Int&gt;</code> is an
+<code>Int</code>. A bare <code>List</code> or <code>Map</code> still means
+"elements unknown" and stays compatible with any parameterisation, which is why
+existing code kept compiling. See <a href="generics.html">Generics</a>.</p>
 
 <p><code>==</code> compares <code>List</code> and <code>Map</code> structurally, by
 value, and scalars by value. Negative indices and missing map keys are runtime
@@ -687,9 +692,10 @@ message. Idiomatic Silica returns a sentinel or prints and returns early:</p>
         "limits_note": callout(
             "<strong>Functions are not first-class values in %s.</strong> They can be "
             "called, not passed, returned or stored. There are no closures, no "
-            "anonymous functions, and no methods: a struct holds data and "
-            "functions operate on it. Those are planned, not present — see the "
-            "<a href=\"../index.html#roadmap\">roadmap</a>." % VERSION,
+            "anonymous functions. A <code>struct</code> holds data and functions "
+            "operate on it; a <code>class</code> can carry methods, "
+            "<code>static</code> members and <code>private</code> fields "
+            "(0.10.0). See <a href=\"generics.html\">Generics and classes</a>." % VERSION,
             kind="warn",
         ),
     }
@@ -1025,6 +1031,12 @@ nothing is granted by default:</p>
                 ["<code>json</code>", "<code>use json</code>", "implemented"],
                 ["<code>colors</code>", "<code>use colors</code>",
                  "implemented (0.9.1) — 29 functions"],
+                ["<code>path</code>", "<code>use path</code>",
+                 "implemented (0.10.0) — path text, no capability needed"],
+                ["<code>time</code>", "<code>use time</code>",
+                 "implemented (0.10.0) — wall clock and monotonic clock"],
+                ["<code>random</code>", "<code>use random</code>",
+                 "implemented (0.10.0) — pseudorandom and CSPRNG, separately named"],
                 ["<code>fs</code>", "<code>use fs</code>", "implemented, capability-gated"],
                 ["<code>ui</code>, <code>tui</code>, <code>gui</code>, <code>speech</code>",
                  "<code>use ui</code> …", "implemented; UI namespaces are separate"],
@@ -1157,6 +1169,9 @@ def examples():
                                     "and modified."),
         ("colors_demo", "Colours", "Perceptual colour, contrast and a generated "
                                    "palette."),
+        ("generics_demo", "Generics", "A constrained type parameter over "
+                                      "Int, String and Float."),
+        ("class_demo", "Classes", "A class with methods and mutable state."),
     ]
 
     blocks = []
@@ -1225,9 +1240,20 @@ def faq():
          "<code>const</code> freezes the whole reachable tree. Structs hold data; "
          "they have no methods."),
         ("Does it have classes or generics?",
-         "No. There are no classes, no inheritance and no methods, and no generic "
-         "parameters — <code>List</code> and <code>Map</code> elements check as "
-         "<code>Any</code>. Both are on the roadmap."),
+         "Yes, since 0.10.0. <code>sfn first&lt;T&gt;(items: List&lt;T&gt;) -&gt; "
+         "T</code>, <code>struct Box&lt;T&gt;</code> and <code>class Bag&lt;T&gt;"
+         "</code> all parse and are checked; <code>List&lt;T&gt;</code> and "
+         "<code>Map&lt;K, V&gt;</code> carry their element types, inference fills "
+         "them in at construction and at call sites, and the constraints "
+         "<code>Numeric</code>, <code>Orderable</code> and <code>Equatable</code> "
+         "gate the operators. Classes have methods, <code>static</code> members "
+         "and <code>private</code> fields. Inheritance is still on the roadmap."),
+        ("What are the limits of generics?",
+         "They are erased: a type parameter is checked at compile time and gone at "
+         "run time, so there is no runtime type test and a <code>static</code> "
+         "method cannot use its class's type parameters. Type arguments are "
+         "invariant — a <code>List&lt;Int&gt;</code> is not a <code>List&lt;Any&gt;"
+         "</code>. A bare <code>List</code> still means \"elements unknown\"."),
         ("Are there closures or first-class functions?",
          "No. Functions can be called but not passed, returned or stored."),
         ("Does it support exceptions or a Result type?",
@@ -1371,9 +1397,11 @@ loop.</p>
 # --------------------------------------------------------------------------
 def structs():
     return """
-<p>A <code>struct</code> is a named record with typed fields. It is the first
+<p>A <code>struct</code> is a named record with typed fields. It was the first
 user-defined type in Silica, added in 0.9.2 and refined in 0.9.3 so that
-assignment works at any depth.</p>
+assignment works at any depth. Since 0.10.0 a struct can also take type
+parameters — <code>struct Box&lt;T&gt;</code> — and classes add behaviour to the
+same idea.</p>
 
 %(basic)s
 %(basic_out)s
@@ -1435,14 +1463,112 @@ a compile to <code>.sbc</code> and reload.</p>
         "h_bytecode": h2("Structs in bytecode", "bytecode"),
         "h_limits": h2("What structs are not", "limits"),
         "limits": callout(
-            "<strong>No methods, no inheritance, no generics.</strong> A struct "
-            "holds data and functions operate on it. There are no classes in the "
-            "Python sense, and because there are no generics, a struct stored in a "
-            "plain <code>List</code> is reached through <code>Any</code> — the "
-            "checker defers field access to the runtime, which then reports the "
-            "real problem if the value is not a struct.",
+            "<strong>No methods on structs.</strong> A struct holds data; functions "
+            "operate on it. If you want behaviour attached to the data, use a "
+            "<code>class</code> (0.10.0), which has methods, <code>static</code> "
+            "members and <code>private</code> fields. Structs can be generic — "
+            "<code>struct Box&lt;T&gt;</code> is valid — and a struct stored in a "
+            "bare <code>List</code> is still reached through <code>Any</code>, so "
+            "field access is deferred to the runtime there.",
             kind="warn",
         ),
+    }
+
+# --------------------------------------------------------------------------
+def generics():
+    return """
+<p>Since 0.10.0 Silica has type parameters that are actually checked: on
+functions, on structs and on classes, with parameterised <code>List&lt;T&gt;</code>
+and <code>Map&lt;K, V&gt;</code>, inference at construction and at call sites,
+and three constraints that gate the operators.</p>
+
+%(demo)s
+%(demo_out)s
+
+%(h_decl)s
+<p>A declaration puts <code>&lt;T&gt;</code> after the name, and optionally a
+constraint after a colon: <code>&lt;T: Orderable&gt;</code>. Several parameters
+are allowed — <code>struct Pair&lt;K, V&gt;</code> — and a parameter is in scope
+for the declaration's own signature, so <code>sfn f&lt;T&gt;(x: T) -&gt; T</code>
+checks.</p>
+
+%(decl_code)s
+
+%(h_containers)s
+<p>The built-in containers are generic. Element and key types flow through
+indexing, iteration and concatenation, so <code>xs[0]</code> on a
+<code>List&lt;Int&gt;</code> is an <code>Int</code> and a <code>Map&lt;String,
+Int&gt;</code> yields <code>Int</code> values. A bare <code>List</code> or
+<code>Map</code> still means "elements unknown" and stays compatible with any
+parameterisation, which is why every 0.9.x program kept compiling.</p>
+
+%(h_infer)s
+<p>Type arguments are inferred from the arguments first, then from the binding's
+annotation — <code>let s: Stack&lt;String&gt; = Stack([])</code> is enough. A
+mismatch is a compile error that names the type argument, not a runtime surprise.</p>
+
+%(h_constraints)s
+%(constraint_table)s
+<p>An unconstrained type parameter cannot be used with <code>+ - * / %%</code> or
+<code>&lt; &lt;= &gt; &gt;=</code>: the checker rejects it in the body and at every
+call site, so a generic function that adds its arguments has to say
+<code>&lt;T: Numeric&gt;</code>.</p>
+
+%(h_classes)s
+<p>A <code>class</code> is a record that can also carry methods. Fields are
+declared as in a struct, methods are <code>sfn</code> declarations that use
+<code>self</code>, and <code>static</code> and <code>private</code> are keywords.
+Classes compare by identity; structs compare by value.</p>
+
+%(class_code)s
+%(class_out)s
+
+%(h_erase)s
+%(limits)s
+
+%(h_errors)s
+<p>Twelve new diagnostics cover the feature: unknown type argument, wrong
+argument count, constraint not satisfied, invariant argument, a type parameter
+used where a concrete type is required, and a static method reaching for its
+class's parameters. The <a href="examples.html">examples page</a> runs the code
+above against the current release.</p>
+""" % {
+        "demo": code("generics_demo", "generics.sc"),
+        "demo_out": code_out("generics_demo"),
+        "h_decl": h2("Declaring type parameters", "declaring"),
+        "decl_code": code_block(
+            "sfn repeat<T>(value: T, times: Int) -> List<T> { ... }\n"
+            "struct Box<T> { value: T }\n"
+            "class Bag<T> { items: List<T> ... }\n"
+            "struct Pair<K, V> { key: K, value: V }",
+            "shapes.sc", show_copy=False, line_numbers=False),
+        "h_containers": h2("Parameterised containers", "containers"),
+        "h_infer": h2("Inference", "inference"),
+        "h_constraints": h2("Constraints", "constraints"),
+        "constraint_table": table(
+            ["Constraint", "Allows", "Checked"],
+            [
+                ["<code>Numeric</code>", "<code>+ - * / %</code>",
+                 "in the body and at every call site"],
+                ["<code>Orderable</code>", "<code>&lt; &lt;= &gt; &gt;=</code>",
+                 "the same"],
+                ["<code>Equatable</code>", "<code>== !=</code>", "the same"],
+            ],
+        ),
+        "h_classes": h2("Classes", "classes"),
+        "class_code": code("class_demo", "counter.sc"),
+        "class_out": code_out("class_demo"),
+        "h_erase": h2("Erasure and what is not allowed", "erasure"),
+        "limits": callout(
+            "<strong>Generics are erased.</strong> The type parameter is checked at "
+            "compile time and does not exist at run time, so there is no runtime "
+            "type test, a <code>static</code> method cannot use its class's type "
+            "parameters, and type arguments are invariant — a "
+            "<code>List&lt;Int&gt;</code> is not a <code>List&lt;Any&gt;</code>. "
+            "There is no inheritance yet.",
+            kind="warn",
+        ),
+        "h_errors": h2("Diagnostics", "diagnostics"),
     }
 
 PAGES = {
@@ -1455,6 +1581,7 @@ PAGES = {
     "control-flow": control_flow,
     "strings": strings,
     "structs": structs,
+    "generics": generics,
     "built-in-functions": builtins,
     "cli-reference": cli,
     "examples": examples,
